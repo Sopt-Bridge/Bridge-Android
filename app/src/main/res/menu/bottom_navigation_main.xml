@@ -6,11 +6,16 @@
         android:enabled="true"
         android:icon="@mipmap/ic_launcher"
         android:title="home"
-        app:showAsAction="withText" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_subscribe"
         android:icon="@mipmap/ic_launcher"
         android:title="subscribe"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_request"
+        android:icon="@mipmap/ic_launcher"
+        android:title="request"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_library"
