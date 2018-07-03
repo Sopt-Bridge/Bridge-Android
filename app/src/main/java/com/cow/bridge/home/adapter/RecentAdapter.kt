@@ -41,7 +41,7 @@ class RecentAdapter(internal var _context: Context) : RecyclerView.Adapter<Recyc
     }
 
     override fun getItemCount(): Int {
-        return 24
+        return 57
     }
 
 

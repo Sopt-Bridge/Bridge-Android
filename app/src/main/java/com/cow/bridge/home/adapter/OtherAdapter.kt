@@ -41,7 +41,7 @@ class OtherAdapter(internal var _context: Context) : RecyclerView.Adapter<Recycl
     }
 
     override fun getItemCount(): Int {
-        return 24
+        return 57
     }
 
 
