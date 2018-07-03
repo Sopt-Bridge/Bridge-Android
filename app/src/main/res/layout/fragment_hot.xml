@@ -76,7 +76,9 @@
                 android:id="@+id/hot_recycler_recommended"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:paddingHorizontal="11dp">
+                android:clipToPadding="false"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp">
 
             </android.support.v7.widget.RecyclerView>
 
@@ -96,7 +98,6 @@
                 android:id="@+id/hot_recycler_recent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"
                 android:nestedScrollingEnabled="false"
                 android:paddingLeft="11dp"
                 android:paddingRight="11dp" />
