@@ -1,5 +1,6 @@
 package com.cow.bridge
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -7,9 +8,11 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import com.cow.bridge.home.activity.HomeFragment
 import com.cow.bridge.library.activity.LibraryFragment
+import com.cow.bridge.login.LoginActivity
 import com.cow.bridge.request.activity.RequestFragment
 import com.cow.bridge.subscribe.activity.SubscribeFragment
 import com.cow.bridge.util.BottomNavigationViewHelper
@@ -22,6 +25,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        main_button_login.setOnClickListener{
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
         main_bottom_navigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
