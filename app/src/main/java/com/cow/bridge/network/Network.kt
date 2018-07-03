@@ -6,7 +6,7 @@ package com.cow.bridge.network
 
 class Network {
     internal var message: String? = null
-    internal var data: Array<Result>? = null
+    internal var data: ArrayList<Result>? = null
 
 
 }

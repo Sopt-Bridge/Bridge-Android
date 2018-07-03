@@ -14,6 +14,8 @@ import android.view.ViewGroup
 import com.cow.bridge.R
 import com.cow.bridge.home.activity.type.HotFragment
 import com.cow.bridge.home.activity.type.OtherFragment
+import com.cow.bridge.network.ApplicationController
+import com.cow.bridge.network.ServerInterface
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlin.collections.ArrayList
 
@@ -36,7 +38,7 @@ class HomeFragment : Fragment() {
 
         with(convertView){
             home_viewpager.adapter = adapter
-            home_viewpager.offscreenPageLimit = 1
+            home_viewpager.offscreenPageLimit = 3
             home_viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
                 override fun onPageScrollStateChanged(state: Int) {
 
