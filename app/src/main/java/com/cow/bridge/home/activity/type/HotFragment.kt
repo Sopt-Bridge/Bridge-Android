@@ -22,12 +22,11 @@ import kotlinx.android.synthetic.main.fragment_hot.view.*
 class HotFragment : Fragment() {
 
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val convertView = inflater!!.inflate(R.layout.fragment_hot, container, false)
 
-        val adapter = ViewPagerAdapter(fragmentManager)
+        val adapter = ViewPagerAdapter(fragmentManager!!)
         adapter.addFragment(NowTrendFragment())
         adapter.addFragment(NowTrendFragment())
         adapter.addFragment(NowTrendFragment())

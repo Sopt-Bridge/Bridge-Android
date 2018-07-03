@@ -31,18 +31,17 @@ class OtherFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            pageName = arguments.getString(pageNameParam)
+            pageName = arguments!!.getString(pageNameParam)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val convertView = inflater!!.inflate(R.layout.fragment_other, container, false)
 
         with(convertView){
             other_layout_orderby.setOnClickListener(object : View.OnClickListener{
                 override fun onClick(p0: View?) {
-                    val orderbyDialog : OrderbyDialog = OrderbyDialog(activity, other_text_orderby.text.toString())
+                    val orderbyDialog : OrderbyDialog = OrderbyDialog(activity!!, other_text_orderby.text.toString())
                     orderbyDialog.window.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
                     orderbyDialog.show()
                     orderbyDialog.setOnDismissListener(object : DialogInterface.OnDismissListener{

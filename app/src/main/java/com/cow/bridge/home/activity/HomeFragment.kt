@@ -23,12 +23,11 @@ import kotlin.collections.ArrayList
  */
 class HomeFragment : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val convertView = inflater!!.inflate(R.layout.fragment_home, container, false)
 
-        val adapter = ViewPagerAdapter(fragmentManager)
+        val adapter = ViewPagerAdapter(fragmentManager!!)
         adapter.addFragment(HotFragment(), "HOT")
         adapter.addFragment(OtherFragment.newInstance("k-content"), "K-CONTENT")
         adapter.addFragment(OtherFragment.newInstance("k-pop"), "K-POP")
