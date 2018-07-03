@@ -12,8 +12,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cow.bridge.R
+import com.cow.bridge.home.activity.type.HotFragment
+import com.cow.bridge.home.activity.type.OtherFragment
 import kotlinx.android.synthetic.main.fragment_home.view.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -53,6 +54,7 @@ class HomeFragment : Fragment() {
             })
 
             home_tabs.tabGravity = TabLayout.GRAVITY_FILL
+            home_tabs.tabMode = TabLayout.MODE_SCROLLABLE
             home_tabs.setBackgroundColor(Color.WHITE)
             home_tabs.setTabTextColors(Color.parseColor("#D1D1D1"), Color.parseColor("#E31C9E"))
             home_tabs.setSelectedTabIndicatorColor(Color.parseColor("#E31C9E"))

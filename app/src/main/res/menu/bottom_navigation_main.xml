@@ -3,24 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_home"
-        android:enabled="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/bottom_bar_home_active_icon"
         android:title="HOME"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_subscribe"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/bottom_bar_subscribe_normal_icon"
         android:title="SUBSCRIBE"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_request"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/bottom_bar_request_normal_icon"
         android:title="REQUEST"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_library"
         android:enabled="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/bottom_bar_folder_normal_icon"
         android:title="LIBRARY"
         app:showAsAction="ifRoom" />
 </menu>

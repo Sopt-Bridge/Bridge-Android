@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="153dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="6dp">
+
+        <ImageView
+            android:id="@+id/contents_image_thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/home_logo_with_text_icon" />
+
+        <ImageView
+            android:id="@+id/contents_image_type"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom|left"
+            app:srcCompat="@drawable/home_video_thumnail_icon" />
+
+        <TextView
+            android:id="@+id/contents_text_count"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="9dp"
+            android:layout_marginRight="9dp"
+            android:background="#000000"
+            android:gravity="center"
+            android:minWidth="25dp"
+            android:text="00:00"
+            android:textColor="#FFFFFF"
+            android:textSize="8dp" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/contents_text_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        android:text="BTS - Anpanman fancam focus on Jungkuk"
+        android:textColor="#000000"
+        android:textSize="12dp" />
+</LinearLayout>

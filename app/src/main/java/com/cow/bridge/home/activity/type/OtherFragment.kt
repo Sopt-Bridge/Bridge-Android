@@ -1,4 +1,4 @@
-package com.cow.bridge.home.activity
+package com.cow.bridge.home.activity.type
 
 
 import android.os.Bundle

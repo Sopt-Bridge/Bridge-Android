@@ -7,13 +7,13 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.widget.TextView
 import com.cow.bridge.home.activity.HomeFragment
 import com.cow.bridge.library.activity.LibraryFragment
 import com.cow.bridge.request.activity.RequestFragment
 import com.cow.bridge.subscribe.activity.SubscribeFragment
+import com.cow.bridge.util.BottomNavigationViewHelper
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         main_bottom_navigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
+
                 R.id.action_home -> main_viewpager.setCurrentItem(0, false)
                 R.id.action_subscribe -> main_viewpager.setCurrentItem(1, false)
                 R.id.action_request -> main_viewpager.setCurrentItem(2, false);
@@ -55,8 +56,9 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        main_viewpager.offscreenPageLimit = 3
         main_viewpager.setOnTouchListener { v, event -> true }
-
+        BottomNavigationViewHelper.removeShiftMode(main_bottom_navigation)
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(HomeFragment())

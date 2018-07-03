@@ -1,4 +1,4 @@
-package com.cow.bridge.home.activity
+package com.cow.bridge.home.activity.type.hot
 
 
 import android.os.Bundle
@@ -13,17 +13,13 @@ import com.cow.bridge.R
 /**
  * A simple [Fragment] subclass.
  */
-class HotFragment : Fragment() {
+class NowTrendFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val convertView = inflater!!.inflate(R.layout.fragment_hot, container, false)
-
-
-
-        return convertView
+        return inflater!!.inflate(R.layout.fragment_now_trend, container, false)
     }
 
 }// Required empty public constructor
