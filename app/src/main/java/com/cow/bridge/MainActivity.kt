@@ -13,6 +13,7 @@ import com.cow.bridge.request.activity.RequestFragment
 import com.cow.bridge.subscribe.activity.SubscribeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        main_bottom_navigation!!.setOnNavigationItemSelectedListener { item ->
+        main_bottom_navigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.action_home -> main_viewpager.setCurrentItem(0, false)
                 R.id.action_subscribe -> main_viewpager.setCurrentItem(1, false)
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             false
         }
 
-        prevMenuItem = main_bottom_navigation!!.menu.getItem(0)
+        prevMenuItem = main_bottom_navigation.menu.getItem(0)
         prevMenuItem!!.isChecked = main_bottom_navigation.menu.getItem(0).isChecked
 
         main_viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -43,8 +44,8 @@ class MainActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 prevMenuItem?.let {
                     prevMenuItem?.isChecked = false
-                    main_bottom_navigation!!.menu.getItem(position).isChecked = true
-                    prevMenuItem = main_bottom_navigation!!.menu.getItem(position)
+                    main_bottom_navigation.menu.getItem(position).isChecked = true
+                    prevMenuItem = main_bottom_navigation.menu.getItem(position)
 
                 }
             }
@@ -67,6 +68,7 @@ class MainActivity : AppCompatActivity() {
 
     inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
         private val mFragmentList = ArrayList<Fragment>()
+
         override fun getItem(position: Int): Fragment {
             return mFragmentList[position]
         }

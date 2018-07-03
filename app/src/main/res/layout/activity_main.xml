@@ -6,29 +6,46 @@
     android:layout_height="match_parent">
 
 
-    <android.support.v7.widget.Toolbar
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/campus_toolbar"
-        app:contentInsetEnd="0dp"
-        app:contentInsetStart="0dp"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#00FFFFFF"
+        android:layout_height="87dp"
         android:layout_gravity="top"
-        android:elevation="4dp">
+        android:background="#FFFFFF"
+        android:elevation="4dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetStart="0dp">
+
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#FFFFFF">
 
             <ImageView
+                android:id="@+id/button"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_gravity="right|center_vertical"
+                android:padding="12dp"
+                android:src="@drawable/search_btn" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/home_logo_only_icon" />
+
+            <Button
                 android:id="@+id/campus_image_drawer"
-                android:layout_width="48dp"
-                android:layout_height="match_parent"
+                android:layout_width="56dp"
+                android:layout_height="28dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="48dp"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:tint="#FFFFFF" />
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/button_rect_1dp_d1d1d1_radius"
+                android:text="LogIn"
+                android:textColor="#D1D1D1"
+                android:textSize="10dp" />
 
         </FrameLayout>
     </android.support.v7.widget.Toolbar>
@@ -39,7 +56,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="56dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="87dp"
+        android:background="#FFFFFF"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.BottomNavigationView

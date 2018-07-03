@@ -5,22 +5,22 @@
         android:id="@+id/action_home"
         android:enabled="true"
         android:icon="@mipmap/ic_launcher"
-        android:title="home"
+        android:title="HOME"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_subscribe"
         android:icon="@mipmap/ic_launcher"
-        android:title="subscribe"
+        android:title="SUBSCRIBE"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_request"
         android:icon="@mipmap/ic_launcher"
-        android:title="request"
+        android:title="REQUEST"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_library"
         android:enabled="true"
         android:icon="@mipmap/ic_launcher"
-        android:title="library"
+        android:title="LIBRARY"
         app:showAsAction="ifRoom" />
 </menu>
