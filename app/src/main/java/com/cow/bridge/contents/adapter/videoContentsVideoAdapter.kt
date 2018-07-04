@@ -5,21 +5,22 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.cow.bridge.model.videoContentsData
+import com.cow.bridge.R
+import com.cow.bridge.model.videoContentsVideoData
 
-class videoContentsVideoAdapter(val context : Context, val dataItem : ArrayList<videoContentsData> ) : RecyclerView.Adapter<videoContentsVideoAdapter.videoContentsViewHolder>(){
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): videoContentsViewHolder {
-        val mainView : View = LayoutInflater.from(parent.context).inflate(R.layout.video_contents_video_layout_manager,parent,false)
-        return videoContentsViewHolder(mainView)
+class videoContentsVideoAdapter(val context : Context, val videoDataItem : ArrayList<videoContentsVideoData> ) : RecyclerView.Adapter<videoContentsVideoAdapter.videoContentsVideoViewHolder>(){
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): videoContentsVideoViewHolder {
+        val mainView : View = LayoutInflater.from(parent!!.context).inflate(R.layout.video_contents_video_layout_manager,parent,false)
+        return videoContentsVideoViewHolder(mainView)
     }
 
-    override fun getItemCount(): Int = R.model.videoContentsData.size
+    override fun getItemCount(): Int = videoDataItem.size
 
-    override fun onBindViewHolder(holder: videoContentsViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: videoContentsVideoViewHolder?, position: Int) {
 
     }
 
-inner class videoContentsViewHolder(val itemView : View?):RecyclerView.ViewHolder(itemView){
+inner class videoContentsVideoViewHolder(val itemView : View?):RecyclerView.ViewHolder(itemView){
 
 }
 }

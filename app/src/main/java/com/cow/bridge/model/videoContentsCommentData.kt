@@ -1,4 +1,7 @@
 package com.cow.bridge.model
 
-class videoContentsCommentData {
-}
+import android.media.Image
+
+data class videoContentsCommentData (
+    val image: Int?=null
+)
