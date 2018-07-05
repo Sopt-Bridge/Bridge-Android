@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -25,11 +26,14 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -61,6 +65,12 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     private ImageButton mVoiceBtn;
     private ImageButton mEmptyBtn;
     private RelativeLayout mSearchTopBar;
+
+    private Button normalButton;
+    private Button hashButton;
+    private ImageView normalImage;
+    private ImageView hashImage;
+    private LinearLayout previewLayout;
 
     private CharSequence mOldQueryText;
     private CharSequence mUserQuery;
@@ -158,11 +168,20 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
         mEmptyBtn = (ImageButton) mSearchLayout.findViewById(R.id.action_empty_btn);
         mTintView = mSearchLayout.findViewById(R.id.transparent_view);
 
+        normalButton = (Button) mSearchLayout.findViewById(R.id.search_button_normal);
+        hashButton = (Button) mSearchLayout.findViewById(R.id.search_button_hash);
+        normalImage = (ImageView) mSearchLayout.findViewById(R.id.search_image_normal);
+        hashImage = (ImageView) mSearchLayout.findViewById(R.id.search_image_hash);
+        previewLayout = (LinearLayout) mSearchLayout.findViewById(R.id.search_layout_preview);
+
         mSearchSrcTextView.setOnClickListener(mOnClickListener);
         mBackBtn.setOnClickListener(mOnClickListener);
         mVoiceBtn.setOnClickListener(mOnClickListener);
         mEmptyBtn.setOnClickListener(mOnClickListener);
         mTintView.setOnClickListener(mOnClickListener);
+
+        normalButton.setOnClickListener(mOnClickListener);
+        hashButton.setOnClickListener(mOnClickListener);
 
         allowVoiceSearch = false;
 
@@ -171,7 +190,14 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
         initSearchView();
 
         mSuggestionsListView.setVisibility(GONE);
+
+
+
         setAnimationDuration(AnimationUtil.ANIMATION_DURATION_MEDIUM);
+    }
+
+    public void hidePreview(){
+        previewLayout.setVisibility(GONE);
     }
 
     private void initSearchView() {
@@ -232,6 +258,16 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
                 showSuggestions();
             } else if (v == mTintView) {
                 closeSearch();
+            } else if (v == normalButton) {
+                normalButton.setTextColor(Color.parseColor("#E31C9E"));
+                normalImage.setBackgroundColor(Color.parseColor("#E31C9E"));
+                hashButton.setTextColor(Color.parseColor("#AAAAAA"));
+                hashImage.setBackgroundColor(Color.parseColor("#AAAAAA"));
+            } else if (v == hashButton) {
+                normalButton.setTextColor(Color.parseColor("#AAAAAA"));
+                normalImage.setBackgroundColor(Color.parseColor("#AAAAAA"));
+                hashButton.setTextColor(Color.parseColor("#E31C9E"));
+                hashImage.setBackgroundColor(Color.parseColor("#E31C9E"));
             }
         }
     };
@@ -268,8 +304,8 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
         CharSequence query = mSearchSrcTextView.getText();
         if (query != null && TextUtils.getTrimmedLength(query) > 0) {
             if (mOnQueryChangeListener == null || !mOnQueryChangeListener.onQueryTextSubmit(query.toString())) {
-                closeSearch();
-                mSearchSrcTextView.setText(null);
+                //closeSearch();
+                //mSearchSrcTextView.setText(null);
             }
         }
     }

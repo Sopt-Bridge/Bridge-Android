@@ -3,7 +3,10 @@ package com.cow.bridge.search.activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.cow.bridge.R
+import com.cow.bridge.model.SearchWord
 import com.cow.bridge.search.searchlibrary.MaterialSearchView
+import io.realm.Realm
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_search.*
 
 class SearchActivity : AppCompatActivity() {
@@ -23,7 +26,7 @@ class SearchActivity : AppCompatActivity() {
 
         searchView?.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-
+                searchView?.hidePreview()
                 return false
             }
 
@@ -49,6 +52,18 @@ class SearchActivity : AppCompatActivity() {
             }
 
         })
+
+        var realm  = Realm.getDefaultInstance()
+        var normalRecentlyWords : RealmResults<SearchWord> = realm.where(SearchWord::class.java).findAll();
+        var searchName : Array<String?> = arrayOfNulls<String>(normalRecentlyWords.size)
+        var count = 0
+        for(word in normalRecentlyWords){
+            searchName[count] = word.recentlyWord!!
+        }
+
+        realm.close()
+
+        searchView?.setSuggestions(searchName);
 
     }
 

@@ -120,14 +120,14 @@
                     android:weightSum="2">
 
                     <ImageView
-                        android:id="@+id/search_image_campus"
+                        android:id="@+id/search_image_normal"
                         android:layout_width="wrap_content"
                         android:layout_height="2dp"
                         android:layout_weight="1"
                         android:background="#E31C9E" />
 
                     <ImageView
-                        android:id="@+id/search_image_major"
+                        android:id="@+id/search_image_hash"
                         android:layout_width="wrap_content"
                         android:layout_height="2dp"
                         android:layout_weight="1"
