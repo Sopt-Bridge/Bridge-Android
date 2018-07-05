@@ -14,6 +14,7 @@ import com.cow.bridge.home.activity.HomeFragment
 import com.cow.bridge.library.activity.LibraryFragment
 import com.cow.bridge.login.LoginActivity
 import com.cow.bridge.request.activity.RequestFragment
+import com.cow.bridge.search.activity.SearchActivity
 import com.cow.bridge.subscribe.activity.SubscribeFragment
 import com.cow.bridge.util.BottomNavigationViewHelper
 import kotlinx.android.synthetic.main.activity_main.*
@@ -28,6 +29,11 @@ class MainActivity : AppCompatActivity() {
 
         main_button_login.setOnClickListener{
             val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
+        main_image_search.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
         }
 
