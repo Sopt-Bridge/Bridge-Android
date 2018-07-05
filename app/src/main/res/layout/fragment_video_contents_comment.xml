@@ -1,12 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </android.support.v7.widget.RecyclerView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="54.69dp"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <EditText
+            android:id="@+id/video_contents_tv_comment_edit"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="31.66dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15.34dp"
+            android:layout_gravity="center"
+            android:background="@drawable/edit_enter_text"
+            />
+
+        <Button
+            android:layout_width="61.44dp"
+            android:layout_height="29.75dp"
+            android:layout_marginLeft="7.97dp"
+            android:layout_marginRight="14.4dp"
+            android:layout_toRightOf="@id/video_contents_tv_comment_edit"
+            android:layout_gravity="center"
+            android:background="@drawable/round_btn_done"
+            android:text="Done"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</LinearLayout>
