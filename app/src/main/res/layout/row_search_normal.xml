@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="42dp"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/search_text_word"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_weight="1"
+        android:textColor="#000000"
+        android:textSize="13dp"
+        tools:text="bangtar" />
+
+    <TextView
+        android:id="@+id/search_text_datetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00.00"
+        android:textColor="#D1D1D1"
+        android:textSize="12dp" />
+
+    <ImageView
+        android:id="@+id/search_image_delete"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        app:srcCompat="@drawable/search_delete_icon_small" />
+</LinearLayout>

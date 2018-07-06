@@ -1,6 +1,8 @@
 package com.cow.bridge.network
 
 import android.app.Application
+import io.realm.Realm
+import io.realm.RealmConfiguration
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -20,6 +22,9 @@ class ApplicationController : Application() {
     override fun onCreate() {
         super.onCreate()
         ApplicationController.instance = this
+        Realm.init(applicationContext)
+        val realmCOnfiguration = RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build()
+        Realm.setDefaultConfiguration(realmCOnfiguration)
 
     }
 
