@@ -41,7 +41,8 @@
         </activity>
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".SplashActivity" />
-        <activity android:name=".search.activity.SearchActivity"></activity>
+        <activity android:name=".search.activity.SearchActivity" />
+        <activity android:name=".subscribe.activity.BestChannelActivity"></activity>
     </application>
 
 </manifest>
