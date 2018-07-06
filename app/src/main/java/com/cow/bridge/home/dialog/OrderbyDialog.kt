@@ -42,7 +42,6 @@ class OrderbyDialog(context: Context, orderby : String) : Dialog(context), View.
     }
 
     override fun onClick(v: View?) {
-        Log.v("test", v?.id.toString() + " " + R.id.orderby_button_uploaddate)
         when(v?.id){
             R.id.orderby_button_uploaddate -> {
                 orderby = "Upload date"

@@ -1,12 +1,17 @@
 package com.cow.bridge.search.activity
 
-import android.support.v7.app.AppCompatActivity
+import android.content.DialogInterface
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.view.View
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import com.cow.bridge.R
+import com.cow.bridge.home.adapter.SearchResultAdapter
+import com.cow.bridge.home.dialog.OrderbyDialog
 import com.cow.bridge.model.SearchWord
 import com.cow.bridge.search.searchlibrary.MaterialSearchView
 import io.realm.Realm
@@ -82,6 +87,34 @@ class SearchActivity : AppCompatActivity() {
         realm.close()
 
         searchView?.setSuggestions(searchName);
+
+        val searchResultAdapter = SearchResultAdapter(this)
+
+        val llm : LinearLayoutManager = LinearLayoutManager(this)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        search_recycler_result.layoutManager = llm
+        search_recycler_result.adapter = searchResultAdapter
+
+        search_layout_orderby.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(p0: View?) {
+                val orderbyDialog : OrderbyDialog = OrderbyDialog(this@SearchActivity, search_text_orderby.text.toString())
+                orderbyDialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                orderbyDialog.show()
+                orderbyDialog.setOnDismissListener(object : DialogInterface.OnDismissListener{
+                    override fun onDismiss(dialog: DialogInterface?) {
+                        with(dialog as OrderbyDialog){
+                            dialog.orderby?.let {
+                                Log.v("test", orderby)
+                                this@SearchActivity.search_text_orderby?.text = it
+                                //TODO : 해당 정렬순으로 리스트가져오기
+                            }
+                        }
+                    }
+
+                })
+            }
+
+        })
 
     }
 
