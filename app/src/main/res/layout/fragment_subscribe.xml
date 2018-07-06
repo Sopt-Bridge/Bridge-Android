@@ -23,6 +23,7 @@
         android:layout_height="100dp"
         android:background="#F5F5F5"
         android:clipToPadding="false"
+        android:elevation="4dp"
         android:paddingLeft="7dp" />
 
     <android.support.v4.widget.NestedScrollView
