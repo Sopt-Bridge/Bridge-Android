@@ -9,5 +9,7 @@ import io.realm.RealmObject
 public open class SearchWord : RealmObject() {
 
     var recentlyWord: String? = null
+    var searchDateTime : String? = null
+    var thumbnailImage : String? = null
 
 }

@@ -13,7 +13,6 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.speech.RecognizerIntent;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -23,7 +22,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -89,6 +87,8 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     private Drawable suggestionIcon;
 
     private Context mContext;
+
+    public String searchType = "normal";
 
     public MaterialSearchView(Context context) {
         this(context, null);
@@ -200,6 +200,10 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
         previewLayout.setVisibility(GONE);
     }
 
+    public void showPreview(){
+        previewLayout.setVisibility(VISIBLE);
+    }
+
     private void initSearchView() {
         mSearchSrcTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -234,6 +238,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
                 if (hasFocus) {
                     showKeyboard(mSearchSrcTextView);
                     showSuggestions();
+
                 }
             }
         });
@@ -250,12 +255,19 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
         public void onClick(View v) {
             if (v == mBackBtn) {
                 closeSearch();
+                if (mSearchViewListener != null) {
+                    mSearchViewListener.onSearchViewBack();
+                }
             } else if (v == mVoiceBtn) {
                 onVoiceClicked();
             } else if (v == mEmptyBtn) {
                 mSearchSrcTextView.setText(null);
             } else if (v == mSearchSrcTextView) {
                 showSuggestions();
+                if (mSearchViewListener != null) {
+                    mSearchViewListener.onSearchVIewFocus();
+                    showPreview();
+                }
             } else if (v == mTintView) {
                 closeSearch();
             } else if (v == normalButton) {
@@ -263,11 +275,13 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
                 normalImage.setBackgroundColor(Color.parseColor("#E31C9E"));
                 hashButton.setTextColor(Color.parseColor("#AAAAAA"));
                 hashImage.setBackgroundColor(Color.parseColor("#AAAAAA"));
+                searchType = "normal";
             } else if (v == hashButton) {
                 normalButton.setTextColor(Color.parseColor("#AAAAAA"));
                 normalImage.setBackgroundColor(Color.parseColor("#AAAAAA"));
                 hashButton.setTextColor(Color.parseColor("#E31C9E"));
                 hashImage.setBackgroundColor(Color.parseColor("#E31C9E"));
+                searchType = "hash";
             }
         }
     };
@@ -306,6 +320,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
             if (mOnQueryChangeListener == null || !mOnQueryChangeListener.onQueryTextSubmit(query.toString())) {
                 //closeSearch();
                 //mSearchSrcTextView.setText(null);
+
             }
         }
     }
@@ -769,6 +784,10 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
         void onSearchViewShown();
 
         void onSearchViewClosed();
+
+        void onSearchViewBack();
+
+        void onSearchVIewFocus();
     }
 
 

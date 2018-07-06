@@ -12,10 +12,15 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.cow.bridge.R;
+import com.cow.bridge.model.SearchWord;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Suggestions Adapter.
@@ -29,6 +34,10 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
     private Drawable suggestionIcon;
     private LayoutInflater inflater;
     private boolean ellipsize;
+    private Context _context;
+    private String searchType = "normal";
+    private RealmResults<SearchWord> searchWordResults;
+    Realm realm;
 
     public SearchAdapter(Context context, String[] suggestions) {
         inflater = LayoutInflater.from(context);
@@ -42,6 +51,9 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
         this.suggestions = suggestions;
         this.suggestionIcon = suggestionIcon;
         this.ellipsize = ellipsize;
+        this.realm = Realm.getDefaultInstance();
+        this.searchWordResults = realm.where(SearchWord.class).findAll();
+        this.realm.close();
     }
 
     @Override
@@ -59,6 +71,19 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
                         if (string.toLowerCase().startsWith(constraint.toString().toLowerCase())) {
                             searchData.add(string);
                         }
+
+                        if(string.matches(".*" + constraint+".*")){
+                            if(searchType.equals("hash")){
+                                if(string.startsWith("#")){
+                                    searchData.add(string);
+                                }
+                            }else{
+                                if(!string.startsWith("#")){
+                                    searchData.add(string);
+                                }
+                            }
+                        }
+
                     }
 
                     // Assign the data to the FilterResults
@@ -79,6 +104,11 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
         return filter;
     }
 
+    public void setSearchType(String searchType){
+        this.searchType = searchType;
+    }
+
+
     @Override
     public int getCount() {
         return data.size();
@@ -86,7 +116,11 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public Object getItem(int position) {
-        return data.get(position);
+        if(data.get(position).startsWith("#")){
+            return data.get(position).substring(1);
+        }else{
+            return data.get(position);
+        }
     }
 
     @Override
@@ -96,39 +130,92 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        SuggestionsViewHolder viewHolder;
-
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.suggest_item, parent, false);
-            viewHolder = new SuggestionsViewHolder(convertView);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (SuggestionsViewHolder) convertView.getTag();
-        }
+        SuggestionsViewHolderNormal viewHolderNormal = null;
+        SuggestionsViewHolderHash viewHolderHash = null;
 
         String currentListData = (String) getItem(position);
 
-        viewHolder.textView.setText(currentListData);
-        if (ellipsize) {
-            viewHolder.textView.setSingleLine();
-            viewHolder.textView.setEllipsize(TextUtils.TruncateAt.END);
+        if(currentListData.matches("#.*")) {
+            convertView = inflater.inflate(R.layout.row_search_hash, parent, false);
+            viewHolderHash = new SuggestionsViewHolderHash(convertView);
+            convertView.setTag(viewHolderHash);
+            viewHolderHash = (SuggestionsViewHolderHash) convertView.getTag();
+        }else {
+            convertView = inflater.inflate(R.layout.row_search_normal, parent, false);
+            viewHolderNormal = new SuggestionsViewHolderNormal(convertView);
+            convertView.setTag(viewHolderNormal);
+            viewHolderNormal = (SuggestionsViewHolderNormal) convertView.getTag();
+        }
+
+        if(currentListData.matches("#.*")) {
+            //Campus currentCampus = campusRealmResults.get(Integer.parseInt(currentListData.replace("c", "")));
+            this.realm = Realm.getDefaultInstance();
+            SearchWord currentWord = realm.where(SearchWord.class).equalTo("word", currentListData).findFirst();
+
+            //Glide.with(_context).load().into(viewHolderHash.thumbnailImage);
+            viewHolderHash.wordText.setText(currentWord.getRecentlyWord());
+            viewHolderHash.dateText.setText(currentWord.getSearchDateTime());
+            viewHolderHash.deleteImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+            /*Campus currentCampus = realm.where(Campus.class).equalTo("campusCode", currentListData).findFirst();
+            Glide.with(_context).load(ApplicationController.pictureEndpoint+"/mobile/logo/logo_"+currentCampus.getCampusCode()+".jpg").into(viewHolderCampus.logoImage);
+            viewHolderCampus.campusText.setText(currentCampus.getCampusName());
+            viewHolderCampus.countText.setText(currentCampus.getCampusReviewCount()+"개의 리뷰");
+            if (ellipsize) {
+                viewHolderCampus.campusText.setSingleLine();
+                viewHolderCampus.campusText.setEllipsize(TextUtils.TruncateAt.END);
+            }*/
+            this.realm.close();
+        }else {
+            //Major currentMajor = majorRealmResults.get(Integer.parseInt(currentListData.replace("m", "")));
+            this.realm = Realm.getDefaultInstance();
+            SearchWord currentWord = realm.where(SearchWord.class).equalTo("word", currentListData).findFirst();
+
+            viewHolderNormal.wordText.setText(currentWord.getRecentlyWord());
+            viewHolderNormal.dateText.setText(currentWord.getSearchDateTime());
+            viewHolderNormal.deleteImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+            this.realm.close();
         }
 
         return convertView;
     }
 
-    private class SuggestionsViewHolder {
+    private class SuggestionsViewHolderNormal {
 
-        TextView textView;
-        ImageView imageView;
+        TextView wordText;
+        TextView dateText;
+        ImageView deleteImage;
 
-        public SuggestionsViewHolder(View convertView) {
-            textView = (TextView) convertView.findViewById(R.id.suggestion_text);
-            if (suggestionIcon != null) {
-                imageView = (ImageView) convertView.findViewById(R.id.suggestion_icon);
-                imageView.setImageDrawable(suggestionIcon);
-            }
+        public SuggestionsViewHolderNormal(View convertView) {
+            wordText = (TextView) convertView.findViewById(R.id.search_text_word);
+            dateText = (TextView) convertView.findViewById(R.id.search_text_datetime);
+            deleteImage = (ImageView) convertView.findViewById(R.id.search_image_delete);
+        }
+    }
+
+    private class SuggestionsViewHolderHash {
+
+        TextView wordText;
+        TextView dateText;
+        ImageView deleteImage;
+        ImageView thumbnailImage;
+
+        public SuggestionsViewHolderHash(View convertView) {
+            wordText = (TextView) convertView.findViewById(R.id.search_text_word);
+            dateText = (TextView) convertView.findViewById(R.id.search_text_datetime);
+            deleteImage = (ImageView) convertView.findViewById(R.id.search_image_delete);
+            thumbnailImage = (ImageView) convertView.findViewById(R.id.search_image_thumbnail);
         }
     }
 }
