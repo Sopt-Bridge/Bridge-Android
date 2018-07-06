@@ -5,8 +5,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.cow.bridge.R
 import com.cow.bridge.model.videoContentsVideoData
+import com.cow.bridge.R
 
 class videoContentsVideoAdapter(val context : Context, val videoDataItem : ArrayList<videoContentsVideoData> ) : RecyclerView.Adapter<videoContentsVideoAdapter.videoContentsVideoViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): videoContentsVideoViewHolder {

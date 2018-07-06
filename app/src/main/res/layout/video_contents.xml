@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <FrameLayout
         android:layout_width="match_parent"
@@ -119,36 +119,26 @@
 
     </LinearLayout>
 
-    <TabHost
-        android:id="@+id/host"
+  <android.support.design.widget.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <android.support.design.widget.TabLayout
+          android:id="@+id/video_contents_tab"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:tabGravity="fill"
+          app:tabMode="fixed"
+          android:background="#FFFFFF"
+          app:tabIndicatorColor="#E31C9E"
+          app:tabTextColor="#B1B1B1"
+          app:tabSelectedTextColor="#E31C9E">
+
+      </android.support.design.widget.TabLayout>
+  </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/video_contents_vp_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TabWidget
-                android:id="@android:id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="36.43dp" />
-
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <FrameLayout
-                android:id="@android:id/content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            </FrameLayout>
-
-        </LinearLayout>
-
-    </TabHost>
-
+        android:layout_height="wrap_content"/>
 </LinearLayout>
