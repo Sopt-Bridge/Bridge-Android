@@ -9,6 +9,8 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.TextView
 import com.cow.bridge.home.activity.HomeFragment
 import com.cow.bridge.library.activity.LibraryFragment
@@ -40,10 +42,22 @@ class MainActivity : AppCompatActivity() {
         main_bottom_navigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
 
-                R.id.action_home -> main_viewpager.setCurrentItem(0, false)
-                R.id.action_subscribe -> main_viewpager.setCurrentItem(1, false)
-                R.id.action_request -> main_viewpager.setCurrentItem(2, false);
-                R.id.action_library -> main_viewpager.setCurrentItem(3, false);
+                R.id.action_home -> {
+                    main_viewpager.setCurrentItem(0, false)
+                    main_toolbar.visibility = VISIBLE
+                }
+                R.id.action_subscribe -> {
+                    main_viewpager.setCurrentItem(1, false)
+                    main_toolbar.visibility = VISIBLE
+                }
+                R.id.action_request -> {
+                    main_viewpager.setCurrentItem(2, false)
+                    main_toolbar.visibility = GONE
+                }
+                R.id.action_library -> {
+                    main_viewpager.setCurrentItem(3, false)
+                    main_toolbar.visibility = VISIBLE
+                }
             }
             false
         }

@@ -35,12 +35,7 @@ class MySubscribeAdapter(internal var _context: Context) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if(getItemViewType(position)==0){
             with((holder as MySubscribeViewHolder).itemView){
-                mysubscribe_layout_main.setOnClickListener{
-                    val intent = Intent(_context, BestChannelActivity::class.java)
-                    intent.putExtra("title", "My Subscriptions")
-                    (_context as Activity).startActivity(intent)
 
-                }
             }
         }else{
             with((holder as RecommendSubscribeViewHolder).itemView){
