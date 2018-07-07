@@ -1,4 +1,4 @@
-package com.cow.bridge.login
+package com.cow.bridge.login.activity
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -46,20 +46,6 @@ class LoginActivity : AppCompatActivity() {
 
         })
 
-        val accessToken = AccessToken.getCurrentAccessToken()
-        val isLoggedIn = accessToken != null && !accessToken.isExpired
-
-        if(isLoggedIn)
-            Toast.makeText(applicationContext, "이미 페이스북 로그인이 되어있습니다", Toast.LENGTH_SHORT).show()
-
-        //google로그인 구현
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        val account = GoogleSignIn.getLastSignedInAccount(this)
-        account?.let {
-            Toast.makeText(applicationContext, "이미 구글 로그인이 되어있습니다", Toast.LENGTH_SHORT).show()
-        }
-
         login_image_back.setOnClickListener {
             finish()
         }
@@ -69,7 +55,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         login_button_google.setOnClickListener {
-            //val signInIntent = mGoogleSignInClient.signInIntent
             val signInIntent = mGoogleSignInClient?.getSignInIntent();
             startActivityForResult(signInIntent, 57)
 

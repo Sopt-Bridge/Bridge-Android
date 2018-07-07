@@ -12,9 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
-        <activity android:name=".contents.activity.videoContentsMain">
-=======
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -36,27 +33,20 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity">
->>>>>>> fca8ae3d2b5250d58ac52dd35928aa931f48cfe0
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity android:name=".login.activity.MypageActivity"/>
-=======
-        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".login.activity.LoginActivity" />
         <activity android:name=".SplashActivity" />
-<<<<<<< HEAD
-        <activity android:name=".search.activity.SearchActivity"></activity>
->>>>>>> 1f4626f00aebc3da0744faee422fa3cb8208194b
-=======
         <activity android:name=".search.activity.SearchActivity" />
         <activity android:name=".subscribe.activity.BestChannelActivity" />
         <activity android:name=".request.activity.RequestWriteActivity" />
         <activity android:name=".request.activity.RequestContentActivity"></activity>
->>>>>>> 30407aeb5f9b12d63691a16e2ea6d3f8826bd4ed
+        <activity android:name=".contents.activity.videoContentsMain"/>
     </application>
 
 </manifest>

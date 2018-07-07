@@ -8,17 +8,20 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.TextView
+import android.widget.Toast
 import com.cow.bridge.home.activity.HomeFragment
 import com.cow.bridge.library.activity.LibraryFragment
-import com.cow.bridge.login.LoginActivity
+import com.cow.bridge.login.activity.LoginActivity
+import com.cow.bridge.login.activity.MypageActivity
 import com.cow.bridge.request.activity.RequestFragment
 import com.cow.bridge.search.activity.SearchActivity
 import com.cow.bridge.subscribe.activity.SubscribeFragment
 import com.cow.bridge.util.BottomNavigationViewHelper
+import com.facebook.AccessToken
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +33,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         main_button_login.setOnClickListener{
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, MypageActivity::class.java)
+            //val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
