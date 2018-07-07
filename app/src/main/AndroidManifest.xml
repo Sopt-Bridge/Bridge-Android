@@ -47,6 +47,9 @@
         <activity android:name=".request.activity.RequestWriteActivity" />
         <activity android:name=".request.activity.RequestContentActivity"></activity>
         <activity android:name=".contents.activity.videoContentsMain"/>
+        <activity android:name=".contents.activity.ImageContentsActivity" />
+        <activity android:name=".ImageDetail" />
+        <activity android:name=".contents.activity.ImageContents"></activity>
     </application>
 
 </manifest>
