@@ -1,13 +1,12 @@
 package com.cow.bridge.login.activity
 
-import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.view.LayoutInflater
 import android.view.View
+<<<<<<< HEAD
 import android.view.ViewGroup
 import android.widget.TextView
 <<<<<<< HEAD
@@ -15,6 +14,12 @@ import com.cow.bridge.R
 =======
 >>>>>>> mypage
 import java.util.ArrayList
+=======
+import com.cow.bridge.R
+import com.cow.bridge.login.adapter.MypageAdapter
+import com.cow.bridge.model.MypageItems
+import java.util.*
+>>>>>>> d4cf65aa9e142649185e1973542ac8b5ef726407
 
 
 class MypageActivity : AppCompatActivity() {
@@ -33,15 +38,19 @@ class MypageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 <<<<<<< HEAD
+<<<<<<< HEAD
         setContentView(R.layout.mypage_activity)
+=======
+        setContentView(R.layout.activity_mypage)
+>>>>>>> d4cf65aa9e142649185e1973542ac8b5ef726407
         toolbar = findViewById<View>(R.id.mypage_toolbar) as Toolbar //툴바설정
 
         val recyclerView = findViewById<View>(R.id.mypage_write) as RecyclerView
 
         mypageItems = ArrayList()
-        mypageItems.add(MypageItems("[Requests] 번역 오역 요청","2018.01.03"))
-        mypageItems.add(MypageItems("[Requests] 영상 문의","2018.01.03"))
-        mypageItems.add(MypageItems("[Requests] 오류 문의","2018.07.05"))
+        mypageItems.add(MypageItems("[Requests] 번역 오역 요청", "2018.01.03"))
+        mypageItems.add(MypageItems("[Requests] 영상 문의", "2018.01.03"))
+        mypageItems.add(MypageItems("[Requests] 오류 문의", "2018.07.05"))
 
 
         myAdapter = MypageAdapter(mypageItems)
@@ -50,6 +59,7 @@ class MypageActivity : AppCompatActivity() {
         recyclerView.addItemDecoration(ItemDecoration())
 
     }
+<<<<<<< HEAD
 
     inner class MypageAdapter(var mypageItems: ArrayList<MypageItems>)
         : RecyclerView.Adapter<MypageViewHolder>() {
@@ -110,6 +120,8 @@ class MypageActivity : AppCompatActivity() {
         var mypageDate : TextView = itemView!!.findViewById<TextView>(R.id.date)
 
     }
+=======
+>>>>>>> d4cf65aa9e142649185e1973542ac8b5ef726407
 }
 
 =======

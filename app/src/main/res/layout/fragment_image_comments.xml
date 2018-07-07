@@ -4,10 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginTop="18.25dp">
+    android:layout_marginTop="18.25dp"
+    android:background="#ffffff">
+
     <ImageView
         android:layout_width="51.83dp"
         android:layout_height="51.83dp"
+        android:layout_marginLeft="14.56dp"
         android:src="@drawable/mypage_btn_mid_comment_profile" />
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,37 +20,41 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="19dp"
-            android:layout_weight="1"
-            android:layout_marginTop="12.28dp"
-            android:layout_marginLeft="15.4dp"
-            android:textColor="#000000"
-            android:textSize="14dp"
-            android:textStyle="bold"
-            android:text="Name surname"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="17.63dp"
-            android:text="Delete"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="19dp"
+                android:layout_weight="1"
+                android:layout_marginTop="12.28dp"
+                android:layout_marginLeft="15.4dp"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:text="Name surname"
+                android:ellipsize="end"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="17.63dp"
+                android:layout_marginTop="9.32dp"
+                android:textColor="#000000"
+                android:text="Delete"/>
         </LinearLayout>
 
         <TextView
             android:id="@+id/video_comment_text_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_PaddingTop="8.99dp"
-            android:paddingRight="1.52dp"
-            android:layout_marginTop="14.44dp"
+            android:layout_marginBottom="14.44dp"
             android:layout_marginLeft="13.48dp"
             android:layout_marginRight="15.4dp"
-            android:layout_marginBottom="14.44dp"
+            android:layout_marginTop="14.44dp"
             android:background="#F7F7F7"
+            android:padding="5dp"
+            android:paddingRight="1.52dp"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipisicing slit, sed do"
             android:textColor="#000000"
-            android:textSize="14dp"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipisicing slit, sed do" />
+            android:textSize="14dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -70,7 +77,8 @@
                 android:background="#ffffff"
                 android:textColor="#000000"
                 android:textSize="10dp"
-                android:text=" 120 Replies" />
+                android:text=" 120 Replies"
+                android:textAllCaps="false"/>
         </LinearLayout>
 
     </LinearLayout>

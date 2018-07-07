@@ -1,8 +1,7 @@
 package com.cow.bridge.model
 
-import android.media.Image
 
-data class videoContentsCommentData (
+class VideoContentsCommentData(
     var image: Int?= null,
     var comment_member : String?= null,
     var comment : String?= null,

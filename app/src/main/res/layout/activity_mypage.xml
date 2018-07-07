@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -7,51 +8,57 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="299.52dp"
+        android:layout_height="265dp"
         android:background="#ffffff">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/mypage_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:layout_marginTop="29.76dp"
-
+            android:layout_height="82dp"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" >
+            android:layout_centerHorizontal="true"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp">
 
             <ImageButton
                 android:id="@+id/back_btn"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-
-                android:background="#ffffff"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="left"
-                android:layout_marginLeft="16.56dp"
-
-                />
+                android:background="#FFFFFF"
+                android:padding="16dp"
+                app:srcCompat="@drawable/back_btn" />
 
             <TextView
-                android:layout_width="74dp"
+                android:layout_width="wrap_content"
                 android:layout_height="24dp"
-                android:text="MY PAGE"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                android:textColor="#333333"
                 android:layout_gravity="center_horizontal"
-                />
+                android:text="MY PAGE"
+                android:textColor="#333333"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/mypage_out_btn"
-                android:layout_width="18.18dp"
-                android:layout_height="21.12dp"
-                android:background="#ffffff"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
                 android:layout_gravity="right"
-                android:layout_marginRight="14.4dp"
-                android:layout_centerVertical="true"/>
+                android:background="#ffffff"
+                android:padding="16dp"
+                app:srcCompat="@drawable/mypage_out_btn" />
 
         </android.support.v7.widget.Toolbar>
 
 
+        <ImageView
+            android:layout_width="101.76dp"
+            android:layout_height="101.76dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/bottom_bar_home_active_icon" />
 
+<<<<<<< HEAD:app/src/main/res/layout/mypage_activity.xml
             <ImageView
                 android:layout_width="101.76dp"
                 android:layout_height="101.76dp"
@@ -74,6 +81,18 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:background="#ffffff">
+=======
+        <TextView
+            android:layout_width="102dp"
+            android:layout_height="22dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="27dp"
+            android:layout_marginTop="0dp"
+            android:text="Lee Hokyung"
+            android:textColor="#333333"
+            android:textSize="16dp" />
+>>>>>>> d4cf65aa9e142649185e1973542ac8b5ef726407:app/src/main/res/layout/activity_mypage.xml
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/mypage_toolbar"
@@ -82,6 +101,7 @@
             android:layout_marginTop="15dp"
 >>>>>>> mypage
 
+<<<<<<< HEAD:app/src/main/res/layout/mypage_activity.xml
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" >
 
@@ -96,6 +116,9 @@
 
 <<<<<<< HEAD
         </RelativeLayout>
+=======
+    </RelativeLayout>
+>>>>>>> d4cf65aa9e142649185e1973542ac8b5ef726407:app/src/main/res/layout/activity_mypage.xml
 
 <RelativeLayout
     android:layout_width="match_parent"

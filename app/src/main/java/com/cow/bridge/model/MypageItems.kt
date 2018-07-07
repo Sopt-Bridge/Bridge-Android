@@ -1,4 +1,4 @@
-package com.cow.bridge.login.activity
+package com.cow.bridge.model
 
 class MypageItems(
         var writing: String,

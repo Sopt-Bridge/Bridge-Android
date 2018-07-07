@@ -1,6 +1,6 @@
 package com.cow.bridge.model
 
-data class videoContentsVideoData (
+class VideoContentsVideoData(
         var video : String?= null,
         var title : String?= null,
         var commment_content : String ?= null,
