@@ -15,8 +15,6 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.cow.bridge.R
-import com.cow.bridge.R.id.subscribe_layout_orderby
-import com.cow.bridge.R.id.subscribe_text_orderby
 import com.cow.bridge.home.dialog.OrderbyDialog
 import com.cow.bridge.subscribe.adapter.MySubscribeAdapter
 import com.cow.bridge.subscribe.adapter.SubscribeContentAdapter
