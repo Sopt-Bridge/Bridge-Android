@@ -79,27 +79,6 @@ class HotFragment : Fragment() {
                 }
             })
 
-            /*
-            Call<Messages> messagesCall = api.getMentorList(sessionKey, "best");
-            messagesCall.enqueue(new Callback<Messages>() {
-                @Override
-                public void onResponse(Call<Messages> call, Response<Messages> response) {
-                    messages = response.body();
-                    Log.v(TAG, "getBestMentorList : " + UtilController.getInstance().gsonToString(messages));
-                    if(messages.getStatus().equals("ok")){
-                        if(messages.getResult()[0].getMentorList().size() != 0){
-                            mentorArrayList = messages.getResult()[0].getMentorList();
-                            mentoringBestAdapter.addAll(mentorArrayList);
-                            mentoringBestAdapter.notifyDataSetChanged();
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Messages> call, Throwable t) {
-                    Log.v(TAG, "getBestMentorList error : " + t.toString());
-                }
-            });*/
         }
 
 

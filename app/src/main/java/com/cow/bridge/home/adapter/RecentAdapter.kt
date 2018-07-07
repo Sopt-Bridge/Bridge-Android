@@ -1,10 +1,14 @@
 package com.cow.bridge.home.adapter
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Point
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import com.cow.bridge.R
+import com.cow.bridge.contents.activity.ImageContentsActivity
+import com.cow.bridge.contents.activity.VideoContentsMainActivity
 import kotlinx.android.synthetic.main.row_contents_vertical_simple.view.*
 
 /**
@@ -36,6 +40,17 @@ class RecentAdapter(internal var _context: Context) : RecyclerView.Adapter<Recyc
                 }
 
             })
+
+            contents_layout_main.setOnClickListener {
+
+                if(position%2==0){
+                    val intent = Intent(_context, ImageContentsActivity::class.java)
+                    (_context as Activity).startActivity(intent)
+                }else{
+                    val intent = Intent(_context, VideoContentsMainActivity::class.java)
+                    (_context as Activity).startActivity(intent)
+                }
+            }
         }
 
     }
