@@ -48,8 +48,15 @@
 =======
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".SplashActivity" />
+<<<<<<< HEAD
         <activity android:name=".search.activity.SearchActivity"></activity>
 >>>>>>> 1f4626f00aebc3da0744faee422fa3cb8208194b
+=======
+        <activity android:name=".search.activity.SearchActivity" />
+        <activity android:name=".subscribe.activity.BestChannelActivity" />
+        <activity android:name=".request.activity.RequestWriteActivity" />
+        <activity android:name=".request.activity.RequestContentActivity"></activity>
+>>>>>>> 30407aeb5f9b12d63691a16e2ea6d3f8826bd4ed
     </application>
 
 </manifest>

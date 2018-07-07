@@ -40,18 +40,10 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.github.bumptech.glide:glide:3.6.0'
-<<<<<<< HEAD
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.android.support:design:26.1.0'
-
-    }
-apply plugin: 'kotlin-android-extensions'
-=======
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.ext.kotlin_version"
     compile 'me.relex:circleindicator:1.2.2@aar'
     implementation 'com.facebook.android:facebook-login:[4,5)'
     compile 'com.google.android.gms:play-services-auth:15.0.1'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
+
 }
 apply plugin: 'realm-android'
->>>>>>> 1f4626f00aebc3da0744faee422fa3cb8208194b

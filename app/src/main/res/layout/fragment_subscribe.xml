@@ -1,9 +1,81 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cow.bridge.subscribe.activity.SubscribeFragment">
+    android:orientation="vertical">
 
 
+    <TextView
+        android:id="@+id/subscribe_text_more"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text=" + more"
+        android:textColor="#9A9A9A"
+        android:textSize="11dp" />
 
-</FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/subscribe_recycler_mylist"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#F5F5F5"
+        android:clipToPadding="false"
+        android:elevation="4dp"
+        android:paddingLeft="7dp" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:descendantFocusability="blocksDescendants">
+
+            <LinearLayout
+                android:id="@+id/subscribe_layout_orderby"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_marginBottom="11dp"
+                android:layout_marginRight="35dp"
+                android:layout_marginTop="11dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp">
+
+                <TextView
+                    android:id="@+id/subscribe_text_orderby"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
+                    android:layout_weight="1"
+                    android:text="Upload date"
+                    android:textColor="#333333"
+                    android:textSize="12dp" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/search_list_icon" />
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/subscribe_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false" />
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/contents_image_thumbnail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="160dp"
+            android:layout_height="100dp"
             app:srcCompat="@drawable/google_logo" />
 
         <ImageView
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="2"
-        android:text="BTS - Anpanman fancam focus on Jungkuk"
+        android:text="[M/V] NU'EST W(뉴이스트 W) - Dejavu"
         android:textColor="#000000"
         android:textSize="12dp" />
 </LinearLayout>
