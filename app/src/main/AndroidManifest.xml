@@ -42,7 +42,9 @@
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".SplashActivity" />
         <activity android:name=".search.activity.SearchActivity" />
-        <activity android:name=".subscribe.activity.BestChannelActivity"></activity>
+        <activity android:name=".subscribe.activity.BestChannelActivity" />
+        <activity android:name=".request.activity.RequestWriteActivity" />
+        <activity android:name=".request.activity.RequestContentActivity"></activity>
     </application>
 
 </manifest>

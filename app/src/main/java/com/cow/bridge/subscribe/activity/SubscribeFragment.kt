@@ -2,6 +2,7 @@ package com.cow.bridge.subscribe.activity
 
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -63,6 +64,13 @@ class SubscribeFragment : Fragment() {
             val llm2 : RecyclerView.LayoutManager = GridLayoutManager(context, 2)
             subscribe_recycler.layoutManager = llm2
             subscribe_recycler.adapter = subscribeContentAdapter
+
+            subscribe_text_more.setOnClickListener{
+                val intent = Intent(context, BestChannelActivity::class.java)
+                intent.putExtra("title", "My Subscriptions")
+                startActivity(intent)
+
+            }
 
         }
 
