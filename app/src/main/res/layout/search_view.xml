@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible">
+
+    <View
+        android:id="@+id/transparent_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/search_layover_bg"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#FFFFFF">
+
+        <RelativeLayout
+            android:id="@+id/search_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="#FFFFFF">
+
+            <EditText
+                android:id="@+id/searchTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="한글로 학교를 검색해 주세요."
+                android:imeOptions="actionSearch"
+                android:inputType="textNoSuggestions"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:singleLine="true"
+                android:textColor="#333333"
+                android:textColorHint="#999999"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/action_up_btn"
+                style="@style/MSV_ImageButton"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_action_navigation_arrow_back" />
+
+            <ImageButton
+                android:id="@+id/action_voice_btn"
+                style="@style/MSV_ImageButton"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_action_voice_search" />
+
+            <ImageButton
+                android:id="@+id/action_empty_btn"
+                style="@style/MSV_ImageButton"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_action_navigation_close"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_alignParentBottom="true"
+                android:background="#fff"
+                android:backgroundTint="#10000000" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/search_layout_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F5F5F5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#F5F5F5"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/search_button_normal"
+                        style="@style/MSV_ImageButton"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:text="SEARCH"
+                        android:textColor="#E31C9E"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/search_button_hash"
+                        style="@style/MSV_ImageButton"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:text="HASHTAG"
+                        android:textColor="#AAAAAA"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_gravity="bottom"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <ImageView
+                        android:id="@+id/search_image_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="2dp"
+                        android:layout_weight="1"
+                        android:background="#E31C9E" />
+
+                    <ImageView
+                        android:id="@+id/search_image_hash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="2dp"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.87"
+                android:text="Recent Searches"
+                android:textColor="#000000"
+                android:textSize="13dp" />
+
+            <ListView
+                android:id="@+id/search_listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/white"
+                android:divider="@android:color/transparent" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>

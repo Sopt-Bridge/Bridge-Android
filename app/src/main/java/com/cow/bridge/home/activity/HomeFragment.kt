@@ -1,63 +1,94 @@
 package com.cow.bridge.home.activity
 
 
+import android.graphics.Color
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.cow.bridge.R
+import com.cow.bridge.home.activity.type.HotFragment
+import com.cow.bridge.home.activity.type.OtherFragment
+import com.cow.bridge.network.ApplicationController
+import com.cow.bridge.network.ServerInterface
+import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlin.collections.ArrayList
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(){
 
-
-    // TODO: Rename and change types of parameters
-    private var mParam1: String? = null
-    private var mParam2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            mParam1 = arguments.getString(ARG_PARAM1)
-            mParam2 = arguments.getString(ARG_PARAM2)
-        }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.fragment_home, container, false)
-    }
+        val convertView = inflater!!.inflate(R.layout.fragment_home, container, false)
 
-    companion object {
-        // TODO: Rename parameter arguments, choose names that match
-        // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-        private val ARG_PARAM1 = "param1"
-        private val ARG_PARAM2 = "param2"
+        val adapter = ViewPagerAdapter(fragmentManager!!)
+        adapter.addFragment(HotFragment(), "HOT")
+        adapter.addFragment(OtherFragment.newInstance("k-content"), "K-CONTENT")
+        adapter.addFragment(OtherFragment.newInstance("k-pop"), "K-POP")
+        adapter.addFragment(OtherFragment.newInstance("fun"), "FUN")
+        adapter.addFragment(OtherFragment.newInstance("culture"), "CULTURE")
 
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LibraryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        fun newInstance(param1: String, param2: String): HomeFragment {
-            val fragment = HomeFragment()
-            val args = Bundle()
-            args.putString(ARG_PARAM1, param1)
-            args.putString(ARG_PARAM2, param2)
-            fragment.arguments = args
-            return fragment
+        with(convertView){
+            home_viewpager.adapter = adapter
+            home_viewpager.offscreenPageLimit = 3
+            home_viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+                override fun onPageScrollStateChanged(state: Int) {
+
+                }
+
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+                }
+
+                override fun onPageSelected(position: Int) {
+
+                }
+
+            })
+
+            home_tabs.tabGravity = TabLayout.GRAVITY_FILL
+            home_tabs.tabMode = TabLayout.MODE_SCROLLABLE
+            home_tabs.setBackgroundColor(Color.WHITE)
+            home_tabs.setTabTextColors(Color.parseColor("#D1D1D1"), Color.parseColor("#E31C9E"))
+            home_tabs.setSelectedTabIndicatorColor(Color.parseColor("#E31C9E"))
+            home_tabs.setupWithViewPager(home_viewpager)
+
         }
+
+
+        return convertView
     }
 
+    inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
+        private val mFragmentList = ArrayList<Fragment>()
+        private val mFragmentTitleList = ArrayList<String>()
+
+        override fun getItem(position: Int): Fragment {
+            return mFragmentList[position]
+        }
+
+        override fun getCount(): Int {
+            return mFragmentList.size
+        }
+
+        override fun getPageTitle(position: Int): CharSequence {
+            return mFragmentTitleList.get(position)
+        }
+
+        fun addFragment(fragment: Fragment, title : String) {
+            mFragmentList.add(fragment)
+            mFragmentTitleList.add(title)
+        }
+
+    }
 
 }// Required empty public constructor
