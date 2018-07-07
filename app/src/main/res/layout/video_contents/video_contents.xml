@@ -101,6 +101,7 @@
                 android:text="#Hiphop #J-this " />
 
                 <TextView
+                    android:id="@+id/video_contents_tv_recommand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/video_contents_bt_recommend"
