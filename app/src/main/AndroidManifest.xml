@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".contents.activity.ImageContentsActivity" />
+        <activity android:name=".ImageDetail" />
+        <activity android:name=".contents.activity.ImageContents"></activity>
     </application>
 
 </manifest>
