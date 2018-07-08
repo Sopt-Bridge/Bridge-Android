@@ -1,13 +1,25 @@
 package com.cow.bridge.subscribe.activity
 
 
+import android.content.DialogInterface
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.cow.bridge.R
+import com.cow.bridge.home.dialog.OrderbyDialog
+import com.cow.bridge.subscribe.adapter.MySubscribeAdapter
+import com.cow.bridge.subscribe.adapter.SubscribeContentAdapter
+import kotlinx.android.synthetic.main.fragment_subscribe.*
+import kotlinx.android.synthetic.main.fragment_subscribe.view.*
 
 
 /**
@@ -17,47 +29,53 @@ import com.cow.bridge.R
  */
 class SubscribeFragment : Fragment() {
 
-    // TODO: Rename and change types of parameters
-    private var mParam1: String? = null
-    private var mParam2: String? = null
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        var convertView = inflater!!.inflate(R.layout.fragment_subscribe, container, false)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            mParam1 = arguments.getString(ARG_PARAM1)
-            mParam2 = arguments.getString(ARG_PARAM2)
+        with(convertView){
+            subscribe_layout_orderby.setOnClickListener(object : View.OnClickListener{
+                override fun onClick(p0: View?) {
+                    val orderbyDialog : OrderbyDialog = OrderbyDialog(activity!!, subscribe_text_orderby.text.toString())
+                    orderbyDialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    orderbyDialog.show()
+                    orderbyDialog.setOnDismissListener(object : DialogInterface.OnDismissListener{
+                        override fun onDismiss(dialog: DialogInterface?) {
+                            with(dialog as OrderbyDialog){
+                                orderby?.let {
+                                    convertView.subscribe_text_orderby.text = it
+                                    //TODO : 해당 정렬순으로 리스트가져오기
+                                }
+                            }
+                        }
+
+                    })
+                }
+
+            })
+
+            val mylistAdapter : MySubscribeAdapter = MySubscribeAdapter(context)
+            val subscribeContentAdapter : SubscribeContentAdapter = SubscribeContentAdapter(context)
+
+            val llm : LinearLayoutManager = LinearLayoutManager(context)
+            llm.orientation = LinearLayoutManager.HORIZONTAL
+            subscribe_recycler_mylist.layoutManager = llm
+            subscribe_recycler_mylist.adapter = mylistAdapter
+
+            val llm2 : RecyclerView.LayoutManager = GridLayoutManager(context, 2)
+            subscribe_recycler.layoutManager = llm2
+            subscribe_recycler.adapter = subscribeContentAdapter
+
+            subscribe_text_more.setOnClickListener{
+                val intent = Intent(context, BestChannelActivity::class.java)
+                intent.putExtra("title", "My Subscriptions")
+                startActivity(intent)
+
+            }
+
         }
+
+        return convertView
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.fragment_subscribe, container, false)
-    }
-
-    companion object {
-        // TODO: Rename parameter arguments, choose names that match
-        // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-        private val ARG_PARAM1 = "param1"
-        private val ARG_PARAM2 = "param2"
-
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SubscribeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        fun newInstance(param1: String, param2: String): SubscribeFragment {
-            val fragment = SubscribeFragment()
-            val args = Bundle()
-            args.putString(ARG_PARAM1, param1)
-            args.putString(ARG_PARAM2, param2)
-            fragment.arguments = args
-            return fragment
-        }
-    }
 
 }// Required empty public constructor
