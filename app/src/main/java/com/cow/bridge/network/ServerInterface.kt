@@ -11,6 +11,8 @@ import java.util.ArrayList
  */
 interface ServerInterface {
 
+    //home
+
     @GET("/home/recent/{contentsCategory}/{lastcontentsIdx}")
     fun recentContentsList(@Path("contentsCategory") category : Int, @Path("lastcontentsIdx") lastcontentsIdx : Int): Call<Network>
 
@@ -25,5 +27,11 @@ interface ServerInterface {
 
     @GET("/home/recommended")
     fun recommendedContentsList(): Call<Network>
+
+
+    //subscribe
+
+    @GET("/subscribe/recommendedhashlist/{pageIdx}/{userIdx}")
+    fun recommendedHashList(@Path("pageIdx") pageIdx : Int, @Path("userIdx") userIdx : Int): Call<Network>
 
 }

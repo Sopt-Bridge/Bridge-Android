@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cow.bridge.R
+import com.cow.bridge.model.Content
 
 /**
  * Created by jihaeseong on 2018. 7. 3..
  */
 
 class BestChannelAdapter(internal var _context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var items = ArrayList<Content>()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         val convertView = LayoutInflater.from(_context).inflate(R.layout.row_bestchannel_simple, parent, false)
@@ -19,7 +21,6 @@ class BestChannelAdapter(internal var _context: Context) : RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-
         with((holder as BestChannelViewHolder).itemView){
 
         }
@@ -27,7 +28,15 @@ class BestChannelAdapter(internal var _context: Context) : RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int {
-        return 57
+        return items.size
+    }
+
+    fun clear(){
+        this.items.clear()
+    }
+
+    fun addAll(contents: java.util.ArrayList<Content>) {
+        this.items.addAll(contents)
     }
 
 
