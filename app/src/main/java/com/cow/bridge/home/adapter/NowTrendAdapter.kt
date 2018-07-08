@@ -13,6 +13,7 @@ import com.cow.bridge.contents.activity.ImageContentsActivity
 import com.cow.bridge.contents.activity.VideoContentsMainActivity
 import com.cow.bridge.model.Content
 import com.cow.bridge.network.ApplicationController
+import com.cow.bridge.util.UtilController
 import kotlinx.android.synthetic.main.row_contents_simple.view.*
 
 /**
@@ -47,10 +48,10 @@ class NowTrendAdapter(internal var _context: Context) : RecyclerView.Adapter<Rec
             contents_text_count.text = items[position].contentsRuntime
             if(items[position].contentsType==0){
                 Glide.with(_context).load(R.drawable.home_image_thumnail_icon).into(contents_image_type)
-                Glide.with(_context).load(ApplicationController.imageUrl(1, 1)).override(153, 100).into(contents_image_thumbnail)
+                Glide.with(_context).load(ApplicationController.imageUrl(1, 1)).override(UtilController.convertDpToPixel(153f, context).toInt(), UtilController.convertDpToPixel(100f, context).toInt()).into(contents_image_thumbnail)
             }else{
                 Glide.with(_context).load(R.drawable.home_video_thumnail_icon).into(contents_image_type)
-                Glide.with(_context).load(ApplicationController.videoThumbnailUrl(4)).override(153, 100).into(contents_image_thumbnail)
+                Glide.with(_context).load(ApplicationController.videoThumbnailUrl(4)).override(UtilController.convertDpToPixel(153f, context).toInt(), UtilController.convertDpToPixel(100f, context).toInt()).into(contents_image_thumbnail)
             }
         }
     }
