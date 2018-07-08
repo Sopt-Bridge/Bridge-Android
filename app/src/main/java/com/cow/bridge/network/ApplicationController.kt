@@ -50,6 +50,13 @@ class ApplicationController : Application() {
         var instance: ApplicationController? = null
             private set
         var endpoint = String.format("http://13.124.201.59:3000")
+
+        fun imageUrl(contentsIdx : Int, number : Int) = "https://s3.ap-northeast-2.amazonaws.com/ryudd/Bridge/src/img/img_${contentsIdx}_${number}.jpeg"
+
+        fun videoThumbnailUrl(contentsIdx: Int) = "https://s3.ap-northeast-2.amazonaws.com/ryudd/Bridge/src/thumbnail/img_thumbnail_${contentsIdx}.jpeg"
+
+        fun videoUrl(contentsIdx: Int) = "https://s3.ap-northeast-2.amazonaws.com/ryudd/Bridge/src/video/video_${contentsIdx}.mp4"
+
     }
 
 }

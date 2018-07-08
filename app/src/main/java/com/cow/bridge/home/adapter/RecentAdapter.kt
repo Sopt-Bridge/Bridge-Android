@@ -6,9 +6,12 @@ import android.content.Intent
 import android.graphics.Point
 import android.support.v7.widget.RecyclerView
 import android.view.*
+import com.bumptech.glide.Glide
 import com.cow.bridge.R
 import com.cow.bridge.contents.activity.ImageContentsActivity
 import com.cow.bridge.contents.activity.VideoContentsMainActivity
+import com.cow.bridge.model.Content
+import com.cow.bridge.network.ApplicationController
 import kotlinx.android.synthetic.main.row_contents_vertical_simple.view.*
 
 /**
@@ -16,6 +19,7 @@ import kotlinx.android.synthetic.main.row_contents_vertical_simple.view.*
  */
 
 class RecentAdapter(internal var _context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var items = ArrayList<Content>()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         val convertView = LayoutInflater.from(_context).inflate(R.layout.row_contents_vertical_simple, parent, false)
@@ -43,20 +47,40 @@ class RecentAdapter(internal var _context: Context) : RecyclerView.Adapter<Recyc
 
             contents_layout_main.setOnClickListener {
 
-                if(position%2==0){
+                if(items[position].contentsType==0){
                     val intent = Intent(_context, ImageContentsActivity::class.java)
+                    intent.putExtra("imageContents", items[position])
                     (_context as Activity).startActivity(intent)
                 }else{
                     val intent = Intent(_context, VideoContentsMainActivity::class.java)
+                    intent.putExtra("videoContents", items[position])
                     (_context as Activity).startActivity(intent)
                 }
+            }
+
+            contents_text_title.text = items[position].contentsTitle
+            contents_text_count.text = items[position].contentsRuntime
+            if(items[position].contentsType==0){
+                Glide.with(_context).load(R.drawable.home_image_thumnail_icon).into(contents_image_type)
+                Glide.with(_context).load(ApplicationController.imageUrl(1, 1)).override(153, 100).into(contents_image_thumbnail)
+            }else{
+                Glide.with(_context).load(R.drawable.home_video_thumnail_icon).into(contents_image_type)
+                Glide.with(_context).load(ApplicationController.videoThumbnailUrl(4)).override(153, 100).into(contents_image_thumbnail)
             }
         }
 
     }
 
     override fun getItemCount(): Int {
-        return 57
+        return items.size
+    }
+
+    fun clear(){
+        this.items.clear()
+    }
+
+    fun addAll(contents: java.util.ArrayList<Content>) {
+        this.items.addAll(contents)
     }
 
 
