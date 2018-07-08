@@ -61,11 +61,29 @@ class HotFragment : Fragment() {
             hot_recycler_recent.layoutManager = llm3
             hot_recycler_recent.adapter = recentAdapter
 
-            var messagesCall = api?.recommendedList
+            var messagesCall = api?.nowTrendContentsList(0)
             messagesCall?.enqueue(object : Callback<Network>{
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
-                    if(network!!.message.equals("ok")){
+                    if(network?.message.equals("ok")){
+                        network.data?.get(0)?.contents_list?.let {
+                            if(it.size!=0){
+                                nowTrendAdapter.addAll(it)
+                                nowTrendAdapter.notifyDataSetChanged()
+                            }
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                }
+            })
+
+            messagesCall = api?.recommendedContentsList()
+            messagesCall?.enqueue(object : Callback<Network>{
+                override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                    var network = response!!.body()
+                    if(network?.message.equals("ok")){
                         network.data?.get(0)?.contents_list?.let {
                             if(it.size!=0){
                                 recommendedAdapter.addAll(it)
@@ -79,6 +97,23 @@ class HotFragment : Fragment() {
                 }
             })
 
+            messagesCall = api?.recentContentsList(0, 0)
+            messagesCall?.enqueue(object : Callback<Network>{
+                override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                    var network = response!!.body()
+                    if(network?.message.equals("ok")){
+                        network.data?.get(0)?.contents_list?.let {
+                            if(it.size!=0){
+                                recentAdapter.addAll(it)
+                                recentAdapter.notifyDataSetChanged()
+                            }
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                }
+            })
         }
 
 

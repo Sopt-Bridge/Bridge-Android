@@ -16,7 +16,13 @@ import android.widget.LinearLayout
 import com.cow.bridge.R
 import com.cow.bridge.home.adapter.OtherAdapter
 import com.cow.bridge.home.dialog.OrderbyDialog
+import com.cow.bridge.network.ApplicationController
+import com.cow.bridge.network.Network
+import com.cow.bridge.network.ServerInterface
 import kotlinx.android.synthetic.main.fragment_other.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 /**
@@ -27,6 +33,8 @@ import kotlinx.android.synthetic.main.fragment_other.view.*
 class OtherFragment : Fragment() {
 
     private var pageName: String? = null
+    var api : ServerInterface? = null
+    var otherAdapter : OtherAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +45,7 @@ class OtherFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val convertView = inflater!!.inflate(R.layout.fragment_other, container, false)
+        api = ApplicationController.instance?.buildServerInterface()
 
         with(convertView){
             other_layout_orderby.setOnClickListener(object : View.OnClickListener{
@@ -47,9 +56,11 @@ class OtherFragment : Fragment() {
                     orderbyDialog.setOnDismissListener(object : DialogInterface.OnDismissListener{
                         override fun onDismiss(dialog: DialogInterface?) {
                             with(dialog as OrderbyDialog){
-                                orderby?.let {
-                                    other_text_orderby.text = it
-                                    //TODO : 해당 정렬순으로 리스트가져오기
+                                if(confirm){
+                                    orderby?.let {
+                                        other_text_orderby.text = it
+                                        getContentsList(pageName, orderby)
+                                    }
                                 }
                             }
                         }
@@ -59,11 +70,13 @@ class OtherFragment : Fragment() {
 
             })
 
-            val otherAdapter : OtherAdapter = OtherAdapter(context)
+            otherAdapter = OtherAdapter(context)
 
             val llm : RecyclerView.LayoutManager = GridLayoutManager(context, 2)
             other_recycler.layoutManager = llm
             other_recycler.adapter = otherAdapter
+
+            getContentsList(pageName,"Upload date")
 
         }
 
@@ -80,6 +93,53 @@ class OtherFragment : Fragment() {
             fragment.arguments = args
             return fragment
         }
+    }
+
+    fun getContentsList(type : String?, orderby : String?, page : Int = 0){
+        var messagesCall : Call<Network>? = null
+        var category : Int = 0
+        if(type.equals("k-content")){
+            category = 1
+        }else if(type.equals("k-pop")){
+            category = 2
+        }else if(type.equals("fun")){
+            category = 3
+        }else if(type.equals("culture")){
+            category = 4
+        }else{
+            category = 0
+        }
+
+        if(orderby.equals("Upload date")){
+            messagesCall = api?.recentContentsList(category, page)
+        }else if(orderby.equals("View count")){
+            messagesCall = api?.hitsortContentsList(category, page)
+        }else if(orderby.equals("Rating")){
+            messagesCall = api?.likesortContentsList(category, page)
+        }else{
+            messagesCall = api?.recentContentsList(category, page)
+        }
+
+
+        messagesCall?.enqueue(object : Callback<Network> {
+            override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                var network = response!!.body()
+                if(network?.message.equals("ok")){
+                    network.data?.get(0)?.contents_list?.let {
+                        if(it.size!=0){
+                            if(page==0){
+                                otherAdapter?.clear()
+                            }
+                            otherAdapter?.addAll(it)
+                            otherAdapter?.notifyDataSetChanged()
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+            }
+        })
     }
 
 }// Required empty public constructor
