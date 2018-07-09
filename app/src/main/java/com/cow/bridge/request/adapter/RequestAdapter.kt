@@ -30,7 +30,7 @@ class RequestAdapter(internal var _context: Context) : RecyclerView.Adapter<Recy
         with((holder as RequestViewHolder).itemView){
             request_layout_main.setOnClickListener{
                 var intent = Intent(_context, RequestContentActivity::class.java)
-                intent.putExtra("requestContents", items[position])
+                intent.putExtra("request", items[position])
                 (_context as Activity).startActivity(intent)
             }
 
