@@ -7,15 +7,19 @@
 
     <TextView
         android:id="@+id/subscribe_text_more"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
+        android:layout_width="51dp"
+        android:layout_height="21dp"
         android:layout_gravity="right"
-        android:gravity="center_vertical"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text=" + more"
-        android:textColor="#9A9A9A"
-        android:textSize="11dp" />
+        android:layout_marginBottom="7dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_rect_fill_e31c9e_radius"
+        android:gravity="center"
+        android:paddingBottom="2dp"
+        android:text="+ more"
+        android:textColor="#FFFFFF"
+        android:textSize="13dp"
+        android:textStyle="bold" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/subscribe_recycler_mylist"

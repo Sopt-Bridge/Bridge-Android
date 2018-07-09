@@ -8,7 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
+ import android.util.Log
+ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cow.bridge.R
@@ -19,7 +20,8 @@ import com.cow.bridge.home.adapter.RecommendedAdapter
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
-import kotlinx.android.synthetic.main.fragment_hot.view.*
+ import com.google.gson.Gson
+ import kotlinx.android.synthetic.main.fragment_hot.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -61,11 +63,30 @@ class HotFragment : Fragment() {
             hot_recycler_recent.layoutManager = llm3
             hot_recycler_recent.adapter = recentAdapter
 
-            var messagesCall = api?.recommendedList
+            var messagesCall = api?.nowTrendContentsList(0)
             messagesCall?.enqueue(object : Callback<Network>{
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
-                    if(network!!.message.equals("ok")){
+                    Log.v("nowTrendContentsList : ", Gson().toJson(network))
+                    if(network?.message.equals("ok")){
+                        network.data?.get(0)?.contents_list?.let {
+                            if(it.size!=0){
+                                nowTrendAdapter.addAll(it)
+                                nowTrendAdapter.notifyDataSetChanged()
+                            }
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                }
+            })
+
+            messagesCall = api?.recommendedContentsList()
+            messagesCall?.enqueue(object : Callback<Network>{
+                override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                    var network = response!!.body()
+                    if(network?.message.equals("ok")){
                         network.data?.get(0)?.contents_list?.let {
                             if(it.size!=0){
                                 recommendedAdapter.addAll(it)
@@ -79,6 +100,23 @@ class HotFragment : Fragment() {
                 }
             })
 
+            messagesCall = api?.recentContentsList(0, 0)
+            messagesCall?.enqueue(object : Callback<Network>{
+                override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                    var network = response!!.body()
+                    if(network?.message.equals("ok")){
+                        network.data?.get(0)?.contents_list?.let {
+                            if(it.size!=0){
+                                recentAdapter.addAll(it)
+                                recentAdapter.notifyDataSetChanged()
+                            }
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                }
+            })
         }
 
 

@@ -13,12 +13,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.SearchView
+import android.widget.Toast
 
 import com.cow.bridge.R
+import com.cow.bridge.network.ApplicationController
+import com.cow.bridge.network.Network
 import com.cow.bridge.request.adapter.RequestAdapter
 import com.cow.bridge.util.RequestDividerItemDecoration
 import com.cow.bridge.util.UtilController
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_request.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 /**
@@ -27,7 +34,7 @@ import kotlinx.android.synthetic.main.fragment_request.view.*
  * create an instance of this fragment.
  */
 class RequestFragment : Fragment() {
-
+    val api = ApplicationController.instance?.buildServerInterface()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val convertView : View = inflater!!.inflate(R.layout.fragment_request, container, false)
 
@@ -39,6 +46,25 @@ class RequestFragment : Fragment() {
             request_recycler.layoutManager = llm
             request_recycler.addItemDecoration(RequestDividerItemDecoration(context))
             request_recycler.adapter = requestAdapter
+
+            var messagesCall = api?.requestContentsList(0)
+            messagesCall?.enqueue(object : Callback<Network> {
+                override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                    var network = response!!.body()
+                    Log.v("requestContentsList : ", Gson().toJson(network))
+                    if(network?.message.equals("ok")){
+                        network.data?.get(0)?.request_list?.let {
+                            if(it.size!=0){
+                                requestAdapter.addAll(it)
+                                requestAdapter.notifyDataSetChanged()
+                            }
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                }
+            })
 
             //request_search.setIconifiedByDefault(false)
             val searchTextView = request_search.findViewById<AutoCompleteTextView>(request_search.context.resources.getIdentifier("android:id/search_src_text", null, null))
@@ -58,20 +84,78 @@ class RequestFragment : Fragment() {
                 }
             }
 
+            request_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    request_button_write.callOnClick()
+                    return false
+                }
+
+                override fun onQueryTextChange(p0: String?): Boolean {
+                    return false
+                }
+
+            })
+
             request_button_write.setOnClickListener{
                 if(request_button_write.text.equals("write")){
                     var intent = Intent(context, RequestWriteActivity::class.java)
                     startActivity(intent)
                 }else if(request_button_write.text.equals("search")){
-                    //TODO 검색 api 연동
+                    if(request_search.query.toString().equals("")){
+                        messagesCall = api?.requestContentsList(0)
+                        messagesCall?.enqueue(object : Callback<Network> {
+                            override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                                var network = response!!.body()
+                                Log.v("requestContentsList : ", Gson().toJson(network))
+                                if(network?.message.equals("ok")){
+                                    network.data?.get(0)?.request_list?.let {
+                                        if(it.size!=0){
+                                            requestAdapter.clear()
+                                            requestAdapter.addAll(it)
+                                            requestAdapter.notifyDataSetChanged()
+                                        }
+                                    }
+                                }
+                            }
+                            override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                            }
+                        })
+                    }else{
+                        messagesCall = api?.requestSearchContentsList(request_search.query.toString())
+                        messagesCall?.enqueue(object : Callback<Network> {
+                            override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                                var network = response!!.body()
+                                Log.v("requestSearchContent : ", Gson().toJson(network))
+                                if(network?.message.equals("ok")){
+                                    network.data?.get(0)?.request_list?.let {
+                                        if(it.size!=0){
+                                            requestAdapter.clear()
+                                            requestAdapter.addAll(it)
+                                            requestAdapter.notifyDataSetChanged()
+                                        }else{
+                                            Toast.makeText(context, "검색결과가 없습니다", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                                }
+                            }
+                            override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                            }
+                        })
+                    }
+
+
                 }
             }
-            //request_search.clearFocus()
+
+
 
         }
 
         return convertView
     }
+
 
 
 }// Required empty public constructor

@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.dialog_orderby.*
 class OrderbyDialog(context: Context, orderby : String) : Dialog(context), View.OnClickListener {
 
     var orderby : String? = null
+    var confirm : Boolean = false
 
     init {
         this.orderby = orderby;
@@ -65,7 +66,10 @@ class OrderbyDialog(context: Context, orderby : String) : Dialog(context), View.
                 orderby = null
                 dismiss()
             }
-            R.id.orderby_button_confirm -> dismiss()
+            R.id.orderby_button_confirm -> {
+                confirm = true
+                dismiss()
+            }
 
         }
     }

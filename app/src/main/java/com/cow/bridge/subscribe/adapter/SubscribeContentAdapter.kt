@@ -41,7 +41,6 @@ class SubscribeContentAdapter(internal var _context: Context) : RecyclerView.Ada
             val nuestList : Array<Int> = arrayOf(R.drawable.nuest0, R.drawable.nuest1, R.drawable.nuest2, R.drawable.nuest3, R.drawable.nuest4, R.drawable.nuest5, R.drawable.nuest6, R.drawable.nuest7, R.drawable.nuest8, R.drawable.nuest9, R.drawable.nuest10)
             Glide.with(_context).load(nuestList.get(position%11)).fitCenter().into(contents_image_thumbnail)
         }
-
     }
 
     override fun getItemCount(): Int {
