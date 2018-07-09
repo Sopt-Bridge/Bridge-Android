@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+<<<<<<< HEAD
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -57,6 +58,30 @@
             android:layout_marginTop="13dp"
             android:background="@drawable/bottom_bar_home_active_icon" />
 
+<<<<<<< HEAD:app/src/main/res/layout/mypage_activity.xml
+            <ImageView
+                android:layout_width="101.76dp"
+                android:layout_height="101.76dp"
+                android:layout_centerInParent="true"
+                />
+            <TextView
+                android:layout_width="102dp"
+                android:layout_height="22dp"
+                android:text="Lee Hokyung"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="0dp"
+                android:textSize="16dp"
+                android:textColor="#333333"
+                android:layout_marginBottom="58.64dp"
+                />
+=======
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="#ffffff">
+=======
         <TextView
             android:layout_width="102dp"
             android:layout_height="22dp"
@@ -67,9 +92,33 @@
             android:text="Lee Hokyung"
             android:textColor="#333333"
             android:textSize="16dp" />
+>>>>>>> d4cf65aa9e142649185e1973542ac8b5ef726407:app/src/main/res/layout/activity_mypage.xml
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/mypage_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+>>>>>>> mypage
 
+<<<<<<< HEAD:app/src/main/res/layout/mypage_activity.xml
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" >
+
+            <ImageButton
+                android:id="@+id/back_btn"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/back_btn"
+                android:background="#ffffff"
+                android:layout_gravity="left"
+                android:layout_marginLeft="15dp"
+
+<<<<<<< HEAD
+        </RelativeLayout>
+=======
     </RelativeLayout>
+>>>>>>> d4cf65aa9e142649185e1973542ac8b5ef726407:app/src/main/res/layout/activity_mypage.xml
 
 <RelativeLayout
     android:layout_width="match_parent"
@@ -104,4 +153,73 @@
     </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>
+=======
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MY PAGE"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:layout_gravity="center_horizontal"
+                />
+            <ImageButton
+                android:id="@+id/mypage_out_btn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/mypage_out_btn"
+                android:background="#ffffff"
+                android:layout_gravity="right"
+                android:layout_marginRight="15dp"
+                android:layout_centerVertical="true"/>
+
+        </android.support.v7.widget.Toolbar>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_below="@+id/mypage_toolbar">
+
+            <ImageView
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:src="@drawable/mypage_btn_small"
+                android:layout_centerInParent="true"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lee Hokyung"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="0dp"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_marginBottom="15dp"
+                />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:text="My Requests"
+        android:gravity="center"
+        android:textSize="13sp"
+        />
+
+    <android.support.v7.widget.RecyclerView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mypage_write"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+>>>>>>> mypage
 </LinearLayout>
