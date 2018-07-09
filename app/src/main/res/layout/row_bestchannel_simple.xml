@@ -55,6 +55,15 @@
             android:layout_gravity="center_horizontal"
             app:srcCompat="@drawable/subscribe_normal_btn" />
 
+        <!--<com.sackcentury.shinebuttonlib.ShineButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/bestchannel_image_subscribe"
+            app:btn_color="#E1E1E1"
+            app:btn_fill_color="#E31C9E"
+            app:allow_random_color="true"
+            app:siShape="@drawable/subscribe_normal_btn"/>-->
         <TextView
             android:id="@+id/bestchannel_text_subscribe"
             android:layout_width="wrap_content"

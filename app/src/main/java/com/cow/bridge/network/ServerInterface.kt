@@ -1,9 +1,8 @@
 package com.cow.bridge.network
 
+import com.cow.bridge.model.Hash
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 import java.util.ArrayList
 
 /**
@@ -34,4 +33,11 @@ interface ServerInterface {
     @GET("/subscribe/recommendedhashlist/{pageIdx}/{userIdx}")
     fun recommendedHashList(@Path("pageIdx") pageIdx : Int, @Path("userIdx") userIdx : Int): Call<Network>
 
+    @GET("/subscribe/getsubhashlist/{pageIdx}/{userIdx}")
+    fun getMySubscribeHashList(@Path("pageIdx") pageIdx : Int, @Path("userIdx") userIdx : Int): Call<Network>
+
+    @POST("/subscribe/subscribemodify")
+    fun subscribeModify(@Body hash : Hash): Call<Network>
+
+    
 }

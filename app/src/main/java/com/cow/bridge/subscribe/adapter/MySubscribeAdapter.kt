@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cow.bridge.R
+import com.cow.bridge.model.Hash
 import com.cow.bridge.subscribe.activity.BestChannelActivity
 import kotlinx.android.synthetic.main.row_recommend_subscribe_simple.view.*
 import kotlinx.android.synthetic.main.row_subscribe_simple.view.*
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.row_subscribe_simple.view.*
  */
 
 class MySubscribeAdapter(internal var _context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var items = ArrayList<Hash>()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
 
@@ -50,9 +52,16 @@ class MySubscribeAdapter(internal var _context: Context) : RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int {
-        return 3+1
+        return items.size+1
     }
 
+    fun clear(){
+        this.items.clear()
+    }
+
+    fun addAll(hashes: java.util.ArrayList<Hash>) {
+        this.items.addAll(hashes)
+    }
     override fun getItemViewType(position: Int): Int {
         if(position==itemCount-1){
             return 1

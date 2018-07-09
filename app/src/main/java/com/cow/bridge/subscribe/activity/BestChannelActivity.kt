@@ -46,7 +46,7 @@ class BestChannelActivity : AppCompatActivity() {
                     var network = response!!.body()
                     Log.v("recommendedHashList : ", Gson().toJson(network))
                     if(network?.message.equals("ok")){
-                        network.data?.get(0)?.hashcontent_list?.let {
+                        network.data?.get(0)?.recommendedhashcontents_list?.let {
                             if(it.size!=0){
                                 bestChannelAdapter.addAll(it)
                                 bestChannelAdapter.notifyDataSetChanged()
