@@ -11,7 +11,4 @@ class Result{
 
     var contents_list: ArrayList<Content>? = null
 
-    var recommandVideoContentsList: ArrayList<Content>? = null
-    var VideoCommentList: ArrayList<Content>?= null
-
 }

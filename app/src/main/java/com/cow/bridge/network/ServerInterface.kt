@@ -15,10 +15,12 @@ interface ServerInterface {
 
 
     //Video contents
-    @POST("/contents/{pageIdx}/{userIdx}")
-    fun recommandVideoContentsList (@Path("pageIdx") pageIdx : Int, @Path("UserIdx") userIdx : Int): Call<Network>
+    @GET("/contents/nextcontents/{lastcontentsIdx}/{contentsIdx}")
+    fun recommandVideoContentsList (@Path("lastcontentsIdx") lastcontentsIdx : Int, @Path("contentsIdx") userIdx : Int): Call<Network>
 
-    @GET("/contents/{pageIdx}/{userIdx}")
-    fun VideoCommentList (@Path("pageIdx") pageIdx : Int, @Path("UserIdx") userIdx : Int): Call<Network>
+    @GET("/contents/{contentsIdx}/{lastcontentsIdx}")
+    fun videoCommentList (@Path("contentsIdx") pageIdx : Int, @Path("lastcontentsIdx") userIdx : Int): Call<Network>
 
+    @GET("/contents/getcontents/{userIdx}/{contentsIdx}/{contentsType}")
+    fun getVideoContents(@Path("userIdx")userIdx : Int, @Path("contentsIdx")contentsIdx : Int, @Path("contentsType")contentsType : Int): Call<Network>
 }
