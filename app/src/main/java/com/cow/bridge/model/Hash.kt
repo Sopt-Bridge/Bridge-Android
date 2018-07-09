@@ -11,5 +11,6 @@ class Hash : Serializable {
     var hashImg : String = ""
     var hashCnt : Int = 0
     var subflagresult : Int = 0
+    var userIdx : Int = 0
 
 }

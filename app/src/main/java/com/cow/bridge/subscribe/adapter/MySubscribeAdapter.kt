@@ -50,7 +50,7 @@ class MySubscribeAdapter(internal var _context: Context) : RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int {
-        return 5+1
+        return 3+1
     }
 
     override fun getItemViewType(position: Int): Int {

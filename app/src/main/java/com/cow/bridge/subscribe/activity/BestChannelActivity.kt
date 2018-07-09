@@ -4,12 +4,14 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import com.cow.bridge.R
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
 import com.cow.bridge.subscribe.adapter.BestChannelAdapter
 import com.cow.bridge.subscribe.adapter.MySubscriptionsAdapter
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_best_channel.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,8 +44,9 @@ class BestChannelActivity : AppCompatActivity() {
             messagesCall?.enqueue(object : Callback<Network> {
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
+                    Log.v("recommendedHashList : ", Gson().toJson(network))
                     if(network?.message.equals("ok")){
-                        network.data?.get(0)?.contents_list?.let {
+                        network.data?.get(0)?.hashcontent_list?.let {
                             if(it.size!=0){
                                 bestChannelAdapter.addAll(it)
                                 bestChannelAdapter.notifyDataSetChanged()
