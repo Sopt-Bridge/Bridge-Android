@@ -39,5 +39,9 @@ interface ServerInterface {
     @POST("/subscribe/subscribemodify")
     fun subscribeModify(@Body hash : Hash): Call<Network>
 
-    
+
+    //request
+
+    @GET("/trequest/trequest_listview/{lastcontentsIdx}")
+    fun requestContentsList(@Path("lastcontentsIdx") lastcontentsIdx : Int): Call<Network>
 }
