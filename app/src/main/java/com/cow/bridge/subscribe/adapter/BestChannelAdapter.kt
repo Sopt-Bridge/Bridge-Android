@@ -36,7 +36,7 @@ class BestChannelAdapter(internal var _context: Context) : RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         with((holder as BestChannelViewHolder).itemView){
-            Glide.with(_context).load("").into(bestchannel_image_thumbnail)
+            Glide.with(_context).load(items[position].hashImg).into(bestchannel_image_thumbnail)
             bestchannel_text_name.text = items[position].hashName
             bestchannel_text_subscribe_count.text = "Subscribers ${items[position].hashCnt}"
             if(items[position].subflagresult==0){
@@ -49,10 +49,7 @@ class BestChannelAdapter(internal var _context: Context) : RecyclerView.Adapter<
 
             bestchannel_layout_subscribe.setOnClickListener {
                 if(items[position].subflagresult==0){
-                    items[position].subflagresult = 1
-                    bestchannel_image_subscribe.setImageResource(R.drawable.subscribe_active_btn)
                     //bestchannel_image_subscribe.init(_context as Activity?)
-                    bestchannel_text_subscribe.setTextColor(Color.parseColor("#E31C9E"))
                     //TODO userIdx 수정
                     var messagesCall = api?.subscribeModify(Hash(items[position].hashName, 1))
                     messagesCall?.enqueue(object : Callback<Network> {
@@ -60,6 +57,9 @@ class BestChannelAdapter(internal var _context: Context) : RecyclerView.Adapter<
                             var network = response!!.body()
                             Log.v("subscribeModify : ", Gson().toJson(network))
                             if(network?.message.equals("ok")){
+                                items[position].subflagresult = 1
+                                bestchannel_image_subscribe.setImageResource(R.drawable.subscribe_active_btn)
+                                bestchannel_text_subscribe.setTextColor(Color.parseColor("#E31C9E"))
                                 Toast.makeText(_context, "${items[position].hashName} added", Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -68,16 +68,16 @@ class BestChannelAdapter(internal var _context: Context) : RecyclerView.Adapter<
                         }
                     })
                 }else{
-                    items[position].subflagresult = 0
-                    bestchannel_image_subscribe.setImageResource(R.drawable.subscribe_normal_btn)
                     //bestchannel_image_subscribe.init(_context as Activity?)
-                    bestchannel_text_subscribe.setTextColor(Color.parseColor("#D1D1D1"))
                     var messagesCall = api?.subscribeModify(Hash(items[position].hashName, 1))
                     messagesCall?.enqueue(object : Callback<Network> {
                         override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                             var network = response!!.body()
                             Log.v("subscribeModify : ", Gson().toJson(network))
                             if(network?.message.equals("ok")){
+                                items[position].subflagresult = 0
+                                bestchannel_image_subscribe.setImageResource(R.drawable.subscribe_normal_btn)
+                                bestchannel_text_subscribe.setTextColor(Color.parseColor("#D1D1D1"))
                                 Toast.makeText(_context, "${items[position].hashName} removed", Toast.LENGTH_SHORT).show()
                             }
                         }

@@ -37,6 +37,9 @@ interface ServerInterface {
     @GET("/subscribe/getsubhashlist/{pageIdx}/{userIdx}")
     fun getMySubscribeHashList(@Path("pageIdx") pageIdx : Int, @Path("userIdx") userIdx : Int): Call<Network>
 
+    @POST("/subscribe/hashcontentlist")
+    fun getHashContentList(@Body hash : Hash): Call<Network>
+
     @POST("/subscribe/subscribemodify")
     fun subscribeModify(@Body hash : Hash): Call<Network>
 
