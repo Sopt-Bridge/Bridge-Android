@@ -19,6 +19,10 @@ class Content : Serializable{
     var hashName2 : String = ""
     var hashName3 : String = ""
     var contentsType : Int = 0
+    var contentsUrl : String = ""
+    var contentsoriginUrl : String = ""
     var contentsRuntime : String = "00:00"
+    var imgCnt : Int = 0
+    var commentCnt : Int = 0
 
 }
