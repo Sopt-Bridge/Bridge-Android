@@ -1,6 +1,7 @@
 package com.cow.bridge.network
 
 import com.cow.bridge.model.Hash
+import com.cow.bridge.model.Request
 import retrofit2.Call
 import retrofit2.http.*
 import java.util.ArrayList
@@ -39,5 +40,12 @@ interface ServerInterface {
     @POST("/subscribe/subscribemodify")
     fun subscribeModify(@Body hash : Hash): Call<Network>
 
-    
+
+    //request
+
+    @GET("/trequest/trequest_listview/{lastcontentsIdx}")
+    fun requestContentsList(@Path("lastcontentsIdx") lastcontentsIdx : Int): Call<Network>
+
+    @GET("/trequest/trequest_search/{searchname}")
+    fun requestSearchContentsList(@Path("searchname") searchname : String): Call<Network>
 }
