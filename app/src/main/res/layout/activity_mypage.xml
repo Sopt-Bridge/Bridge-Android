@@ -13,72 +13,96 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/mypage_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp">
+            android:layout_height="82dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp">
+
+            <ImageButton
+                android:id="@+id/back_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="left"
+                android:background="#FFFFFF"
+                android:padding="16dp"
+                app:srcCompat="@drawable/back_btn" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MY PAGE"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                android:textColor="#000000"
+                android:layout_height="24dp"
                 android:layout_gravity="center_horizontal"
-                />
+                android:text="MY PAGE"
+                android:textColor="#333333"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/mypage_out_btn"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/mypage_out_btn"
-                android:background="#ffffff"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
                 android:layout_gravity="right"
-                android:layout_marginRight="15dp"
-                android:layout_centerVertical="true"/>
+                android:background="#ffffff"
+                android:padding="16dp"
+                app:srcCompat="@drawable/mypage_out_btn" />
 
         </android.support.v7.widget.Toolbar>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_below="@+id/mypage_toolbar">
 
-            <ImageView
-                android:layout_width="95dp"
-                android:layout_height="95dp"
-                android:src="@drawable/mypage_btn_small"
-                android:layout_centerInParent="true"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lee Hokyung"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp"
-                android:textSize="16sp"
-                android:textColor="#000000"
-                android:layout_marginBottom="15dp"
-                />
+        <ImageView
+            android:layout_width="101.76dp"
+            android:layout_height="101.76dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/bottom_bar_home_active_icon" />
 
-
-        </RelativeLayout>
+        <TextView
+            android:layout_width="102dp"
+            android:layout_height="22dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="27dp"
+            android:layout_marginTop="0dp"
+            android:text="Lee Hokyung"
+            android:textColor="#333333"
+            android:textSize="16dp" />
 
 
     </RelativeLayout>
-    <TextView
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:text="My Requests"
-        android:gravity="center"
-        android:textSize="13sp"
-        />
+        android:layout_height="26.9dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1.92dp"
+            android:background="#E1E1E1"
+            />
 
-    <android.support.v7.widget.RecyclerView
+        <TextView
+            android:layout_width="78dp"
+            android:layout_height="18dp"
+            android:text="My Requests"
+            android:gravity="center"
+            android:textSize="13dp"
+            android:textColor="#A5A5A5"
+            android:layout_centerInParent="true"
+            />
 
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/mypage_write"
-        >
+        android:layout_height="340.9dp">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mypage_write"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
 </LinearLayout>
