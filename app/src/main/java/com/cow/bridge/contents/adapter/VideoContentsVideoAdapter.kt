@@ -5,12 +5,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.cow.bridge.model.VideoContentsVideoData
+import com.cow.bridge.model.*
 import com.cow.bridge.R
-import com.cow.bridge.model.Content
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.ServerInterface
-import kotlinx.android.synthetic.main.row_video_contents_video.*
+import kotlinx.android.synthetic.main.row_video_contents_video.view.*
 
 class VideoContentsVideoAdapter(val context : Context, val videoDataItem : ArrayList<VideoContentsVideoData> ) : RecyclerView.Adapter<VideoContentsVideoAdapter.VideoContentsVideoViewHolder>(){
     var items = ArrayList<Content>()
@@ -25,16 +24,14 @@ class VideoContentsVideoAdapter(val context : Context, val videoDataItem : Array
 
     override fun onBindViewHolder(holder: VideoContentsVideoViewHolder?, position: Int) {
         with((holder as VideoContentsVideoViewHolder).itemView) {
-            video_contents_video_tv_video_titls.text = items[position].contents_title
-            var hashList :String = items.[position].hashName1 + items[position].hashName2 + items[position].hashName3
+            video_contents_video_tv_video_title.text = items[position].contentsTitle
+            var hashList :String = items[position].hashName1 + items[position].hashName2 + items[position].hashName3
             video_contents_video_tv_hash.text = hashList
-            video_contents_video_tv_contents_time.text = itemts[position].contentsRuntime
-            video_contents_video_
-
+            video_contents_video_tv_contents_time.text = items[position].contentsRuntime
         }
-    }
 
-    inner class VideoContentsVideoViewHolder(val itemView : View?):RecyclerView.ViewHolder(itemView){
+    }
+    inner class VideoContentsVideoViewHolder(val view : View):RecyclerView.ViewHolder(view){
 
     }
 }

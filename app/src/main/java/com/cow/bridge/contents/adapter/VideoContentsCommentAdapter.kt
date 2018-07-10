@@ -11,7 +11,6 @@ import com.cow.bridge.R
 import com.cow.bridge.model.Content
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.ServerInterface
-import kotlinx.android.synthetic.main.row_video_contents_video.view.*
 
 class VideoContentsCommentAdapter(val context : Context, val commentDataItem : ArrayList<VideoContentsCommentData> ) : RecyclerView.Adapter<VideoContentsCommentAdapter.VideoContentsCommentViewHolder>(){
     var items = ArrayList<Content>()

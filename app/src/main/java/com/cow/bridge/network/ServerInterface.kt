@@ -3,23 +3,13 @@ package com.cow.bridge.network
 import com.cow.bridge.model.Hash
 import com.cow.bridge.model.Request
 import retrofit2.Call
-<<<<<<< HEAD
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-=======
 import retrofit2.http.*
 import java.util.ArrayList
->>>>>>> 85fb8c466177630e4e6ddbbba4d38df5e73a7e98
 
 /**
  * Created by jihaeseong on 2017. 2. 13..
  */
 interface ServerInterface {
-
-    //home
-
-<<<<<<< HEAD
 
     //Video contents
     @GET("/contents/nextcontents/{lastcontentsIdx}/{contentsIdx}")
@@ -30,7 +20,8 @@ interface ServerInterface {
 
     @GET("/contents/getcontents/{userIdx}/{contentsIdx}/{contentsType}")
     fun getVideoContents(@Path("userIdx")userIdx : Int, @Path("contentsIdx")contentsIdx : Int, @Path("contentsType")contentsType : Int): Call<Network>
-=======
+
+    //home
     @GET("/home/recent/{contentsCategory}/{lastcontentsIdx}")
     fun recentContentsList(@Path("contentsCategory") category : Int, @Path("lastcontentsIdx") lastcontentsIdx : Int): Call<Network>
 
@@ -66,5 +57,4 @@ interface ServerInterface {
 
     @GET("/trequest/trequest_search/{searchname}")
     fun requestSearchContentsList(@Path("searchname") searchname : String): Call<Network>
->>>>>>> 85fb8c466177630e4e6ddbbba4d38df5e73a7e98
 }
