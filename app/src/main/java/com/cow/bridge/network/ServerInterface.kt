@@ -51,4 +51,7 @@ interface ServerInterface {
 
     @GET("/trequest/trequest_search/{searchname}")
     fun requestSearchContentsList(@Path("searchname") searchname : String): Call<Network>
+
+    @POST("/trequest/trequest_write")
+    fun requestWriteContents(@Body request : Request): Call<Network>
 }
