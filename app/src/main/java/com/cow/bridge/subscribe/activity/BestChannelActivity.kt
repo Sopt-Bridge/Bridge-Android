@@ -40,13 +40,13 @@ class BestChannelActivity : AppCompatActivity() {
             val bestChannelAdapter = BestChannelAdapter(this)
             subscribe_recycler.adapter = bestChannelAdapter
 
-            var messagesCall = api?.recommendedHashList(0, 0)
+            var messagesCall = api?.recommendedHashList(0, 1)
             messagesCall?.enqueue(object : Callback<Network> {
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
                     Log.v("recommendedHashList : ", Gson().toJson(network))
                     if(network?.message.equals("ok")){
-                        network.data?.get(0)?.recommendedhashcontents_list?.let {
+                        network.data?.get(0)?.hashcontents_list?.let {
                             if(it.size!=0){
                                 bestChannelAdapter.addAll(it)
                                 bestChannelAdapter.notifyDataSetChanged()
@@ -63,6 +63,23 @@ class BestChannelActivity : AppCompatActivity() {
             val mySubscriptionsAdapter = MySubscriptionsAdapter(this)
             subscribe_recycler.adapter = mySubscriptionsAdapter
 
+            var messagesCall = api?.getMySubscribeHashList(0, 1)
+            messagesCall?.enqueue(object : Callback<Network> {
+                override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                    var network = response!!.body()
+                    if(network?.message.equals("ok")){
+                        network.data?.get(0)?.hashcontents_list?.let {
+                            if(it.size!=0){
+                                mySubscriptionsAdapter.addAll(it)
+                                mySubscriptionsAdapter.notifyDataSetChanged()
+                            }
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                }
+            })
         }
     }
 }

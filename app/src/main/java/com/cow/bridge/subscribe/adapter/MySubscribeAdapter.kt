@@ -7,8 +7,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.cow.bridge.R
 import com.cow.bridge.model.Hash
+import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.subscribe.activity.BestChannelActivity
 import kotlinx.android.synthetic.main.row_recommend_subscribe_simple.view.*
 import kotlinx.android.synthetic.main.row_subscribe_simple.view.*
@@ -19,6 +21,11 @@ import kotlinx.android.synthetic.main.row_subscribe_simple.view.*
 
 class MySubscribeAdapter(internal var _context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var items = ArrayList<Hash>()
+    internal var onMySubscribeItemClickListener: OnMySubscribeItemClickListener? = null
+
+    fun setOnMySubscribeItemClickListener(onMySubscribeItemClickListener: OnMySubscribeItemClickListener) {
+        this.onMySubscribeItemClickListener = onMySubscribeItemClickListener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
 
@@ -37,7 +44,12 @@ class MySubscribeAdapter(internal var _context: Context) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if(getItemViewType(position)==0){
             with((holder as MySubscribeViewHolder).itemView){
+                subscribe_text_hashname.text = items[position].hashName
+                Glide.with(_context).load(items[position].hashImg).into(subscribe_image_thumbnail)
 
+                if (onMySubscribeItemClickListener != null) {
+                    mysubscribe_layout_main.setOnClickListener { v -> onMySubscribeItemClickListener!!.onMySubscribeItemClickListener(items[position]) }
+                }
             }
         }else{
             with((holder as RecommendSubscribeViewHolder).itemView){
@@ -76,5 +88,9 @@ class MySubscribeAdapter(internal var _context: Context) : RecyclerView.Adapter<
 
     private inner class RecommendSubscribeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+    }
+
+    interface OnMySubscribeItemClickListener {
+        fun onMySubscribeItemClickListener(hash : Hash)
     }
 }
