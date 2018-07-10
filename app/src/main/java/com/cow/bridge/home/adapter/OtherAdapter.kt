@@ -60,11 +60,12 @@ class OtherAdapter(internal var _context: Context) : RecyclerView.Adapter<Recycl
             }
 
             contents_text_title.text = items[position].contentsTitle
-            contents_text_count.text = items[position].contentsRuntime
             if(items[position].contentsType==0){
+                contents_text_count.text = "+ ${items[position].imgCnt}"
                 Glide.with(_context).load(R.drawable.home_image_thumnail_icon).into(contents_image_type)
                 Glide.with(_context).load(ApplicationController.imageUrl(1, 1)).override(UtilController.convertDpToPixel(153f, context).toInt(), UtilController.convertDpToPixel(100f, context).toInt()).into(contents_image_thumbnail)
             }else{
+                contents_text_count.text = items[position].contentsRuntime
                 Glide.with(_context).load(R.drawable.home_video_thumnail_icon).into(contents_image_type)
                 Glide.with(_context).load(ApplicationController.videoThumbnailUrl(4)).override(UtilController.convertDpToPixel(153f, context).toInt(), UtilController.convertDpToPixel(100f, context).toInt()).into(contents_image_thumbnail)
             }
