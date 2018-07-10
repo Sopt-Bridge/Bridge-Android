@@ -24,5 +24,7 @@ class Content : Serializable{
     var contentsRuntime : String = "00:00"
     var imgCnt : Int = 0
     var commentCnt : Int = 0
+    var likeFlag : Int = 0
+    var subFlag : Int = 1
 
 }

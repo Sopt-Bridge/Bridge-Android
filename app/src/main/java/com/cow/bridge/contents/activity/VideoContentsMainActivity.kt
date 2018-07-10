@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.TextView
+import android.widget.VideoView
 import com.cow.bridge.R
 import com.cow.bridge.model.Content
 import com.cow.bridge.network.ApplicationController
@@ -27,9 +28,10 @@ class VideoContentsMainActivity :AppCompatActivity(){
     var btn_feedback : Button ?= null
     var txt_recommand : TextView ?= null
     var btn_recommand : Button ?= null
+    var video_contents : VideoView ?= null
 
     var txt_title : TextView ?= null
-    var txt_credit : TextView ?= null
+    var txt_info : TextView ?= null
     var txt_hash : TextView ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,30 +46,43 @@ class VideoContentsMainActivity :AppCompatActivity(){
         //others
         txt_hash = video_contents_tv_hash
         txt_title = video_contents_tv_title
-        txt_credit = video_contents_tv_credit
+        txt_info = video_contents_tv_contents_info
         btn_library = video_contents_bt_library
         btn_feedback = video_contents_bt_feedback
         txt_recommand = video_contents_tv_recommand
         btn_recommand = video_contents_bt_recommend
-
+        txt_runtime = video_contents_tv
+        //others setting
         txt_title.text = video.contentsTitle
         txt_hash.text = video.hashName1 + video.hashName2 + video.hashName3
-        txt_credit.text = video.contentsInfo
+        txt_Info.text = video.contentsInfo
         txt_recommand.text = video.contentsLike
+        video_contents = video.contentsUrl
 
         btn_recommand.setOnClickListener {
             if (video.likeFlag == 1) {
                 btn_recommand.setImageResource(R.drawable.good_normal_btn)
-                video.contents--
+                video.contentsLike--
+                video.likeFlag = 0
             } else {
                 btn_recommand.setImageResource(R.drawable.good_active_icon)
                 video.contentsLike++
+                video.likeFlag = 1
             }
         }
-        btn_library
-
+        btn_library.setOnClickListener {
+            if(video.subFlag == 1 ) {
+                btn_library.setImageResource(R.drawable.add_to_library_normal_icon)
+                videk.subFlag = 0
+            }
+            else {
+                btn_library.setImageResource(R.drawable.add_to_library_active_icon)
+                video.subFlag = 1
+            }
+        }
     }
-    init(){
+
+    init {
         //좋아요 버튼
         if(video.likeFlag == 1)
             btn_recommand.setImageResource(R.drawable.good_active_icon)

@@ -19,12 +19,12 @@
             android:layout_gravity="center" />
 
         <Button
-    android:id="@+id/video_contents_iv_video_cancel"
-    android:layout_width="17.79dp"
-    android:layout_height="17.79dp"
-    android:layout_marginLeft="18.25dp"
-    android:layout_marginTop="18.25dp"
-    android:background="@drawable/content_x_btn" />
+            android:id="@+id/video_contents_iv_video_cancel"
+            android:layout_width="17.79dp"
+            android:layout_height="17.79dp"
+            android:layout_marginLeft="18.25dp"
+            android:layout_marginTop="18.25dp"
+            android:background="@drawable/content_x_btn" />
 </FrameLayout>
     //1
         <LinearLayout
@@ -48,7 +48,7 @@
                     android:textColor="#000407"
                     android:text="Jsthis - One of them in university festival" />
                 <TextView
-                    android:id="@+id/video_contents_tv_credit"
+                    android:id="@+id/video_contents_tv_contents_info"
                     android:layout_width="match_parent"
                     android:layout_height="27.8dp"
                     android:layout_marginTop="8dp"
