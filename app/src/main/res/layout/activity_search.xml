@@ -18,7 +18,8 @@
             android:layout_height="wrap_content"
             android:background="#F5F5F5"
             android:minHeight="98dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/imageView3"

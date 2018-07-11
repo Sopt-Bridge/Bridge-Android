@@ -13,14 +13,24 @@ import com.cow.bridge.R
 import com.cow.bridge.home.adapter.SearchResultAdapter
 import com.cow.bridge.home.dialog.OrderbyDialog
 import com.cow.bridge.model.SearchWord
+import com.cow.bridge.network.ApplicationController
+import com.cow.bridge.network.Network
 import com.cow.bridge.search.searchlibrary.MaterialSearchView
+import com.cow.bridge.util.UtilController
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_search.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.*
 
 class SearchActivity : AppCompatActivity() {
 
     var searchView : MaterialSearchView? = null
+    var api = ApplicationController.instance?.buildServerInterface()
+    var searchResultAdapter : SearchResultAdapter? = null
+    var queryTmp = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +47,29 @@ class SearchActivity : AppCompatActivity() {
                 searchView?.hidePreview()
                 searchView?.hideKeyboard(searchView)
 
-                searchView?.setLayoutParams(FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
-
-                //TODO : 검색 결과 realm에 저장하기
+                searchView?.setLayoutParams(FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, UtilController.convertDpToPixel(48f, applicationContext).toInt()));
+                queryTmp = query!!
+                if(searchView?.searchType.equals("normal")){
+                    var realm = Realm.getDefaultInstance()
+                    realm.executeTransaction {
+                        var searchWord = realm.createObject(SearchWord::class.java)
+                        searchWord.recentlyWord = query
+                        searchWord.searchDateTime = Date().time.toString()
+                    }
+                    realm.close()
+                    getSearchContentsList(query!!, 1, 0)
+                }else{
+                    var realm = Realm.getDefaultInstance()
+                    realm.executeTransaction {
+                        var searchWord = realm.createObject(SearchWord::class.java)
+                        searchWord.recentlyWord = "#${query}"
+                        searchWord.searchDateTime = Date().time.toString()
+                        searchWord.thumbnailImage = ""
+                        //TODO 썸네일 넣기
+                    }
+                    realm.close()
+                    getSearchContentsList(query!!, 0, 0)
+                }
 
                 return false
             }
@@ -80,15 +110,16 @@ class SearchActivity : AppCompatActivity() {
         var normalRecentlyWords : RealmResults<SearchWord> = realm.where(SearchWord::class.java).findAll();
         var searchName : Array<String?> = arrayOfNulls<String>(normalRecentlyWords.size)
         var count = 0
+        Log.v("test", "${normalRecentlyWords.size}")
         for(word in normalRecentlyWords){
-            searchName[count] = word.recentlyWord!!
+            searchName[count++] = word.recentlyWord!!
         }
 
         realm.close()
 
         searchView?.setSuggestions(searchName);
 
-        val searchResultAdapter = SearchResultAdapter(this)
+        searchResultAdapter = SearchResultAdapter(this)
 
         val llm : LinearLayoutManager = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
@@ -104,9 +135,10 @@ class SearchActivity : AppCompatActivity() {
                     override fun onDismiss(dialog: DialogInterface?) {
                         with(dialog as OrderbyDialog){
                             dialog.orderby?.let {
-                                Log.v("test", orderby)
                                 this@SearchActivity.search_text_orderby?.text = it
-                                //TODO : 해당 정렬순으로 리스트가져오기
+                                var searchType = if(searchView?.searchType.equals("normal")) 1 else 0
+                                var sortType = if(orderby?.equals("Upload date")!!) 0 else if(orderby?.equals("Rating")!!) 1 else 2
+                                getSearchContentsList(queryTmp, searchType, sortType)
                             }
                         }
                     }
@@ -125,5 +157,31 @@ class SearchActivity : AppCompatActivity() {
     override fun onDestroy() {
         search_view.closeSearch()
         super.onDestroy()
+    }
+
+    fun getSearchContentsList(query : String, searchType : Int, sortType : Int){
+        if(searchType==0){
+            search_layout_hash.visibility = View.VISIBLE
+        }else{
+            search_layout_hash.visibility = View.GONE
+        }
+        var messagesCall = api?.searchContents(0, query!! ,searchType, sortType)
+        messagesCall?.enqueue(object : Callback<Network> {
+            override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                var network = response!!.body()
+                if(network?.message.equals("ok")){
+                    network.data?.get(0)?.contents_list?.let {
+                        if(it.size!=0){
+                            searchResultAdapter?.clear()
+                            searchResultAdapter?.addAll(it)
+                            searchResultAdapter?.notifyDataSetChanged()
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+            }
+        })
     }
 }
