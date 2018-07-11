@@ -21,14 +21,14 @@ class VideoContentsCommentAdapter(val context : Context, val commentDataItem : A
             return VideoContentsCommentViewHolder(mainView)
         }
 
-        override fun getItemCount(): Int = commentDataItem.size
+    override fun getItemCount(): Int = commentDataItem.size
 
-        override fun onBindViewHolder(holder: VideoContentsCommentViewHolder?, position: Int) {
-            with((holder as VideoContentsCommentViewHolder).itemView) {
-
-            }
+    override fun onBindViewHolder(holder: VideoContentsCommentViewHolder?, position: Int) {
+        with((holder as VideoContentsCommentViewHolder).itemView) {
 
         }
+
+    }
 
         inner class VideoContentsCommentViewHolder(val view : View):RecyclerView.ViewHolder(view){
 

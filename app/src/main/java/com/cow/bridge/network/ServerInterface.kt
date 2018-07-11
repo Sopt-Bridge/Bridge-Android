@@ -18,8 +18,12 @@ interface ServerInterface {
     @GET("/contents/{contentsIdx}/{lastcontentsIdx}")
     fun videoCommentList (@Path("contentsIdx") pageIdx : Int, @Path("lastcontentsIdx") userIdx : Int): Call<Network>
 
-    @GET("/contents/getcontents/{userIdx}/{contentsIdx}/{contentsType}")
-    fun getVideoContents(@Path("userIdx")userIdx : Int, @Path("contentsIdx")contentsIdx : Int, @Path("contentsType")contentsType : Int): Call<Network>
+    @POST("/contents/getcontents/{userIdx}/{contentsIdx}/{contentsType}")
+    fun getVideoContents(@Body userIdx : Int, @Body contentsIdx : Int, @Body contentsType : Int): Call<Network>
+
+    @POST("/contents/clike/{contentsIdx}/{userIdx}")
+    fun changeVideoContentsLike(@Body contentsIdx : Int, @Body userIdx : Int): Call<Network>
+
 
     //home
     @GET("/home/recent/{contentsCategory}/{lastcontentsIdx}")

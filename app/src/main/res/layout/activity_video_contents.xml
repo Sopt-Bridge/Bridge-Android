@@ -48,7 +48,7 @@
                     android:textColor="#000407"
                     android:text="Jsthis - One of them in university festival" />
                 <TextView
-                    android:id="@+id/video_contents_tv_contents_info"
+                    android:id="@+id/video_contents_tv_contents_origin_url"
                     android:layout_width="match_parent"
                     android:layout_height="27.8dp"
                     android:layout_marginTop="8dp"
