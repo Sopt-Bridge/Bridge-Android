@@ -2,12 +2,13 @@ package com.cow.bridge.network
 
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.ArrayList
 
 /**
- * Created by jihaeseong on 2017. 2. 13..
+ * Created by jihaeseong on 2017. 2. 13.. //Good....
  */
 interface ServerInterface {
 
@@ -25,5 +26,14 @@ interface ServerInterface {
 
     @GET("/home/recommended")
     fun recommendedContentsList(): Call<Network>
+
+//    // 이미지 컨텐츠 보기
+//    @GET ("/contents/getcontents{userIdx}/{contentsIdx}/{contentsType}")
+//    fun imageContents(@Path(""))
+
+    @POST("/contents/clike{contentsIdx}/{userIdx}")
+    fun ClikeContents(@Path("contentsIdx"), @Path("userIdx"))
+
+
 
 }
