@@ -68,6 +68,9 @@ interface ServerInterface {
     @GET("/user/getmytext/{userIdx}")
     fun getMyTextList(@Path("userIdx") userIdx : Int): Call<Network>
 
+    @POST("/user/login")
+    fun login(@Body user : User): Call<Network>
+
     @POST("/user/quit")
     fun withdrawal(@Body user : User): Call<Network>
 

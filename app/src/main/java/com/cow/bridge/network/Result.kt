@@ -11,6 +11,9 @@ import java.util.ArrayList
 
 class Result{
 
+    var userIdx : Int? = 0
+    var token : String? = ""
+
     var contents_list: ArrayList<Content>? = null
     var hashcontents_list: ArrayList<Hash>? = null
     var recommendedhashcontents_list: ArrayList<Hash>? = null

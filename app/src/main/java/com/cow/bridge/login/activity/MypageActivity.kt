@@ -127,7 +127,7 @@ class MypageActivity : AppCompatActivity() {
                 })
 
             }else if(loginType.equals("google")){
-                var messagesCall = api?.withdrawal(User(sp.getString("loginUuid", "")))
+                var messagesCall = api?.withdrawal(User(sp.getString("loginToken", "")))
                 messagesCall?.enqueue(object : Callback<Network>{
                     override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                         var network = response!!.body()
