@@ -8,5 +8,4 @@ class Network {
     internal var message: String? = null
     internal var data: ArrayList<Result>? = null
 
-
 }

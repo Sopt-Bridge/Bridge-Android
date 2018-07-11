@@ -59,6 +59,7 @@ class HotFragment : Fragment() {
             messagesCall?.enqueue(object : Callback<Network>{
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
+                    Log.v("test", Gson().toJson(network))
                     Log.v("nowTrendContentsList : ", Gson().toJson(network))
                     if(network?.message.equals("ok")){
                         network.data?.get(0)?.contents_list?.let {
@@ -81,7 +82,7 @@ class HotFragment : Fragment() {
                     }
                 }
                 override fun onFailure(call: Call<Network>?, t: Throwable?) {
-
+                    Log.v("test error : ", t.toString())
                 }
             })
 

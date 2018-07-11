@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 
-    <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:sothree="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -24,7 +26,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="20dp"
                 android:orientation="vertical">
 
                 <!-- X 버튼 -->
@@ -34,6 +36,7 @@
                     android:layout_height="17.79dp"
                     android:layout_marginLeft="18.18dp"
                     android:layout_marginTop="10.69dp"
+                    android:id="@+id/imgContentsBackBtn"
                     android:background="@drawable/content_x_btn" />
             </LinearLayout>
 
@@ -51,11 +54,30 @@
 
                     <!-- 사진 개수 알려주는 텍스트-->
 
+
+                    <TextView
+                        android:id="@+id/currentNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="18.15dp"
+                        android:gravity="left"
+                        android:text="1"
+                        android:textColor="#fff"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/slash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:text="/"
+                        android:textColor="#fff"
+                        android:textSize="14dp" />
+
                     <TextView
                         android:id="@+id/imgCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="18.15dp"
                         android:gravity="left"
                         android:text="19/20"
                         android:textColor="#fff"
@@ -118,6 +140,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -143,18 +166,6 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/imgCredit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="12.45dp"
-                    android:text="Credit: 이호경 Instagram"
-                    android:textColor="#fff"
-                    android:textSize="10dp"
-
-                    />
-
             </LinearLayout>
 
 
@@ -162,13 +173,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#E31C9E" />
 
             <Button
                 android:id="@+id/commentsBtn"
@@ -181,6 +187,10 @@
                 android:textColor="#E31C9E"
                 android:textSize="17dp" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#E31C9E" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/comments_list"

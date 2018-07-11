@@ -8,6 +8,10 @@ import java.util.*
  */
 
 class Content : Serializable{
+    constructor(contentsIdx : Int, userIdx : Int){
+        this.contentsIdx = contentsIdx
+        this.userIdx = userIdx
+    }
     var contentsIdx : Int = 0
     var contentsTitle : String = ""
     var contentsInfo : String = ""
@@ -19,10 +23,12 @@ class Content : Serializable{
     var hashName2 : String = ""
     var hashName3 : String = ""
     var contentsType : Int = 0
+    var imgCnt : Int = 0
+    var contentsRuntime : String = "00:00"
+    var likeFlag : Int = 0
     var contentsUrl : String = ""
     var contentsoriginUrl : String = ""
-    var contentsRuntime : String = "00:00"
-    var imgCnt : Int = 0
     var commentCnt : Int = 0
+    var userIdx : Int = 0
 
 }
