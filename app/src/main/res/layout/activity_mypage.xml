@@ -56,7 +56,6 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="13dp"
             android:background="@drawable/mypage_btn_mid_comment_profile" />
-
         <TextView
             android:id="@+id/mypage_text_name"
             android:layout_width="wrap_content"
@@ -97,7 +96,6 @@
         android:layout_height="340.9dp">
 
         <android.support.v7.widget.RecyclerView
-
             android:id="@+id/mypage_recycler_mywritten"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

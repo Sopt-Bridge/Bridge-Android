@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import com.cow.bridge.R
 import com.cow.bridge.model.MypageItems
@@ -19,11 +20,11 @@ class MypageActivity : AppCompatActivity() {
     lateinit var toolbar: Toolbar
     lateinit var mypageItems : ArrayList<MypageItems>
     lateinit var myAdapter: MypageAdapter
+    private lateinit var cancelButton : ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mypage)
-
         toolbar = findViewById<View>(R.id.mypage_toolbar) as Toolbar //툴바설정
 
         val recyclerView = findViewById<View>(R.id.mypage_recycler_mywritten) as RecyclerView
@@ -39,6 +40,8 @@ class MypageActivity : AppCompatActivity() {
         recyclerView.adapter = myAdapter
         recyclerView.addItemDecoration(ItemDecoration())
 
+        cancelButton = findViewById(R.id.mypage_imagebutton_back)
+        cancelButton.setOnClickListener{finish()}
     }
 
     inner class MypageAdapter(var mypageItems: ArrayList<MypageItems>)
@@ -70,4 +73,3 @@ class MypageActivity : AppCompatActivity() {
 
     }
 }
-
