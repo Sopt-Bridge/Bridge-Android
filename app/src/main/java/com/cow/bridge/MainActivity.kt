@@ -10,8 +10,10 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import com.cow.bridge.home.activity.HomeFragment
 import com.cow.bridge.library.activity.LibraryFragment
 import com.cow.bridge.login.activity.LoginActivity
@@ -69,6 +71,7 @@ class MainActivity : AppCompatActivity() {
             false
         }
 
+
         prevMenuItem = main_bottom_navigation.menu.getItem(0)
         prevMenuItem!!.isChecked = main_bottom_navigation.menu.getItem(0).isChecked
 
@@ -93,6 +96,7 @@ class MainActivity : AppCompatActivity() {
 
         main_viewpager.offscreenPageLimit = 3
         main_viewpager.setOnTouchListener { v, event -> true }
+
         BottomNavigationViewHelper.removeShiftMode(main_bottom_navigation)
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
@@ -101,6 +105,7 @@ class MainActivity : AppCompatActivity() {
         adapter.addFragment(RequestFragment())
         adapter.addFragment(LibraryFragment())
         main_viewpager.adapter = adapter
+        main_viewpager.setSwipeable(false)
     }
 
     override fun onResume() {
@@ -126,6 +131,7 @@ class MainActivity : AppCompatActivity() {
         override fun getCount(): Int {
             return mFragmentList.size
         }
+
 
         fun addFragment(fragment: Fragment) {
             mFragmentList.add(fragment)
