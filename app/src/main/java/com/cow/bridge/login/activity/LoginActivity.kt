@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
                 editor.putString("loginType", "facebook")
                 editor.putString("loginName", Profile.getCurrentProfile().name)
                 editor.commit()
-                requestUserProfile(result!!)
+                //requestUserProfile(result!!)
                 Toast.makeText(applicationContext, "페이스북 로그인 성공", Toast.LENGTH_SHORT).show()
             }
 
@@ -99,7 +99,7 @@ class LoginActivity : AppCompatActivity() {
                 editor.putBoolean("login", true)
                 editor.putString("loginType", "google")
                 editor.putString("loginName", account.displayName)
-                editor.putString("loginName", account.email)
+                //editor.putString("loginEmail", account.email)
                 editor.commit()
                 Toast.makeText(applicationContext, account.displayName+ " 구글 로그인 성공", Toast.LENGTH_SHORT).show()
             }

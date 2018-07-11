@@ -62,4 +62,9 @@ interface ServerInterface {
     fun searchContents(@Path("pageIdx") pageIdx : Int, @Path("searchname") searchname : String, @Path("searchType") searchType : Int, @Path("sortType") sortType : Int): Call<Network>
 
 
+    //login
+
+    @GET("/user/getmytext/{userIdx}")
+    fun getMyTextList(@Path("userIdx") userIdx : Int): Call<Network>
+
 }
