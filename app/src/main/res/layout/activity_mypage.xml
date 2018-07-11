@@ -71,37 +71,38 @@
 
     </RelativeLayout>
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="26.9dp">
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="1.92dp"
-        android:background="#E1E1E1"
-        />
+        android:layout_height="26.9dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1.92dp"
+            android:background="#E1E1E1"
+            />
 
-    <TextView
-        android:layout_width="78dp"
-        android:layout_height="18dp"
-        android:text="My Requests"
-        android:gravity="center"
-        android:textSize="13dp"
-        android:textColor="#A5A5A5"
-        android:layout_centerInParent="true"
-        />
+        <TextView
+            android:layout_width="78dp"
+            android:layout_height="18dp"
+            android:text="My Requests"
+            android:gravity="center"
+            android:textSize="13dp"
+            android:textColor="#A5A5A5"
+            android:layout_centerInParent="true"
+            />
 
-</RelativeLayout>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="340.9dp">
-    <android.support.v7.widget.RecyclerView
-
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/mypage_write"
-        >
+        android:layout_height="340.9dp">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
 
-</RelativeLayout>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mypage_write"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
 </LinearLayout>

@@ -16,10 +16,15 @@ import android.view.ViewGroup
 
 import com.cow.bridge.R
 import com.cow.bridge.home.dialog.OrderbyDialog
+import com.cow.bridge.network.ApplicationController
+import com.cow.bridge.network.Network
 import com.cow.bridge.subscribe.adapter.MySubscribeAdapter
 import com.cow.bridge.subscribe.adapter.SubscribeContentAdapter
 import kotlinx.android.synthetic.main.fragment_subscribe.*
 import kotlinx.android.synthetic.main.fragment_subscribe.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 /**
@@ -28,7 +33,7 @@ import kotlinx.android.synthetic.main.fragment_subscribe.view.*
  * create an instance of this fragment.
  */
 class SubscribeFragment : Fragment() {
-
+    val api = ApplicationController.instance?.buildServerInterface()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var convertView = inflater!!.inflate(R.layout.fragment_subscribe, container, false)
 
@@ -71,6 +76,24 @@ class SubscribeFragment : Fragment() {
                 startActivity(intent)
 
             }
+
+            var messagesCall = api?.getMySubscribeHashList(0, 1)
+            messagesCall?.enqueue(object : Callback<Network> {
+                override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                    var network = response!!.body()
+                    if(network?.message.equals("ok")){
+                        network.data?.get(0)?.hashcontents_list?.let {
+                            if(it.size!=0){
+                                mylistAdapter.addAll(it)
+                                mylistAdapter.notifyDataSetChanged()
+                            }
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                }
+            })
 
         }
 

@@ -1,15 +1,17 @@
 package com.cow.bridge.network
 
+import com.cow.bridge.model.Hash
+import com.cow.bridge.model.Request
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 import java.util.ArrayList
 
 /**
  * Created by jihaeseong on 2017. 2. 13..
  */
 interface ServerInterface {
+
+    //home
 
     @GET("/home/recent/{contentsCategory}/{lastcontentsIdx}")
     fun recentContentsList(@Path("contentsCategory") category : Int, @Path("lastcontentsIdx") lastcontentsIdx : Int): Call<Network>
@@ -26,4 +28,24 @@ interface ServerInterface {
     @GET("/home/recommended")
     fun recommendedContentsList(): Call<Network>
 
+
+    //subscribe
+
+    @GET("/subscribe/recommendedhashlist/{pageIdx}/{userIdx}")
+    fun recommendedHashList(@Path("pageIdx") pageIdx : Int, @Path("userIdx") userIdx : Int): Call<Network>
+
+    @GET("/subscribe/getsubhashlist/{pageIdx}/{userIdx}")
+    fun getMySubscribeHashList(@Path("pageIdx") pageIdx : Int, @Path("userIdx") userIdx : Int): Call<Network>
+
+    @POST("/subscribe/subscribemodify")
+    fun subscribeModify(@Body hash : Hash): Call<Network>
+
+
+    //request
+
+    @GET("/trequest/trequest_listview/{lastcontentsIdx}")
+    fun requestContentsList(@Path("lastcontentsIdx") lastcontentsIdx : Int): Call<Network>
+
+    @GET("/trequest/trequest_search/{searchname}")
+    fun requestSearchContentsList(@Path("searchname") searchname : String): Call<Network>
 }
