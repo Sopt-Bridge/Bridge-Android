@@ -31,8 +31,8 @@ interface ServerInterface {
 //    @GET ("/contents/getcontents{userIdx}/{contentsIdx}/{contentsType}")
 //    fun imageContents(@Path(""))
 
-    @POST("/contents/clike{contentsIdx}/{userIdx}")
-    fun ClikeContents(@Path("contentsIdx"), @Path("userIdx"))
+//    @POST("/contents/clike{contentsIdx}/{userIdx}")
+//    fun ClikeContents(@Path("contentsIdx"), @Path("userIdx"))
 
 
 

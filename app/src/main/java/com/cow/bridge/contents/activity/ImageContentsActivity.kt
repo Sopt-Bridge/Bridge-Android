@@ -40,6 +40,8 @@ class ImageContentsActivity : AppCompatActivity() {
         val text5 : ImageButton = findViewById(R.id.imgLike)
         val text6 : TextView = findViewById(R.id.imgLikeNum)
         val text7 : TextView = findViewById(R.id.imgCredit)
+        var text8 : TextView = findViewById(R.id.currentNum)
+        val text9 : TextView = findViewById(R.id.slash)
 
         clickId.add(text1)
         clickId.add(text2)
@@ -48,6 +50,8 @@ class ImageContentsActivity : AppCompatActivity() {
         clickId.add(text5)
         clickId.add(text6)
         clickId.add(text7)
+        clickId.add(text8)
+        clickId.add(text9)
 
         val container : LinearLayout = findViewById(R.id.imgMain)
         container.setOnClickListener {
@@ -68,6 +72,7 @@ class ImageContentsActivity : AppCompatActivity() {
         text1.text = imageContents?.imgCnt.toString()
         text4.text = imageContents?.contentsInfo
         text6.text = imageContents?.contentsLike.toString()
+
 
         //imgLike 아이콘 부분
         var likeFlag : Int?
@@ -98,6 +103,7 @@ class ImageContentsActivity : AppCompatActivity() {
         private val mFragmentList = ArrayList<Fragment>()
 
         override fun getItem(position: Int): Fragment {
+
             return mFragmentList[position]
         }
 
@@ -110,6 +116,7 @@ class ImageContentsActivity : AppCompatActivity() {
         }
 
     }
+
 
     override fun onStart() {
         super.onStart()
