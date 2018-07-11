@@ -65,18 +65,18 @@ class HotFragment : Fragment() {
 
             var messagesCall = api?.nowTrendContentsList(0)
             messagesCall?.enqueue(object : Callback<Network>{
-                override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
-                    var network = response!!.body()
-                    Log.v("nowTrendContentsList : ", Gson().toJson(network))
-                    if(network?.message.equals("ok")){
-                        network.data?.get(0)?.contents_list?.let {
-                            if(it.size!=0){
-                                nowTrendAdapter.addAll(it)
-                                nowTrendAdapter.notifyDataSetChanged()
+                    override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                        var network = response!!.body()
+                        Log.v("nowTrendContentsList : ", Gson().toJson(network))
+                        if(network?.message.equals("ok")){
+                            network.data?.get(0)?.contents_list?.let {
+                                if(it.size!=0){
+                                    nowTrendAdapter.addAll(it)
+                                    nowTrendAdapter.notifyDataSetChanged()
+                                }
                             }
                         }
                     }
-                }
                 override fun onFailure(call: Call<Network>?, t: Throwable?) {
 
                 }

@@ -1,6 +1,7 @@
 package com.cow.bridge.network
 
 import com.cow.bridge.model.Content
+import com.cow.bridge.model.ContentsComment
 import com.cow.bridge.model.Hash
 import com.cow.bridge.model.Request
 import java.util.ArrayList
@@ -15,4 +16,5 @@ class Result{
     var hashcontents_list: ArrayList<Hash>? = null
     var recommendedhashcontents_list: ArrayList<Hash>? = null
     var request_list: ArrayList<Request>? = null
+    var comments_list : ArrayList<ContentsComment>? = null
 }

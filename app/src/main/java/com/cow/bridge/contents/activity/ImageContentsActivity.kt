@@ -1,17 +1,34 @@
 package com.cow.bridge.contents.activity
 
-import android.support.v7.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.ViewPager
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.cow.bridge.R
+import com.cow.bridge.contents.adapter.ImageCommentAdapter
+import com.cow.bridge.model.Content
+import com.cow.bridge.network.ApplicationController
+import com.cow.bridge.network.Network
+import com.cow.bridge.network.ServerInterface
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_image_contents.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ImageContentsActivity : AppCompatActivity() {
     private lateinit var cancelButton : ImageButton
+    var api: ServerInterface? = null
+    lateinit var imgPager: ViewPager
 
     var clickId : ArrayList<View> = ArrayList()
 
@@ -19,16 +36,19 @@ class ImageContentsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image_contents)
 
+        imgPager = findViewById(R.id.viewPager)
         cancelButton = findViewById(R.id.imgContentsBackBtn)
         cancelButton.setOnClickListener{finish()}
+        api = ApplicationController.instance?.buildServerInterface()
 
+
+        // 화면 터치 시 아이콘 보임, 안 보임
         val text1 : TextView = findViewById(R.id.imgCount)
         val text2 : ImageButton = findViewById(R.id.imgLibraryBtn)
         val text3 : ImageButton = findViewById(R.id.imgFeedbackBtn)
         val text4 : TextView = findViewById(R.id.imgDes)
         val text5 : ImageButton = findViewById(R.id.imgLike)
         val text6 : TextView = findViewById(R.id.imgLikeNum)
-        val text7 : TextView = findViewById(R.id.imgCredit)
 
         clickId.add(text1)
         clickId.add(text2)
@@ -36,7 +56,7 @@ class ImageContentsActivity : AppCompatActivity() {
         clickId.add(text4)
         clickId.add(text5)
         clickId.add(text6)
-        clickId.add(text7)
+
 
         val container : LinearLayout = findViewById(R.id.imgMain)
         container.setOnClickListener {
@@ -47,12 +67,70 @@ class ImageContentsActivity : AppCompatActivity() {
                 else s.visibility = View.VISIBLE
             }
         }
-        
+
+        // imgCnt, imgDes, imgLikeNum 부분
+        var intent = Intent(this.intent)
+        var imageContents= intent.getSerializableExtra("imageContents") as? Content
+
+        Log.d("imageContents",imageContents.toString())
+
+        text4.text = imageContents?.contentsInfo
+        text6.text = imageContents?.contentsLike.toString()
+
+
+        val imgCommentAdapter: ImageCommentAdapter = ImageCommentAdapter(applicationContext)
+
+        val llm: LinearLayoutManager = LinearLayoutManager(this)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        image_comments_list.layoutManager = llm
+        image_comments_list.adapter = imgCommentAdapter
+
+
+        var messagesCall = api?.getImageContentCommentList(13, 0)
+        messagesCall?.enqueue(object : Callback<Network> {
+            override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                var network = response!!.body()
+                Log.v("imageCommentList : ", Gson().toJson(network))
+                if (network?.message.equals("ok")) {
+                    network.data?.get(0)?.comments_list?.let {
+                        if (it.size != 0) {
+                            imgCommentAdapter.addAll(it)
+                            imgCommentAdapter.notifyDataSetChanged()
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Network>?, t: Throwable?) {
+                Log.v("test fail : ", t.toString())
+            }
+        })
+
     }
+
+    inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
+        private val mFragmentList = ArrayList<Fragment>()
+
+        override fun getItem(position: Int): Fragment {
+
+            return mFragmentList[position]
+        }
+
+        override fun getCount(): Int {
+            return mFragmentList.size
+        }
+
+        fun addFragment(fragment: Fragment) {
+            mFragmentList.add(fragment)
+        }
+    }
+
 
     override fun onStart() {
         super.onStart()
 
     }
+
+
 
 }
