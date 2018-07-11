@@ -75,7 +75,7 @@ class HotFragment : Fragment() {
                                 hot_viewpager.adapter = hotAdapter
                                 hot_indicator.setViewPager(hot_viewpager)
 
-                                nowTrendAdapter.addAll(ArrayList(it.subList(4,7)))
+                                nowTrendAdapter.addAll(ArrayList(it.subList(4,it.size)))
                                 nowTrendAdapter.notifyDataSetChanged()
                             }
                         }

@@ -8,6 +8,10 @@ import java.util.*
  */
 
 class Content : Serializable{
+    constructor(contentsIdx : Int, userIdx : Int){
+        this.contentsIdx = contentsIdx
+        this.userIdx = userIdx
+    }
     var contentsIdx : Int = 0
     var contentsTitle : String = ""
     var contentsInfo : String = ""
@@ -25,5 +29,6 @@ class Content : Serializable{
     var contentsUrl : String = ""
     var contentsoriginUrl : String = ""
     var commentCnt : Int = 0
+    var userIdx : Int = 0
 
 }

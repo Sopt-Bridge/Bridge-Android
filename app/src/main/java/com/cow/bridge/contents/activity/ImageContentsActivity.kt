@@ -14,6 +14,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.cow.bridge.R
 import com.cow.bridge.model.Content
+import com.cow.bridge.network.ApplicationController
+import com.cow.bridge.network.Network
+import com.cow.bridge.network.ServerInterface
+import com.google.gson.Gson
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ImageContentsActivity : AppCompatActivity() {
     private lateinit var cancelButton : ImageButton
@@ -21,6 +28,8 @@ class ImageContentsActivity : AppCompatActivity() {
     lateinit var imgPager: ViewPager
 
     var clickId : ArrayList<View> = ArrayList()
+
+    val api : ServerInterface? = ApplicationController.instance?.buildServerInterface()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +39,7 @@ class ImageContentsActivity : AppCompatActivity() {
         cancelButton = findViewById(R.id.imgContentsBackBtn)
         cancelButton.setOnClickListener{finish()}
 
+        //POST 부분
 
         // 화면 터치 시 아이콘 보임, 안 보임
         val text1 : TextView = findViewById(R.id.imgCount)
@@ -82,6 +92,29 @@ class ImageContentsActivity : AppCompatActivity() {
             text5.setBackgroundResource(R.drawable.good_active_icon)
         }
 
+        text5.setOnClickListener {
+            var messagesCall = api?.clikeContents(Content(imageContents?.contentsIdx!! , 1))
+            messagesCall?.enqueue(object : Callback<Network> {
+                override fun onFailure(call: Call<Network>?, t: Throwable?) {
+                    Log.v("test fail : ", t.toString())
+                }
+                override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                    var network = response!!.body()
+                    Log.v("test", Gson().toJson(network))
+                    if(network?.message.equals("ok")) {
+                        if(likeFlag==0){
+                            likeFlag =1
+                            text5.setBackgroundResource(R.drawable.good_normal_btn)
+                        } else if(likeFlag==0){
+                            likeFlag =0
+                            text5.setBackgroundResource(R.drawable.good_active_icon)
+                        }
+                    }
+                }
+            })
+        }
+
+
         // view pager 연결
         val adapter = ViewPagerAdapter(supportFragmentManager)
         for (i in 1..imageContents?.imgCnt!!)  {
@@ -91,23 +124,27 @@ class ImageContentsActivity : AppCompatActivity() {
         imgPager.offscreenPageLimit = 2
         imgPager.adapter = adapter
 
-        imgPager.addOnAdapterChangeListener(object : ViewPager.OnPageChangeListener) {
-            override fun onPageScrollStateChanged(state : Int) {
+        imgPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+            override fun onPageScrollStateChanged(state: Int) {
 
             }
+
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
             }
-        }
 
+            override fun onPageSelected(position: Int) {
+                text7.text = position.plus(1).toString()
+                Log.v("test : ", "$position")
+            }
 
+        })
     }
 
+    // adapter
     inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
         private val mFragmentList = ArrayList<Fragment>()
 
         override fun getItem(position: Int): Fragment {
-
             return mFragmentList[position]
         }
 

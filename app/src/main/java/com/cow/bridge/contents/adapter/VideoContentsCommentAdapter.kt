@@ -26,5 +26,5 @@ class VideoContentsCommentAdapter(val context : Context, val commentDataItem : A
 
         inner class VideoContentsCommentViewHolder(val view : View):RecyclerView.ViewHolder(view){
 
-        }
+    }
 }

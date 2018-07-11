@@ -1,5 +1,6 @@
 package com.cow.bridge.network
 
+import com.cow.bridge.model.Content
 import com.cow.bridge.model.Hash
 import com.cow.bridge.model.Request
 import retrofit2.Call
@@ -36,8 +37,8 @@ interface ServerInterface {
 //    @GET ("/contents/getcontents{userIdx}/{contentsIdx}/{contentsType}")
 //    fun imageContents(@Path(""))
 
-//    @POST("/contents/clike{contentsIdx}/{userIdx}")
-//    fun ClikeContents(@Body("contentsIdx"), @Path("userIdx"))
+    @POST("/contents/clike")
+    fun clikeContents(@Body content : Content)  : Call<Network>
 
 
     //subscribe

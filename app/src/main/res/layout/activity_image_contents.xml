@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="18.15dp"
                         android:gravity="left"
-                        android:text="19"
+                        android:text="1"
                         android:textColor="#fff"
                         android:textSize="14dp" />
 
@@ -176,11 +176,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#E31C9E" />
-
             <Button
                 android:id="@+id/commentsBtn"
                 android:layout_width="match_parent"
@@ -192,6 +187,10 @@
                 android:textColor="#E31C9E"
                 android:textSize="17dp" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#E31C9E" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/comments_list"
