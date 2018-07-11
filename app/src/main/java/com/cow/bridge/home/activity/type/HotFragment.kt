@@ -59,11 +59,8 @@ class HotFragment : Fragment() {
             messagesCall?.enqueue(object : Callback<Network>{
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
-<<<<<<< HEAD
                     Log.v("test", Gson().toJson(network))
-=======
                     Log.v("nowTrendContentsList : ", Gson().toJson(network))
->>>>>>> 14ae2e36045b5d6ef8be841ebd4fba45ac79e485
                     if(network?.message.equals("ok")){
                         network.data?.get(0)?.contents_list?.let {
                             if(it.size!=0){

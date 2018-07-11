@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.View
+import android.widget.ImageButton
 import com.cow.bridge.R
 import com.cow.bridge.login.adapter.MypageAdapter
 import com.cow.bridge.model.MypageItems
@@ -18,7 +19,7 @@ class MypageActivity : AppCompatActivity() {
     lateinit var toolbar: Toolbar
     lateinit var mypageItems : ArrayList<MypageItems>
     lateinit var myAdapter: MypageAdapter
-
+    private lateinit var cancelButton : ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,9 @@ class MypageActivity : AppCompatActivity() {
         recyclerView.adapter = myAdapter
         recyclerView.addItemDecoration(ItemDecoration())
 
+        cancelButton = findViewById(R.id.back_btn)
+        cancelButton.setOnClickListener{finish()}
     }
 }
+
 

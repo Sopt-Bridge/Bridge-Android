@@ -14,7 +14,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.cow.bridge.R
 import com.cow.bridge.model.Content
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 class ImageContentsActivity : AppCompatActivity() {
     private lateinit var cancelButton : ImageButton
@@ -27,7 +26,6 @@ class ImageContentsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image_contents)
 
-<<<<<<< HEAD
         imgPager = findViewById(R.id.viewPager)
         cancelButton = findViewById(R.id.imgContentsBackBtn)
         cancelButton.setOnClickListener{finish()}
@@ -40,9 +38,8 @@ class ImageContentsActivity : AppCompatActivity() {
         val text4 : TextView = findViewById(R.id.imgDes)
         val text5 : ImageButton = findViewById(R.id.imgLike)
         val text6 : TextView = findViewById(R.id.imgLikeNum)
-        val text7 : TextView = findViewById(R.id.imgCredit)
-        var text8 : TextView = findViewById(R.id.currentNum)
-        val text9 : TextView = findViewById(R.id.slash)
+        val text7 : TextView = findViewById(R.id.currentNum)
+        val text8 : TextView = findViewById(R.id.slash)
 
         clickId.add(text1)
         clickId.add(text2)
@@ -52,7 +49,6 @@ class ImageContentsActivity : AppCompatActivity() {
         clickId.add(text6)
         clickId.add(text7)
         clickId.add(text8)
-        clickId.add(text9)
 
         val container : LinearLayout = findViewById(R.id.imgMain)
         container.setOnClickListener {
@@ -86,20 +82,24 @@ class ImageContentsActivity : AppCompatActivity() {
             text5.setBackgroundResource(R.drawable.good_active_icon)
         }
 
-
-
         // view pager 연결
         val adapter = ViewPagerAdapter(supportFragmentManager)
         for (i in 1..imageContents?.imgCnt!!)  {
             adapter.addFragment(ImageFragment.newInstance(i,imageContents.contentsIdx))
         }
+
         imgPager.offscreenPageLimit = 2
         imgPager.adapter = adapter
 
+        imgPager.addOnAdapterChangeListener(object : ViewPager.OnPageChangeListener) {
+            override fun onPageScrollStateChanged(state : Int) {
 
-=======
-        
->>>>>>> 14ae2e36045b5d6ef8be841ebd4fba45ac79e485
+            }
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+        }
+
 
     }
 
@@ -118,7 +118,6 @@ class ImageContentsActivity : AppCompatActivity() {
         fun addFragment(fragment: Fragment) {
             mFragmentList.add(fragment)
         }
-
     }
 
 
