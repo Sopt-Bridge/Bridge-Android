@@ -89,4 +89,8 @@ interface ServerInterface {
     @POST("/user/quit")
     fun withdrawal(@Body user : User): Call<Network>
 
+    //comment
+    @GET("/contents/ccomment_view/{contentsIdx}/{lastcontentsIdx}")
+    fun getImageContentCommentList(@Path("contentsIdx") contentsIdx : Int,@Path("lastcontentsIdx") lastcontentsIdx : Int): Call<Network>
+
 }

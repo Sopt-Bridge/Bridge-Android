@@ -7,24 +7,26 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.cow.bridge.R
+import com.cow.bridge.contents.adapter.ImageCommentAdapter
 import com.cow.bridge.model.Content
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_image_contents.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class ImageContentsActivity : AppCompatActivity() {
     private lateinit var cancelButton : ImageButton
-
     lateinit var imgPager: ViewPager
 
     var clickId : ArrayList<View> = ArrayList()
@@ -39,7 +41,7 @@ class ImageContentsActivity : AppCompatActivity() {
         cancelButton = findViewById(R.id.imgContentsBackBtn)
         cancelButton.setOnClickListener{finish()}
 
-        //POST 부분
+
 
         // 화면 터치 시 아이콘 보임, 안 보임
         val text1 : TextView = findViewById(R.id.imgCount)
@@ -74,12 +76,9 @@ class ImageContentsActivity : AppCompatActivity() {
         var intent = Intent(this.intent)
         var imageContents= intent.getSerializableExtra("imageContents") as? Content
 
-        Log.d("imageContents",imageContents.toString())
-
         text1.text = imageContents?.imgCnt.toString()
         text4.text = imageContents?.contentsInfo
         text6.text = imageContents?.contentsLike.toString()
-
 
         //imgLike 아이콘 부분
         var likeFlag : Int?
@@ -138,9 +137,37 @@ class ImageContentsActivity : AppCompatActivity() {
             }
 
         })
+
+        val imgCommentAdapter: ImageCommentAdapter = ImageCommentAdapter(applicationContext)
+
+        val llm: LinearLayoutManager = LinearLayoutManager(this)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        image_comments_list.layoutManager = llm
+        image_comments_list.adapter = imgCommentAdapter
+
+
+        var messagesCall = api?.getImageContentCommentList(13, 0)
+        messagesCall?.enqueue(object : Callback<Network> {
+            override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                var network = response!!.body()
+                Log.v("imageCommentList : ", Gson().toJson(network))
+                if (network?.message.equals("ok")) {
+                    network.data?.get(0)?.comments_list?.let {
+                        if (it.size != 0) {
+                            imgCommentAdapter.addAll(it)
+                            imgCommentAdapter.notifyDataSetChanged()
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Network>?, t: Throwable?) {
+                Log.v("test fail : ", t.toString())
+            }
+        })
+
     }
 
-    // adapter
     inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
         private val mFragmentList = ArrayList<Fragment>()
 
