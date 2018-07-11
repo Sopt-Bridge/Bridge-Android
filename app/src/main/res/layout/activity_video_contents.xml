@@ -106,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/video_contents_bt_recommend"
                     android:layout_marginRight="10.89dp"
-                    android:textColor="#000000"
+                    android:textColor="#333333"
                     android:textSize="13dp"
                     android:text="36"/>
 

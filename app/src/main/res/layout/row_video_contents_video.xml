@@ -25,7 +25,8 @@
                 android:layout_width="29.55dp"
                 android:layout_height="29.55dp"
                 android:layout_gravity="bottom"
-                android:src="@drawable/play_inside_content_icon" />
+                android:src="@drawable/home_video_thumnail_icon"
+                android:background="@drawable/round_btn_done"/>
 
             <TextView
                 android:id="@+id/video_contents_video_tv_contents_time"
