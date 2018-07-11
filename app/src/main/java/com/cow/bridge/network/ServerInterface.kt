@@ -62,12 +62,13 @@ interface ServerInterface {
     @GET("/search/search/{pageIdx}/{searchname}/{searchType}/{sortType}")
     fun searchContents(@Path("pageIdx") pageIdx : Int, @Path("searchname") searchname : String, @Path("searchType") searchType : Int, @Path("sortType") sortType : Int): Call<Network>
 
-    @POST("/user/quit")
-    fun withdrawal(@Body user : User): Call<Network>
 
     //login
 
     @GET("/user/getmytext/{userIdx}")
     fun getMyTextList(@Path("userIdx") userIdx : Int): Call<Network>
+
+    @POST("/user/quit")
+    fun withdrawal(@Body user : User): Call<Network>
 
 }

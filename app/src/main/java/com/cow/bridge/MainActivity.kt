@@ -47,23 +47,50 @@ class MainActivity : AppCompatActivity() {
         }
 
         main_bottom_navigation.setOnNavigationItemSelectedListener { item ->
+            var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
+            login = sp.getBoolean("login", false)
+
             when (item.itemId) {
 
                 R.id.action_home -> {
                     main_viewpager.setCurrentItem(0, false)
                     main_toolbar.visibility = VISIBLE
+                    main_viewpager.visibility = VISIBLE
+                    main_layout_nologin.visibility = GONE
                 }
                 R.id.action_subscribe -> {
                     main_viewpager.setCurrentItem(1, false)
-                    main_toolbar.visibility = VISIBLE
+                    if(login!!){
+                        main_viewpager.visibility = VISIBLE
+                        main_layout_nologin.visibility = GONE
+                        main_toolbar.visibility = VISIBLE
+                    }else{
+                        main_viewpager.visibility = GONE
+                        main_layout_nologin.visibility = VISIBLE
+                    }
                 }
                 R.id.action_request -> {
                     main_viewpager.setCurrentItem(2, false)
-                    main_toolbar.visibility = GONE
+                    if(login!!){
+                        main_viewpager.visibility = VISIBLE
+                        main_layout_nologin.visibility = GONE
+                        main_toolbar.visibility = GONE
+
+                    }else{
+                        main_viewpager.visibility = GONE
+                        main_layout_nologin.visibility = VISIBLE
+                    }
                 }
                 R.id.action_library -> {
                     main_viewpager.setCurrentItem(3, false)
-                    main_toolbar.visibility = VISIBLE
+                    if(login!!){
+                        main_viewpager.visibility = VISIBLE
+                        main_layout_nologin.visibility = GONE
+                        main_toolbar.visibility = VISIBLE
+                    }else{
+                        main_viewpager.visibility = GONE
+                        main_layout_nologin.visibility = VISIBLE
+                    }
                 }
             }
             false
@@ -114,6 +141,7 @@ class MainActivity : AppCompatActivity() {
             main_button_login.visibility = VISIBLE
             main_button_profile.visibility = GONE
         }
+
     }
 
     inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
