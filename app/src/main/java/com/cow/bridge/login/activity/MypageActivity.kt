@@ -26,7 +26,7 @@ class MypageActivity : AppCompatActivity() {
 
         toolbar = findViewById<View>(R.id.mypage_toolbar) as Toolbar //툴바설정
 
-        val recyclerView = findViewById<View>(R.id.mypage_write) as RecyclerView
+        val recyclerView = findViewById<View>(R.id.mypage_recycler_mywritten) as RecyclerView
 
         mypageItems = ArrayList()
         mypageItems.add(MypageItems("[Requests] 번역 오역 요청", "2018.01.03"))
