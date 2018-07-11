@@ -1,6 +1,5 @@
 package com.cow.bridge.login.activity
 
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -36,11 +35,15 @@ class LoginActivity : AppCompatActivity() {
                 var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
                 var editor : SharedPreferences.Editor = sp.edit()
                 editor.putBoolean("login", true)
+                editor.putString("loginUuid", Profile.getCurrentProfile().id)
                 editor.putString("loginType", "facebook")
                 editor.putString("loginName", Profile.getCurrentProfile().name)
                 editor.commit()
                 //requestUserProfile(result!!)
                 Toast.makeText(applicationContext, "페이스북 로그인 성공", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@LoginActivity, MypageActivity::class.java)
+                startActivity(intent)
+                finish()
             }
 
             override fun onCancel() {
@@ -97,11 +100,15 @@ class LoginActivity : AppCompatActivity() {
                 var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
                 var editor : SharedPreferences.Editor = sp.edit()
                 editor.putBoolean("login", true)
+                editor.putString("loginUuid", account.id)
                 editor.putString("loginType", "google")
                 editor.putString("loginName", account.displayName)
                 //editor.putString("loginEmail", account.email)
                 editor.commit()
                 Toast.makeText(applicationContext, account.displayName+ " 구글 로그인 성공", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@LoginActivity, MypageActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         }else{
             callbackManager?.onActivityResult(requestCode, resultCode, data)

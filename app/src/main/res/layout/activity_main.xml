@@ -51,6 +51,15 @@
                     android:textColor="#D1D1D1"
                     android:textSize="10dp" />
 
+                <Button
+                    android:id="@+id/main_button_profile"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/mypage_btn_mid_comment_profile"
+                    android:visibility="gone" />
+
             </FrameLayout>
         </android.support.v7.widget.Toolbar>
 

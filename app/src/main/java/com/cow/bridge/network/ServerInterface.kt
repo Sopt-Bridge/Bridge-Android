@@ -2,6 +2,7 @@ package com.cow.bridge.network
 
 import com.cow.bridge.model.Hash
 import com.cow.bridge.model.Request
+import com.cow.bridge.model.User
 import retrofit2.Call
 import retrofit2.http.*
 import java.util.ArrayList
@@ -61,6 +62,8 @@ interface ServerInterface {
     @GET("/search/search/{pageIdx}/{searchname}/{searchType}/{sortType}")
     fun searchContents(@Path("pageIdx") pageIdx : Int, @Path("searchname") searchname : String, @Path("searchType") searchType : Int, @Path("sortType") sortType : Int): Call<Network>
 
+    @POST("/user/quit")
+    fun withdrawal(@Body user : User): Call<Network>
 
     //login
 

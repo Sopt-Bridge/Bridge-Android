@@ -32,14 +32,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         main_button_login.setOnClickListener{
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
-            if(login!!){
-                val intent = Intent(this, MypageActivity::class.java)
-                startActivity(intent)
-            }else{
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-            }
+        main_button_profile.setOnClickListener {
+            val intent = Intent(this, MypageActivity::class.java)
+            startActivity(intent)
         }
 
         main_image_search.setOnClickListener {
@@ -108,6 +107,13 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
         login = sp.getBoolean("login", false)
+        if(login!!){
+            main_button_login.visibility = GONE
+            main_button_profile.visibility = VISIBLE
+        }else{
+            main_button_login.visibility = VISIBLE
+            main_button_profile.visibility = GONE
+        }
     }
 
     inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
