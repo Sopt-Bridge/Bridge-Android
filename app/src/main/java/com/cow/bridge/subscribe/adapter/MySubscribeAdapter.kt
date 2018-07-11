@@ -27,7 +27,7 @@ class MySubscribeAdapter(internal var _context: Context) : RecyclerView.Adapter<
         this.onMySubscribeItemClickListener = onMySubscribeItemClickListener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         var convertView : View
         if(viewType==0){
@@ -41,7 +41,7 @@ class MySubscribeAdapter(internal var _context: Context) : RecyclerView.Adapter<
 
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(getItemViewType(position)==0){
             with((holder as MySubscribeViewHolder).itemView){
                 subscribe_text_hashname.text = items[position].hashName

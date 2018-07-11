@@ -13,17 +13,16 @@ import com.cow.bridge.util.UtilController
 import kotlinx.android.synthetic.main.fragment_image_comments.view.*
 import kotlinx.android.synthetic.main.row_contents_simple.view.*
 
-class ImageCommentAdapter(internal var _context: Context)
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
+class ImageCommentAdapter(internal var _context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
 
     var items = ArrayList<ContentsComment>()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val convertView = LayoutInflater.from(_context).inflate(R.layout.fragment_image_comments, parent, false)
         return ImageContentsCommentViewHolder(convertView)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         with((holder as ImageContentsCommentViewHolder).itemView){
 
             image_comment_text_title.text = items[position].CcmtContent

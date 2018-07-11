@@ -23,12 +23,12 @@ import kotlinx.android.synthetic.main.row_contents_simple.view.*
 class RecommendedAdapter(internal var _context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var items = ArrayList<Content>()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val convertView = LayoutInflater.from(_context).inflate(R.layout.row_contents_simple, parent, false)
         return RecommendedViewHolder(convertView)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         with((holder as RecommendedViewHolder).itemView){
 
             contents_layout_main.setOnClickListener {

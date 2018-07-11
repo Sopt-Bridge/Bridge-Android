@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.row_video_contents_comment.view.*
 import com.cow.bridge.R
 
 class VideoContentsCommentAdapter(val context : Context, val commentDataItem : ArrayList<VideoContentsCommentData> ) : RecyclerView.Adapter<VideoContentsCommentAdapter.VideoContentsCommentViewHolder>(){
-        override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): VideoContentsCommentViewHolder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoContentsCommentViewHolder {
             val mainView : View = LayoutInflater.from(parent!!.context).inflate(R.layout.row_video_contents_comment,parent,false)
             return VideoContentsCommentViewHolder(mainView)
         }
