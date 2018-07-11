@@ -9,14 +9,18 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.cow.bridge.R
 import com.cow.bridge.home.adapter.SearchResultAdapter
 import com.cow.bridge.home.dialog.OrderbyDialog
+import com.cow.bridge.model.Hash
 import com.cow.bridge.model.SearchWord
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.search.searchlibrary.MaterialSearchView
 import com.cow.bridge.util.UtilController
+import com.google.gson.Gson
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_search.*
@@ -31,6 +35,7 @@ class SearchActivity : AppCompatActivity() {
     var api = ApplicationController.instance?.buildServerInterface()
     var searchResultAdapter : SearchResultAdapter? = null
     var queryTmp = ""
+    var hashSubFlag = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,13 +67,13 @@ class SearchActivity : AppCompatActivity() {
                     var realm = Realm.getDefaultInstance()
                     realm.executeTransaction {
                         var searchWord = realm.createObject(SearchWord::class.java)
-                        searchWord.recentlyWord = "#${query}"
+                        searchWord.recentlyWord = if(query.startsWith("#")) "${query}" else "#${query}"
                         searchWord.searchDateTime = Date().time.toString()
                         searchWord.thumbnailImage = ""
                         //TODO 썸네일 넣기
                     }
                     realm.close()
-                    getSearchContentsList(query!!, 0, 0)
+                    getSearchContentsList(if(query.startsWith("#")) query.substring(1) else query, 0, 0)
                 }
 
                 return false
@@ -162,6 +167,79 @@ class SearchActivity : AppCompatActivity() {
     fun getSearchContentsList(query : String, searchType : Int, sortType : Int){
         if(searchType==0){
             search_layout_hash.visibility = View.VISIBLE
+
+            var messagesCall = api?.getSearchHashInfo(1, query!!)
+            messagesCall?.enqueue(object : Callback<Network> {
+                override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                    var network = response!!.body()
+                    Log.v("test", Gson().toJson(network))
+                    if(network?.message.equals("ok")){
+                        network.data?.get(0)?.hashcontents_list?.let {
+                            if(it.size!=0){
+                                Glide.with(this@SearchActivity).load(it.get(0).hashImg).into(search_image_hash_thumbnail)
+                                search_text_hash_name.text = it.get(0).hashName
+                                search_text_hash_subcount.text = "Subscribers ${it.get(0).hashCnt}"
+                                if(it.get(0).subflagresult==0){
+                                    hashSubFlag = 0
+                                    search_image_hash_sub.setImageResource(R.drawable.subscribe_normal_btn)
+                                    search_text_hash_sub.setTextColor(Color.parseColor("#D1D1D1"))
+                                }else{
+                                    hashSubFlag = 1
+                                    search_image_hash_sub.setImageResource(R.drawable.subscribe_active_btn)
+                                    search_text_hash_sub.setTextColor(Color.parseColor("#E31C9E"))
+                                }
+
+                                search_layout_hash_sub.setOnClickListener {
+                                    if(hashSubFlag==0){
+                                        //bestchannel_image_subscribe.init(_context as Activity?)
+                                        //TODO userIdx 수정
+                                        var messagesCall = api?.subscribeModify(Hash(network.data?.get(0)?.hashcontents_list?.get(0)?.hashName!!, 1))
+                                        messagesCall?.enqueue(object : Callback<Network> {
+                                            override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                                                var network = response!!.body()
+                                                Log.v("subscribeModify : ", Gson().toJson(network))
+                                                if(network?.message.equals("ok")){
+                                                    hashSubFlag = 1
+                                                    search_image_hash_sub.setImageResource(R.drawable.subscribe_active_btn)
+                                                    search_text_hash_sub.setTextColor(Color.parseColor("#E31C9E"))
+                                                    Toast.makeText(this@SearchActivity, "${network.data?.get(0)?.hashcontents_list?.get(0)?.hashName} added", Toast.LENGTH_SHORT).show()
+                                                }
+                                            }
+                                            override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                                            }
+                                        })
+                                    }else{
+                                        //bestchannel_image_subscribe.init(_context as Activity?)
+                                        var messagesCall = api?.subscribeModify(Hash(network.data?.get(0)?.hashcontents_list?.get(0)?.hashName!!, 1))
+                                        messagesCall?.enqueue(object : Callback<Network> {
+                                            override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                                                var network = response!!.body()
+                                                Log.v("subscribeModify : ", Gson().toJson(network))
+                                                if(network?.message.equals("ok")){
+                                                    hashSubFlag = 0
+                                                    search_image_hash_sub.setImageResource(R.drawable.subscribe_normal_btn)
+                                                    search_text_hash_sub.setTextColor(Color.parseColor("#D1D1D1"))
+                                                    Toast.makeText(this@SearchActivity, "${network.data?.get(0)?.hashcontents_list?.get(0)?.hashName} removed", Toast.LENGTH_SHORT).show()
+                                                }
+                                            }
+                                            override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                                            }
+                                        })
+                                    }
+                                }
+                            }else{
+                                search_layout_hash.visibility = View.GONE
+                            }
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<Network>?, t: Throwable?) {
+                    Log.v("test", t.toString())
+
+                }
+            })
         }else{
             search_layout_hash.visibility = View.GONE
         }

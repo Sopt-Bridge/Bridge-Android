@@ -22,7 +22,7 @@
             android:visibility="gone">
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/search_image_hash_thumbnail"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_gravity="center_vertical"
@@ -38,7 +38,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/search_text_hash_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="7dp"
@@ -48,13 +48,14 @@
                     tools:text="#BTS" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/search_text_hash_subcount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Subscribers" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/search_layout_hash_sub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -64,13 +65,13 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imageView8"
+                    android:id="@+id/search_image_hash_sub"
                     android:layout_width="31dp"
                     android:layout_height="30dp"
                     app:srcCompat="@drawable/home_image_thumnail_icon" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/search_text_hash_sub"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="none"

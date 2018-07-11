@@ -62,6 +62,9 @@ interface ServerInterface {
     @GET("/search/search/{pageIdx}/{searchname}/{searchType}/{sortType}")
     fun searchContents(@Path("pageIdx") pageIdx : Int, @Path("searchname") searchname : String, @Path("searchType") searchType : Int, @Path("sortType") sortType : Int): Call<Network>
 
+    @GET("/search/getonehash/{userIdx}/{hashName}")
+    fun getSearchHashInfo(@Path("userIdx") userIdx: Int, @Path("hashName") hashName: String): Call<Network>
+
 
     //login
 

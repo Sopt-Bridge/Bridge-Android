@@ -179,7 +179,19 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
                 viewHolderNormal.deleteImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        realm = Realm.getDefaultInstance();
+                        realm.executeTransaction(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                SearchWord searchWord = realm.where(SearchWord.class).equalTo("recentlyWord", currentListData).findFirst();
+                                if(searchWord!=null){
+                                    searchWord.deleteFromRealm();
+                                    data.remove(position);
+                                }
+                                notifyDataSetChanged();
+                            }
+                        });
+                        realm.close();
                     }
                 });
             }
