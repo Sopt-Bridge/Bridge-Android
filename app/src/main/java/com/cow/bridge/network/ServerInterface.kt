@@ -54,4 +54,12 @@ interface ServerInterface {
 
     @POST("/trequest/trequest_write")
     fun requestWriteContents(@Body request : Request): Call<Network>
+
+
+    //search
+
+    @GET("/search/search/{pageIdx}/{searchname}/{searchType}/{sortType}")
+    fun searchContents(@Path("pageIdx") pageIdx : Int, @Path("searchname") searchname : String, @Path("searchType") searchType : Int, @Path("sortType") sortType : Int): Call<Network>
+
+
 }

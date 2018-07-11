@@ -76,7 +76,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
     private OnQueryTextListener mOnQueryChangeListener;
     private SearchViewListener mSearchViewListener;
 
-    private ListAdapter mAdapter;
+    private SearchAdapter mAdapter;
 
     private SavedState mSavedState;
     private boolean submit = false;
@@ -189,7 +189,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
 
         initSearchView();
 
-        mSuggestionsListView.setVisibility(GONE);
+        //mSuggestionsListView.setVisibility(GONE);
 
 
 
@@ -276,12 +276,16 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
                 hashButton.setTextColor(Color.parseColor("#AAAAAA"));
                 hashImage.setBackgroundColor(Color.parseColor("#AAAAAA"));
                 searchType = "normal";
+                mAdapter.setSearchType("normal");
+                startFilter(mSearchSrcTextView.getText());
             } else if (v == hashButton) {
                 normalButton.setTextColor(Color.parseColor("#AAAAAA"));
                 normalImage.setBackgroundColor(Color.parseColor("#AAAAAA"));
                 hashButton.setTextColor(Color.parseColor("#E31C9E"));
                 hashImage.setBackgroundColor(Color.parseColor("#E31C9E"));
                 searchType = "hash";
+                mAdapter.setSearchType("hash");
+                startFilter(mSearchSrcTextView.getText());
             }
         }
     };
@@ -422,9 +426,6 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
 
     //Public Methods
 
-    /**
-     * Call this method to show suggestions list. This shows up when adapter is set. Call {@link #setAdapter(ListAdapter)} before calling this.
-     */
     public void showSuggestions() {
         if (mAdapter != null && mAdapter.getCount() > 0 && mSuggestionsListView.getVisibility() == GONE) {
             mSuggestionsListView.setVisibility(VISIBLE);
@@ -454,7 +455,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
      *
      * @param adapter
      */
-    public void setAdapter(ListAdapter adapter) {
+    public void setAdapter(SearchAdapter adapter) {
         mAdapter = adapter;
         mSuggestionsListView.setAdapter(adapter);
         startFilter(mSearchSrcTextView.getText());
