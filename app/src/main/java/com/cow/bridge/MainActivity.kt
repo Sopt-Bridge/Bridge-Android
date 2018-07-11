@@ -1,6 +1,8 @@
 package com.cow.bridge
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -10,7 +12,6 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Toast
 import com.cow.bridge.home.activity.HomeFragment
 import com.cow.bridge.library.activity.LibraryFragment
 import com.cow.bridge.login.activity.LoginActivity
@@ -19,23 +20,26 @@ import com.cow.bridge.request.activity.RequestFragment
 import com.cow.bridge.search.activity.SearchActivity
 import com.cow.bridge.subscribe.activity.SubscribeFragment
 import com.cow.bridge.util.BottomNavigationViewHelper
-import com.facebook.AccessToken
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     var prevMenuItem: MenuItem? = null
+    var login : Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         main_button_login.setOnClickListener{
-            val intent = Intent(this, MypageActivity::class.java)
-            //val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+
+            if(login!!){
+                val intent = Intent(this, MypageActivity::class.java)
+                startActivity(intent)
+            }else{
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         main_image_search.setOnClickListener {
@@ -98,6 +102,12 @@ class MainActivity : AppCompatActivity() {
         adapter.addFragment(RequestFragment())
         adapter.addFragment(LibraryFragment())
         main_viewpager.adapter = adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
+        login = sp.getBoolean("login", false)
     }
 
     inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
