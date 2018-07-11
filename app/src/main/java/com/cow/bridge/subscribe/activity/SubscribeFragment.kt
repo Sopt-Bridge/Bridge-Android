@@ -76,6 +76,7 @@ class SubscribeFragment : Fragment() {
                 override fun onMySubscribeItemClickListener(hash : Hash) {
                     var hashTmp = Hash(hash.hashName)
                     hashTmp.pageIdx = 0
+                    hashTmp.sortType = 0
                     getHashContentList(hashTmp)
                 }
 
@@ -113,6 +114,7 @@ class SubscribeFragment : Fragment() {
                             mylistAdapter?.notifyDataSetChanged()
                             var hash = Hash(it[0].hashName)
                             hash.pageIdx = 0
+                            hash.sortType = 0
                             getHashContentList(hash)
                         }
                     }

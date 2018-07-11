@@ -5,7 +5,6 @@
     android:layout_height="169dp"
     tools:context="com.cow.bridge.home.activity.type.hot.NowTrendFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <ImageView
         android:id="@+id/nowtrend_image_thumbnail"
