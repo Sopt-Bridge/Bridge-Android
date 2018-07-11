@@ -17,7 +17,8 @@ import com.cow.bridge.home.activity.type.hot.NowTrendFragment
 import com.cow.bridge.home.adapter.NowTrendAdapter
 import com.cow.bridge.home.adapter.RecentAdapter
 import com.cow.bridge.home.adapter.RecommendedAdapter
-import com.cow.bridge.network.ApplicationController
+ import com.cow.bridge.model.Content
+ import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
  import com.google.gson.Gson
@@ -36,16 +37,7 @@ class HotFragment : Fragment() {
         val convertView = inflater!!.inflate(R.layout.fragment_hot, container, false)
         api = ApplicationController.instance?.buildServerInterface()
 
-        val adapter = ViewPagerAdapter(fragmentManager!!)
-        adapter.addFragment(NowTrendFragment())
-        adapter.addFragment(NowTrendFragment())
-        adapter.addFragment(NowTrendFragment())
-        adapter.addFragment(NowTrendFragment())
-
         with(convertView){
-            hot_viewpager.offscreenPageLimit = 3
-            hot_viewpager.adapter = adapter
-            hot_indicator.setViewPager(hot_viewpager)
 
             val nowTrendAdapter : NowTrendAdapter = NowTrendAdapter(context)
             val recommendedAdapter : RecommendedAdapter = RecommendedAdapter(context)
@@ -67,11 +59,26 @@ class HotFragment : Fragment() {
             messagesCall?.enqueue(object : Callback<Network>{
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
+<<<<<<< HEAD
                     Log.v("test", Gson().toJson(network))
+=======
+                    Log.v("nowTrendContentsList : ", Gson().toJson(network))
+>>>>>>> 14ae2e36045b5d6ef8be841ebd4fba45ac79e485
                     if(network?.message.equals("ok")){
                         network.data?.get(0)?.contents_list?.let {
                             if(it.size!=0){
-                                nowTrendAdapter.addAll(it)
+
+                                val hotAdapter = ViewPagerAdapter(childFragmentManager)
+                                hotAdapter.addFragment(NowTrendFragment.newInstance(it[0]))
+                                hotAdapter.addFragment(NowTrendFragment.newInstance(it[1]))
+                                hotAdapter.addFragment(NowTrendFragment.newInstance(it[2]))
+                                hotAdapter.addFragment(NowTrendFragment.newInstance(it[3]))
+
+                                hot_viewpager.offscreenPageLimit = 1
+                                hot_viewpager.adapter = hotAdapter
+                                hot_indicator.setViewPager(hot_viewpager)
+
+                                nowTrendAdapter.addAll(ArrayList(it.subList(4,7)))
                                 nowTrendAdapter.notifyDataSetChanged()
                             }
                         }
@@ -123,7 +130,10 @@ class HotFragment : Fragment() {
         return convertView
     }
 
+    override fun onResume() {
+        super.onResume()
 
+    }
 
     inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
         private val mFragmentList = ArrayList<Fragment>()

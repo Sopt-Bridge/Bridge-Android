@@ -32,7 +32,4 @@
 >>>>>>> d4cf65aa9e142649185e1973542ac8b5ef726407
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
-  <component name="ProjectType">
-    <option name="id" value="Android" />
-  </component>
 </project>

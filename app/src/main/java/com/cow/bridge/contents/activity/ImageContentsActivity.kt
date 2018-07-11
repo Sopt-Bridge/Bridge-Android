@@ -27,6 +27,7 @@ class ImageContentsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image_contents)
 
+<<<<<<< HEAD
         imgPager = findViewById(R.id.viewPager)
         cancelButton = findViewById(R.id.imgContentsBackBtn)
         cancelButton.setOnClickListener{finish()}
@@ -96,6 +97,9 @@ class ImageContentsActivity : AppCompatActivity() {
         imgPager.adapter = adapter
 
 
+=======
+        
+>>>>>>> 14ae2e36045b5d6ef8be841ebd4fba45ac79e485
 
     }
 
