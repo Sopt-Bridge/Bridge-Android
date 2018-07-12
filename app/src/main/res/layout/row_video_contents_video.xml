@@ -16,7 +16,7 @@
             android:layout_height="92.03dp">
 
             <ImageView
-                android:id="@+id/video"
+                android:id="@+id/video_contents_video_iv_video_image"
                 android:layout_width="144.5dp"
                 android:layout_height="92.03dp" />
 
@@ -25,10 +25,11 @@
                 android:layout_width="29.55dp"
                 android:layout_height="29.55dp"
                 android:layout_gravity="bottom"
-                android:src="@drawable/play_inside_content_icon" />
+                android:src="@drawable/home_video_thumnail_icon"
+                android:background="@drawable/round_btn_done"/>
 
             <TextView
-                android:id="@+id/video_time"
+                android:id="@+id/video_contents_video_tv_contents_time"
                 android:layout_width="29dp"
                 android:layout_height="15dp"
                 android:layout_gravity="bottom|right"
@@ -50,7 +51,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/video_contents_video_tv_video_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5.4dp"
@@ -59,7 +60,7 @@
                 android:textSize="13dp" />
 
             <TextView
-                android:id="@+id/hash"
+                android:id="@+id/video_contents_video_tv_hash"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="#BTS #Anpanman #Jungkuk"

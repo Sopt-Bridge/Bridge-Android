@@ -6,6 +6,7 @@
     android:orientation="horizontal"
     android:layout_marginTop="18.25dp">
     <ImageView
+        android:id="@+id/video_contents_iv_user_image"
         android:layout_width="51.83dp"
         android:layout_height="51.83dp"
         android:src="@drawable/mypage_btn_mid_comment_profile" />
@@ -18,6 +19,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
         <TextView
+            android:id="@+id/video_contents_comment_tv_user_name"
             android:layout_width="0dp"
             android:layout_height="19dp"
             android:layout_weight="1"
@@ -28,14 +30,16 @@
             android:textStyle="bold"
             android:text="Name surname"/>
         <TextView
+            android:id="@+id/video_contents_tv_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="17.63dp"
+            android:textColor="#707070"
             android:text="Delete"/>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/video_comment_text_title"
+            android:id="@+id/video_contents__comment_tv_user_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="8.99dp"
@@ -45,14 +49,14 @@
             android:layout_marginRight="15.4dp"
             android:layout_marginBottom="14.44dp"
             android:background="#F7F7F7"
-            android:textColor="#000000"
+            android:textColor="#333333"
             android:textSize="14dp"
             android:text="Lorem ipsum dolor sit amet, consectetur adipisicing slit, sed do" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/video_contents_tv_comment_edit"
+                android:id="@+id/video_contents_comment_tv_comment_date"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="14dp"
@@ -62,6 +66,7 @@
                 android:textSize="10dp"
                 android:textColor="#B1B1B1"/>
             <Button
+                android:id="@+id/video_contents__comment_bt_comment_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="17.21dp"

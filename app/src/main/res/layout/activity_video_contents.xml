@@ -6,25 +6,16 @@
     android:orientation="vertical">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="186.95dp">
+    <WebView
+            android:id="@+id/video_contents_wv_video"
+            android:layout_width="match_parent"
+            android:layout_height="186.95dp" />
         <VideoView
             android:id="@+id/video_contents_vv_video"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="186.95dp" />
-        <Button
-            android:layout_width="61.36dp"
-            android:layout_height="61.36dp"
-            android:background="@drawable/play_inside_content_icon"
-            android:layout_gravity="center" />
 
-        <Button
-            android:id="@+id/video_contents_iv_video_cancel"
-            android:layout_width="17.79dp"
-            android:layout_height="17.79dp"
-            android:layout_marginLeft="18.25dp"
-            android:layout_marginTop="18.25dp"
-            android:background="@drawable/content_x_btn" />
     </FrameLayout>
     //1
         <LinearLayout
@@ -48,7 +39,7 @@
                     android:textColor="#000407"
                     android:text="Jsthis - One of them in university festival" />
                 <TextView
-                    android:id="@+id/video_contents_tv_credit"
+                    android:id="@+id/video_contents_tv_contents_origin_url"
                     android:layout_width="match_parent"
                     android:layout_height="27.8dp"
                     android:layout_marginTop="8dp"
@@ -106,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/video_contents_bt_recommend"
                     android:layout_marginRight="10.89dp"
-                    android:textColor="#000000"
+                    android:textColor="#333333"
                     android:textSize="13dp"
                     android:text="36"/>
 

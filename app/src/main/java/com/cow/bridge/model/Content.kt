@@ -27,10 +27,10 @@ class Content : Serializable{
     var contentsType : Int = 0
     var imgCnt : Int = 0
     var contentsRuntime : String = "00:00"
-    var likeFlag : Int = 0
     var contentsUrl : String = ""
     var contentsoriginUrl : String = ""
     var commentCnt : Int = 0
+    var likeFlag : Int = 0
+    var subFlag : Int = 1
     var userIdx : Int = 0
-
 }

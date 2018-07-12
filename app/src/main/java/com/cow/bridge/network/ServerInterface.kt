@@ -18,8 +18,21 @@ import java.util.ArrayList
  */
 interface ServerInterface {
 
-    //home
+    //Video contents
+    @GET("/contents/nextcontents/{lastcontentsIdx}/{contentsIdx}")
+    fun recommandVideoContentsList (@Path("lastcontentsIdx") lastcontentsIdx : Int, @Path("contentsIdx") contentsIdx: Int): Call<Network>
 
+    @GET("/contents/{contentsIdx}/{lastcontentsIdx}")
+    fun videoCommentList (@Path("contentsIdx") pageIdx : Int, @Path("lastcontentsIdx") userIdx : Int): Call<Network>
+
+    @POST("/contents/getcontents/{userIdx}/{contentsIdx}/{contentsType}")
+    fun getVideoContents(@Body userIdx : Int, @Body contentsIdx : Int, @Body contentsType : Int): Call<Network>
+
+    @POST("/contents/clike/{contentsIdx}/{userIdx}")
+    fun changeVideoContentsLike(@Body contentsIdx : Int, @Body userIdx : Int): Call<Network>
+
+
+    //home
     @GET("/home/recent/{contentsCategory}/{lastcontentsIdx}")
     fun recentContentsList(@Path("contentsCategory") category : Int, @Path("lastcontentsIdx") lastcontentsIdx : Int): Call<Network>
 
