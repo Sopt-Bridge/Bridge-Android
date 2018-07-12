@@ -19,7 +19,7 @@ interface ServerInterface {
 
     //Video contents
     @GET("/contents/nextcontents/{lastcontentsIdx}/{contentsIdx}")
-    fun recommandVideoContentsList (@Path("lastcontentsIdx") lastcontentsIdx : Int, @Path("contentsIdx") userIdx : Int): Call<Network>
+    fun recommandVideoContentsList (@Path("lastcontentsIdx") lastcontentsIdx : Int, @Path("contentsIdx") contentsIdx: Int): Call<Network>
 
     @GET("/contents/{contentsIdx}/{lastcontentsIdx}")
     fun videoCommentList (@Path("contentsIdx") pageIdx : Int, @Path("lastcontentsIdx") userIdx : Int): Call<Network>

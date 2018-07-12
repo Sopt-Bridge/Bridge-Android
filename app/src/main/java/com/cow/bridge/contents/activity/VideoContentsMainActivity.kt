@@ -97,19 +97,6 @@ class VideoContentsMainActivity :AppCompatActivity() {
         }
         txt_hash?.text = temp_hash
 
-        //video
-        //var media : MediaController ?= MediaController(this)
-       // media?.setAnchorView(video_contents)
-
-
-        //var uri : Uri = Uri.parse("https://youtu.be/embeded/krG-plAW7ps")
-
-       //video_contents?.setVideoURI(uri)
-       // video_contents?.setMediaController(media)
-        //video_contents?.requestFocus()
-       // video_contents?.setOnPreparedListener(MediaPlayer.OnPreparedListener {
-         //   video_contents?.start()
-        //})
         if(video.contentsUrl.endsWith(".mp4")){
             video_contents_mp4?.visibility = View.VISIBLE
             video_contents?.visibility = View.INVISIBLE

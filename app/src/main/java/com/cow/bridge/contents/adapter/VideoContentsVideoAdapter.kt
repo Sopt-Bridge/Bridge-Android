@@ -19,18 +19,27 @@ class VideoContentsVideoAdapter(val context : Context, val videoDataItem : Array
     var items = ArrayList<Content>()
     val api : ServerInterface? = ApplicationController.instance?.buildServerInterface()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): VideoContentsVideoViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoContentsVideoViewHolder {
         val mainView : View = LayoutInflater.from(parent!!.context).inflate(R.layout.row_video_contents_video,parent,false)
         return VideoContentsVideoViewHolder(mainView)
     }
 
     override fun getItemCount(): Int = videoDataItem.size
 
-    override fun onBindViewHolder(holder: VideoContentsVideoViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: VideoContentsVideoViewHolder, position: Int) {
         with((holder as VideoContentsVideoViewHolder).itemView) {
             video_contents_video_tv_video_title.text = items[position].contentsTitle
-            var hashList :String = items[position].hashName1 + items[position].hashName2 + items[position].hashName3
-            video_contents_video_tv_hash.text = hashList
+            var temp_hash = " "
+            if(items[position].hashName1 != null) {
+                temp_hash = items[position].hashName1
+                if(items[position].hashName2 != null) {
+                    temp_hash = temp_hash + items[position].hashName2
+                    if(items[position].hashName3 != null) {
+                        temp_hash = temp_hash + items[position].hashName3
+                    }
+                }
+            }
+            video_contents_video_tv_hash.text = temp_hash
             if(items[position].contentsRuntime==null){
                 contents_text_count.text = "00:00"
             }else{

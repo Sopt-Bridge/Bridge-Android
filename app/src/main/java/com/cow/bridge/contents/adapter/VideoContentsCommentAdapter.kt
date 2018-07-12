@@ -16,14 +16,14 @@ class VideoContentsCommentAdapter(val context : Context, val commentDataItem : A
     var items = ArrayList<Content>()
     val api : ServerInterface? = ApplicationController.instance?.buildServerInterface()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): VideoContentsCommentViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoContentsCommentViewHolder {
         val mainView : View = LayoutInflater.from(parent!!.context).inflate(R.layout.row_video_contents_comment,parent,false)
         return VideoContentsCommentViewHolder(mainView)
     }
 
     override fun getItemCount(): Int = commentDataItem.size
 
-    override fun onBindViewHolder(holder: VideoContentsCommentViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: VideoContentsCommentViewHolder, position: Int) {
         with((holder as VideoContentsCommentViewHolder).itemView) {
 
         }
