@@ -1,14 +1,17 @@
 package com.cow.bridge.library.activity
 
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.cow.bridge.MainActivity
 
 import com.cow.bridge.R
 import com.cow.bridge.library.adapter.LibraryFolderAdapter
@@ -24,6 +27,8 @@ import retrofit2.Response
 
 class LibraryFragment : Fragment() {
     var api : ServerInterface? = ApplicationController.instance?.buildServerInterface()
+    var recentVideoAdapter : RecentVideoAdapter? = null
+    var libraryFolderAdapter : LibraryFolderAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -31,8 +36,8 @@ class LibraryFragment : Fragment() {
 
         with(convertView){
 
-            val recentVideoAdapter = RecentVideoAdapter(context)
-            val libraryFolderAdapter = LibraryFolderAdapter(context)
+            recentVideoAdapter = RecentVideoAdapter(context)
+            libraryFolderAdapter = LibraryFolderAdapter(context)
 
             val llm : LinearLayoutManager = LinearLayoutManager(context)
             llm.orientation = LinearLayoutManager.HORIZONTAL
@@ -42,45 +47,53 @@ class LibraryFragment : Fragment() {
             library_recycler_folder.layoutManager = llm3
             library_recycler_folder.adapter = libraryFolderAdapter
 
-            var messagesCall = api?.recommendedContentsList()
-            messagesCall?.enqueue(object : Callback<Network> {
-                override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
-                    var network = response!!.body()
-                    if(network?.message.equals("ok")){
-                        network.data?.get(0)?.contents_list?.let {
-                            if(it.size!=0){
-                                recentVideoAdapter.addAll(it)
-                                recentVideoAdapter.notifyDataSetChanged()
-                            }
-                        }
-                    }
-                }
-                override fun onFailure(call: Call<Network>?, t: Throwable?) {
+            library_image_add.setOnClickListener {
 
-                }
-            })
+            }
 
-            messagesCall = api?.recentContentsList(0, 0)
-            messagesCall?.enqueue(object : Callback<Network>{
-                override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
-                    var network = response!!.body()
-                    if(network?.message.equals("ok")){
-                        network.data?.get(0)?.group_list?.let {
-                            if(it.size!=0){
-                                libraryFolderAdapter.addAll(it)
-                                libraryFolderAdapter.notifyDataSetChanged()
-                            }
-                        }
-                    }
-                }
-                override fun onFailure(call: Call<Network>?, t: Throwable?) {
-
-                }
-            })
         }
 
         return convertView
     }
 
+    override fun onResume() {
+        super.onResume()
+        var sp : SharedPreferences = (activity as MainActivity).getSharedPreferences("bridge", AppCompatActivity.MODE_PRIVATE)
+        var messagesCall = api?.getRecentVideoList(sp.getInt("userIdx", 0))
+        messagesCall?.enqueue(object : Callback<Network> {
+            override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                var network = response!!.body()
+                if(network?.message.equals("ok")){
+                    network.data?.get(0)?.contents_list?.let {
+                        if(it.size!=0){
+                            recentVideoAdapter?.clear()
+                            recentVideoAdapter?.addAll(it)
+                            recentVideoAdapter?.notifyDataSetChanged()
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<Network>?, t: Throwable?) {
 
+            }
+        })
+
+        messagesCall = api?.getGroupList(sp.getInt("userIdx", 0))
+        messagesCall?.enqueue(object : Callback<Network>{
+            override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                var network = response!!.body()
+                if(network?.message.equals("ok")){
+                    network.data?.get(0)?.group_list?.let {
+                        if(it.size!=0){
+                            libraryFolderAdapter?.addAll(it)
+                            libraryFolderAdapter?.notifyDataSetChanged()
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+            }
+        })
+    }
 }

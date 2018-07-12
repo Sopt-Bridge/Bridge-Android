@@ -1,9 +1,6 @@
 package com.cow.bridge.network
 
-import com.cow.bridge.model.Content
-import com.cow.bridge.model.Hash
-import com.cow.bridge.model.Request
-import com.cow.bridge.model.User
+import com.cow.bridge.model.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -89,8 +86,38 @@ interface ServerInterface {
     @POST("/user/quit")
     fun withdrawal(@Body user : User): Call<Network>
 
+
     //comment
+
     @GET("/contents/ccomment_view/{contentsIdx}/{lastcontentsIdx}")
     fun getImageContentCommentList(@Path("contentsIdx") contentsIdx : Int,@Path("lastcontentsIdx") lastcontentsIdx : Int): Call<Network>
+
+
+    //library
+
+    @POST("/library/addgroupcontents")
+    fun addGroupContents(@Body group : Group)
+
+    @POST("/library/contentsdelete")
+    fun deleteGroupGontents(@Body group : Group)
+
+    @GET("/library/recentvideo/{userIdx}")
+    fun getRecentVideoList(@Path("userIdx") userIdx : Int): Call<Network>
+
+    @GET("/library/getgroupcontents/{lastcontentsIdx}/{userIdx}/{groupIdx}")
+    fun getGroupContentsList(@Path("lastcontentsIdx") lastcontentsIdx : Int, @Path("userIdx") userIdx : Int, @Path("groupIdx") groupIdx : Int): Call<Network>
+
+    @GET("/library/grouplist/{userIdx}")
+    fun getGroupList(@Path("userIdx") userIdx : Int): Call<Network>
+
+    @POST("/library/addgroup")
+    fun addGroup(@Body group : Group): Call<Network>
+
+    @POST("/library/groupmodify")
+    fun modifyGroup(@Body group : Group): Call<Network>
+
+    @POST("/library/groupdelete")
+    fun deleteGroup(@Body group : Group): Call<Network>
+
 
 }

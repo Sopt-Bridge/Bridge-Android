@@ -32,10 +32,10 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".login.activity.MypageActivity"/>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".login.activity.MypageActivity" />
         <activity android:name=".login.activity.LoginActivity" />
-        <activity android:name=".SplashActivity" >
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,9 +45,10 @@
         <activity android:name=".search.activity.SearchActivity" />
         <activity android:name=".subscribe.activity.BestChannelActivity" />
         <activity android:name=".request.activity.RequestWriteActivity" />
-        <activity android:name=".request.activity.RequestContentActivity"></activity>
-        <activity android:name=".contents.activity.VideoContentsMainActivity"/>
+        <activity android:name=".request.activity.RequestContentActivity" />
+        <activity android:name=".contents.activity.VideoContentsMainActivity" />
         <activity android:name=".contents.activity.ImageContentsActivity" />
+        <activity android:name=".library.activity.GroupDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -9,12 +9,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.*
 import com.bumptech.glide.Glide
 import com.cow.bridge.R
-import com.cow.bridge.contents.activity.ImageContentsActivity
-import com.cow.bridge.contents.activity.VideoContentsMainActivity
-import com.cow.bridge.model.Content
+import com.cow.bridge.library.activity.GroupDetailActivity
 import com.cow.bridge.model.Group
-import com.cow.bridge.network.ApplicationController
-import com.cow.bridge.util.UtilController
 import kotlinx.android.synthetic.main.row_libraryfolder_simple.view.*
 
 /**
@@ -26,12 +22,13 @@ class LibraryFolderAdapter(internal var _context: Context) : RecyclerView.Adapte
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val convertView = LayoutInflater.from(_context).inflate(R.layout.row_libraryfolder_simple, parent, false)
-        return RecentViewHolder(convertView)
+        return LibraryFolderViewHolder(convertView)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        with((holder as RecentViewHolder).itemView){
+        with((holder as LibraryFolderViewHolder).itemView){
+
             folder_layout_main.post(object : Runnable{
                 override fun run() {
                     val wm : WindowManager = _context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -49,9 +46,9 @@ class LibraryFolderAdapter(internal var _context: Context) : RecyclerView.Adapte
             })
 
             folder_layout_main.setOnClickListener {
-
-
-
+                val intent = Intent(_context, GroupDetailActivity::class.java)
+                intent.putExtra("group", items[position])
+                (_context as Activity).startActivity(intent)
             }
 
             Glide.with(_context).load(items[position].groupBgimage).into(folder_image_thumbnail)
@@ -62,6 +59,7 @@ class LibraryFolderAdapter(internal var _context: Context) : RecyclerView.Adapte
     }
 
     override fun getItemCount(): Int {
+        //return 5
         return items.size
     }
 
@@ -74,7 +72,7 @@ class LibraryFolderAdapter(internal var _context: Context) : RecyclerView.Adapte
     }
 
 
-    private inner class RecentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    private inner class LibraryFolderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     }
 

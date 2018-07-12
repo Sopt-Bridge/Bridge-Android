@@ -54,7 +54,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/library_image_add"
                     android:layout_width="37dp"
                     android:layout_height="37dp"
                     android:padding="8dp"

@@ -128,6 +128,7 @@ class SubscribeFragment : Fragment() {
     }
 
     fun getHashContentList(hash : Hash){
+        Log.v("getHashContentList", Gson().toJson(hash))
         var messagesCall = api?.getHashContentList(hash)
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
