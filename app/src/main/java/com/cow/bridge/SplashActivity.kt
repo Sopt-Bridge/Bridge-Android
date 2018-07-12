@@ -1,11 +1,10 @@
 package com.cow.bridge
 
-import android.support.v7.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
-import com.facebook.AccessToken
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import android.os.Handler
+import android.support.v7.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity() {
 
@@ -13,22 +12,14 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        animation_view.imageAssetsFolder = "/bridge/app/src/main/assets"
+        animation_view.setAnimation("splash.json")
 
-        val accessToken = AccessToken.getCurrentAccessToken()
-        val isLoggedIn = accessToken != null && !accessToken.isExpired
-
-        if(isLoggedIn) {
-            Toast.makeText(applicationContext, "이미 페이스북 로그인이 되어있습니다", Toast.LENGTH_SHORT).show()
-
-        }
-
-        //google로그인 구현
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
-        var mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        val account = GoogleSignIn.getLastSignedInAccount(this)
-        account?.let {
-            Toast.makeText(applicationContext, "이미 구글 로그인이 되어있습니다", Toast.LENGTH_SHORT).show()
-        }
+        Handler().postDelayed(Runnable {
+            var intent = Intent(this@SplashActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }, 4300)
 
     }
 }

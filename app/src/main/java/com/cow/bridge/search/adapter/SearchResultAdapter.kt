@@ -25,7 +25,7 @@ class SearchResultAdapter(internal var _context: Context) : RecyclerView.Adapter
     var items = ArrayList<Content>()
     private var empty = false
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if(viewType==0){
             val convertView = LayoutInflater.from(_context).inflate(R.layout.row_search_empty, parent, false)
             return EmptySearchViewHolder(convertView)
@@ -35,7 +35,7 @@ class SearchResultAdapter(internal var _context: Context) : RecyclerView.Adapter
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(getItemViewType(position)==1){
             with((holder as SearchViewHolder).itemView){
                 contents_layout_main.setOnClickListener {
@@ -50,7 +50,6 @@ class SearchResultAdapter(internal var _context: Context) : RecyclerView.Adapter
                         (_context as Activity).startActivity(intent)
                     }
                 }
-
                 contents_text_title.text = items[position].contentsTitle
                 contents_text_hash.text = "${items[position].hashName1} ${items[position].hashName2} ${items[position].hashName3}"
                 if(items[position].contentsType==0){

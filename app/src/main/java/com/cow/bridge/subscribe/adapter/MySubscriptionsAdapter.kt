@@ -28,12 +28,12 @@ class MySubscriptionsAdapter(internal var _context: Context) : RecyclerView.Adap
     var items = ArrayList<Hash>()
     val api : ServerInterface? = ApplicationController.instance?.buildServerInterface()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val convertView = LayoutInflater.from(_context).inflate(R.layout.row_bestchannel_simple, parent, false)
         return MySubscritionsViewHolder(convertView)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         with((holder as MySubscritionsViewHolder).itemView){
             Glide.with(_context).load(items[position].hashImg).into(bestchannel_image_thumbnail)

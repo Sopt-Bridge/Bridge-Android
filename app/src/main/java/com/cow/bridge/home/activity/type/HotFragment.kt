@@ -59,10 +59,9 @@ class HotFragment : Fragment() {
             messagesCall?.enqueue(object : Callback<Network>{
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
-                    Log.v("nowTrendContentsList : ", Gson().toJson(network))
-                    if(network?.message.equals("ok")){
+                    if (network?.message.equals("ok")) {
                         network.data?.get(0)?.contents_list?.let {
-                            if(it.size!=0){
+                            if (it.size != 0) {
 
                                 val hotAdapter = ViewPagerAdapter(childFragmentManager)
                                 hotAdapter.addFragment(NowTrendFragment.newInstance(it[0]))
@@ -74,14 +73,15 @@ class HotFragment : Fragment() {
                                 hot_viewpager.adapter = hotAdapter
                                 hot_indicator.setViewPager(hot_viewpager)
 
-                                nowTrendAdapter.addAll(ArrayList(it.subList(4,it.size)))
+                                nowTrendAdapter.addAll(ArrayList(it.subList(4, it.size)))
                                 nowTrendAdapter.notifyDataSetChanged()
                             }
                         }
                     }
                 }
-                override fun onFailure(call: Call<Network>?, t: Throwable?) {
 
+                override fun onFailure(call: Call<Network>?, t: Throwable?) {
+                    Log.v("test error : ", t.toString())
                 }
             })
 
