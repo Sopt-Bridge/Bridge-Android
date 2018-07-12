@@ -1,12 +1,9 @@
 package com.cow.bridge.contents.activity
 
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
@@ -14,24 +11,19 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import android.widget.*
-import com.bumptech.glide.request.animation.GlideAnimation
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.cow.bridge.R
+import com.cow.bridge.contents.dialog.FeedBackDialog
 import com.cow.bridge.model.Content
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_image_contents.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import android.text.method.Touch.onTouchEvent
-import android.util.AttributeSet
-import android.view.MotionEvent
-import android.view.View.OnTouchListener
-import com.cow.bridge.contents.dialog.FeedBackDialog
-import kotlinx.android.synthetic.main.fragment_other.*
 
 
 class ImageContentsActivity : AppCompatActivity() {
@@ -51,7 +43,6 @@ class ImageContentsActivity : AppCompatActivity() {
         cancelButton = findViewById(R.id.imgContentsBackBtn)
         cancelButton.setOnClickListener{finish()}
 
-        //POST 부분
 
         // 화면 터치 시 아이콘 보임, 안 보임
         val text1 : TextView = findViewById(R.id.imgCount)
@@ -114,31 +105,32 @@ class ImageContentsActivity : AppCompatActivity() {
                     var network = response!!.body()
                     Log.v("test", Gson().toJson(network))
                     if(network?.message.equals("ok")) {
-                        if(likeFlag==0){
-                            likeFlag =1
-                            text5.setBackgroundResource(R.drawable.good_normal_btn)
-                        } else if(likeFlag==0){
+                        if(likeFlag==1){
                             likeFlag =0
+                            text5.setBackgroundResource(R.drawable.good_normal_btn)
+                            text6.text = imageContents?.contentsLike.toString()
+                            Log.v("ctest : ", Gson().toJson(network))
+                        } else if(likeFlag==0){
+                            likeFlag =1
                             text5.setBackgroundResource(R.drawable.good_active_icon)
+                            text6.text = imageContents?.contentsLike!!.plus(1).toString()
+                            Log.v("contentsLike : ", Gson().toJson(network))
+
                         }
                     }
                 }
             })
         }
-
         // FeedBack Dialog
         text3.setOnClickListener(object : View.OnClickListener{
             override fun onClick(v: View?) {
-                val feedbackDialog : FeedBackDialog = FeedBackDialog(this@ImageContentsActivity)
+                val feedbackDialog : FeedBackDialog = FeedBackDialog(this@ImageContentsActivity, imageContents?.contentsIdx!!)
                 feedbackDialog.window.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
                 feedbackDialog.show()
                 feedbackDialog.setOnDismissListener(object : DialogInterface.OnDismissListener {
                     override fun onDismiss(dialog: DialogInterface?) {
                         with(dialog as FeedBackDialog) {
                             if(send) {
-                                feedback?.let {
-
-                                }
                             }
                         }
                     }
@@ -146,8 +138,6 @@ class ImageContentsActivity : AppCompatActivity() {
             }
 
         })
-
-
 
 
         // view pager 연결
@@ -194,7 +184,6 @@ class ImageContentsActivity : AppCompatActivity() {
         }
 
     }
-
 
 
     override fun onStart() {

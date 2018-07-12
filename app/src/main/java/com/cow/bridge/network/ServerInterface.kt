@@ -1,6 +1,7 @@
 package com.cow.bridge.network
 
 import com.cow.bridge.model.Content
+import com.cow.bridge.model.Feedback
 import com.cow.bridge.model.Hash
 import com.cow.bridge.model.Request
 import retrofit2.Call
@@ -33,12 +34,20 @@ interface ServerInterface {
     @GET("/home/recommended")
     fun recommendedContentsList(): Call<Network>
 
+
+    //contents
+
 //    // 이미지 컨텐츠 보기
 //    @GET ("/contents/getcontents{userIdx}/{contentsIdx}/{contentsType}")
 //    fun imageContents(@Path(""))
 
     @POST("/contents/clike")
     fun clikeContents(@Body content : Content)  : Call<Network>
+
+    // feedback
+
+    @POST("/feedback/feedback_write")
+    fun writeFeedback(@Body feedback : Feedback ) : Call<Network>
 
 
     //subscribe
