@@ -18,11 +18,11 @@ class VideoContentsVideoFragment : Fragment() {
     val api : ServerInterface? = ApplicationController.instance?.buildServerInterface()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val convertView = inflater!!.inflate(R.layout.fragment_other, container, false)
+        val convertView = inflater!!.inflate(R.layout.fragment_video_contents_video, container, false)
 
-        val llm : RecyclerView.LayoutManager = GridLayoutManager(context, 2)
-        video_contents_video_recycler.layoutManager = llm
-        video_contents_video_recycler.adapter = VideoContentsVideoAdapter()
+        //val llm : RecyclerView.LayoutManager = GridLayoutManager(context, 2)
+        //video_contents_video_recycler.layoutManager = llm
+        //video_contents_video_recycler.adapter = VideoContentsVideoAdapter()
 
         return convertView
     }

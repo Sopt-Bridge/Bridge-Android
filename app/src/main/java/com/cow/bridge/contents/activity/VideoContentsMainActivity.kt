@@ -1,6 +1,8 @@
 package com.cow.bridge.contents.activity
 
 import android.content.Intent
+import android.graphics.Color
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.TabLayout
@@ -10,7 +12,13 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.Button
+import android.widget.MediaController
 import android.widget.TextView
 import android.widget.VideoView
 import com.cow.bridge.R
@@ -22,14 +30,15 @@ import kotlinx.android.synthetic.main.row_contents_simple.view.*
 import retrofit2.*
 import com.cow.bridge.network.Network
 import com.google.gson.Gson
-
-
+import org.w3c.dom.Attr
+import java.net.HttpURLConnection
+import java.net.URL
+import java.util.HashMap
+import javax.xml.parsers.DocumentBuilderFactory
 
 
 class VideoContentsMainActivity :AppCompatActivity() {
-    //val intent = Intent(this.intent)
-    val video: Content = intent.getSerializableExtra("videoContents") as Content
-    val api: ServerInterface? = ApplicationController.instance?.buildServerInterface()
+    var api: ServerInterface? = ApplicationController.instance?.buildServerInterface()
 
     private var tablayout: TabLayout? = null
     var viewPager: ViewPager? = null
@@ -37,7 +46,7 @@ class VideoContentsMainActivity :AppCompatActivity() {
     var btn_feedback: Button? = null
     var txt_recommand: TextView? = null
     var btn_recommand: Button? = null
-    var video_contents: VideoView? = null
+    var video_contents: WebView? = null
 
     var txt_video_title: TextView? = null
     var txt_origin_url: TextView? = null
@@ -46,6 +55,9 @@ class VideoContentsMainActivity :AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_contents)
+        api = ApplicationController.instance?.buildServerInterface()
+        val intent = Intent(this.intent)
+        val video: Content = intent.getSerializableExtra("videoContents") as Content
 
         //tab
         tablayout = video_contents_tab
@@ -63,12 +75,65 @@ class VideoContentsMainActivity :AppCompatActivity() {
         btn_recommand = video_contents_bt_recommend
         video_contents = video_contents_vv_video
         //others setting
+        //video_contents?.start()
 
-        txt_origin_url?.text = video.contentsTitle
-        txt_hash?.text = video.hashName1 + " " + video.hashName2 + " " + video.hashName3
+        txt_origin_url?.text = video.contentsUrl
         txt_recommand?.text = Integer.toString(video.contentsLike)
         txt_video_title?.text = video.contentsTitle
-        video_contents?.setVideoURI(Uri.parse(video.contentsUrl))
+
+        var temp_hash = " "
+        if(video.hashName1 != null) {
+            temp_hash = video.hashName1
+            if(video.hashName2 != null) {
+                temp_hash = temp_hash + video.hashName2
+                if(video.hashName3 != null) {
+                    temp_hash = temp_hash + video.hashName3
+                }
+            }
+        }
+        txt_hash?.text = temp_hash
+
+        //video
+        //var media : MediaController ?= MediaController(this)
+       // media?.setAnchorView(video_contents)
+
+
+        //var uri : Uri = Uri.parse("https://youtu.be/embeded/krG-plAW7ps")
+
+       //video_contents?.setVideoURI(uri)
+       // video_contents?.setMediaController(media)
+        //video_contents?.requestFocus()
+       // video_contents?.setOnPreparedListener(MediaPlayer.OnPreparedListener {
+         //   video_contents?.start()
+        //})
+        var url : String = "<iframe width=\"360dp\" height=\"186.95dp\" \" src=\""+video.contentsUrl +"\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>\n"
+        video_contents?.setWebViewClient(WebViewClient())
+        var setting : WebSettings ?= video_contents?.settings
+        var webClient : WebChromeClient = WebChromeClient()
+        var client : WebViewClient = WebViewClient()
+        video_contents?.webChromeClient = webClient
+        video_contents?.webViewClient = client
+        setting!!.javaScriptEnabled = true
+        setting!!.mediaPlaybackRequiresUserGesture = false
+        video_contents?.settings?.pluginState = WebSettings.PluginState.ON
+        video_contents?.setLayerType(View.LAYER_TYPE_HARDWARE,null)
+        setting.builtInZoomControls = true
+        video_contents?.loadDataWithBaseURL("file:///android_asset/",url,"text/html","utf-8",null)
+        //video_contents?.loadUrl(url)
+
+
+
+        //initialize
+        //좋아요버튼
+        if (video.likeFlag == 1)
+            btn_recommand?.setBackgroundResource(R.drawable.good_active_icon)
+        else
+            btn_recommand?.setBackgroundResource(R.drawable.good_normal_btn)
+        //library여부
+        if (video.subFlag == 1)
+            btn_library?.setBackgroundResource(R.drawable.add_to_library_active_icon)
+        else
+            btn_library?.setBackgroundResource(R.drawable.add_to_library_normal_icon)
 
         btn_recommand?.setOnClickListener {
 
@@ -105,22 +170,7 @@ class VideoContentsMainActivity :AppCompatActivity() {
         }
     }
 
-    init {
-        //좋아요 버튼
-        if (video.likeFlag == 1)
-            btn_recommand?.setBackgroundResource(R.drawable.good_active_icon)
-        else
-            btn_recommand?.setBackgroundResource(R.drawable.good_normal_btn)
-        //library여부
-        if (video.subFlag == 1)
-            btn_library?.setBackgroundResource(R.drawable.add_to_library_active_icon)
-        else
-            btn_library?.setBackgroundResource(R.drawable.add_to_library_normal_icon)
-    }
 
-    fun changeVideoContentsLike(contentsIdx: Int, userIdx: Int) {
-
-    }
 
     private fun setupViewPager(viewPager: ViewPager?) {
         val adapter = ViewPagerAdapter(supportFragmentManager)

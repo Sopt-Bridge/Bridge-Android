@@ -49,7 +49,7 @@ class ApplicationController : Application() {
 
         var instance: ApplicationController? = null
             private set
-        var endpoint = String.format("http://13.124.201.59:3000")
+        var endpoint = String.format("http://13.124.201.59:3007")
 
         fun imageUrl(contentsIdx : Int, number : Int) = "https://s3.ap-northeast-2.amazonaws.com/ryudd/Bridge/src/img/img_${contentsIdx}_${number}.jpeg"
 

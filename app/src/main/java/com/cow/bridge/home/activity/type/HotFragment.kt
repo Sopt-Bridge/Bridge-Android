@@ -1,15 +1,15 @@
 package com.cow.bridge.home.activity.type
 
 
- import android.os.Bundle
+import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
- import android.util.Log
- import android.view.LayoutInflater
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cow.bridge.R
@@ -17,12 +17,12 @@ import com.cow.bridge.home.activity.type.hot.NowTrendFragment
 import com.cow.bridge.home.adapter.NowTrendAdapter
 import com.cow.bridge.home.adapter.RecentAdapter
 import com.cow.bridge.home.adapter.RecommendedAdapter
- import com.cow.bridge.model.Content
- import com.cow.bridge.network.ApplicationController
+import com.cow.bridge.model.Content
+import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
- import com.google.gson.Gson
- import kotlinx.android.synthetic.main.fragment_hot.view.*
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.fragment_hot.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -74,7 +74,7 @@ class HotFragment : Fragment() {
                                 hot_viewpager.adapter = hotAdapter
                                 hot_indicator.setViewPager(hot_viewpager)
 
-                                nowTrendAdapter.addAll(ArrayList(it.subList(4,7)))
+                                nowTrendAdapter.addAll(ArrayList(it.subList(4,it.size)))
                                 nowTrendAdapter.notifyDataSetChanged()
                             }
                         }
