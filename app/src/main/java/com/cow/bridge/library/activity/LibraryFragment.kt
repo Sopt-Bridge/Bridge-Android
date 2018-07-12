@@ -1,13 +1,17 @@
 package com.cow.bridge.library.activity
 
 
+import android.app.Activity
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +20,12 @@ import com.cow.bridge.MainActivity
 import com.cow.bridge.R
 import com.cow.bridge.library.adapter.LibraryFolderAdapter
 import com.cow.bridge.library.adapter.RecentVideoAdapter
+import com.cow.bridge.library.dialog.LibraryDialog
+import com.cow.bridge.model.Group
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_library.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,6 +55,29 @@ class LibraryFragment : Fragment() {
             library_recycler_folder.adapter = libraryFolderAdapter
 
             library_image_add.setOnClickListener {
+                val libraryDialog : LibraryDialog = LibraryDialog(activity!!, "#FFFFFF", "Group ${libraryFolderAdapter?.itemCount!! +1}")
+                libraryDialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                libraryDialog.show()
+                libraryDialog.setOnDismissListener {dialog ->
+                    with(dialog as LibraryDialog){
+                        if(confirm){
+                            var sp : SharedPreferences = (_context as Activity).getSharedPreferences("bridge", AppCompatActivity.MODE_PRIVATE)
+                            var messagesCall = api?.addGroup(Group(1, groupName!!, groupColor!!))
+                            messagesCall?.enqueue(object : Callback<Network> {
+                                override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                                    var network = response!!.body()
+                                    Log.v("test", Gson().toJson(network))
+                                    if(network?.message.equals("ok")){
+                                        getGroupList()
+                                    }
+                                }
+                                override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                                }
+                            })
+                        }
+                    }
+                }
 
             }
 
@@ -59,7 +89,7 @@ class LibraryFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         var sp : SharedPreferences = (activity as MainActivity).getSharedPreferences("bridge", AppCompatActivity.MODE_PRIVATE)
-        var messagesCall = api?.getRecentVideoList(sp.getInt("userIdx", 0))
+        var messagesCall = api?.getRecentVideoList(1)
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()
@@ -78,13 +108,20 @@ class LibraryFragment : Fragment() {
             }
         })
 
-        messagesCall = api?.getGroupList(sp.getInt("userIdx", 0))
+        getGroupList()
+    }
+
+    fun getGroupList(){
+        var sp : SharedPreferences = (activity as MainActivity).getSharedPreferences("bridge", AppCompatActivity.MODE_PRIVATE)
+        var messagesCall = api?.getGroupList(1)
         messagesCall?.enqueue(object : Callback<Network>{
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()
+                Log.v("test", Gson().toJson(network))
                 if(network?.message.equals("ok")){
                     network.data?.get(0)?.group_list?.let {
                         if(it.size!=0){
+                            libraryFolderAdapter?.clear()
                             libraryFolderAdapter?.addAll(it)
                             libraryFolderAdapter?.notifyDataSetChanged()
                         }

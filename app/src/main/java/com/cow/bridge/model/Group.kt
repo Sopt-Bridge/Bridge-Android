@@ -10,8 +10,16 @@ class Group : Serializable{
     constructor(groupIdx : Int){
         this.groupIdx = groupIdx
     }
+
+    constructor(userIdx : Int, groupTitle : String, groupColor : String){
+        this.userIdx = userIdx
+        this.groupTitle = groupTitle
+        this.groupColor = groupColor
+    }
+
     var groupTitle : String = ""
     var groupBgimage : String = ""
     var groupIdx : Int = 0
     var groupColor : String = ""
+    var userIdx : Int = 0
 }

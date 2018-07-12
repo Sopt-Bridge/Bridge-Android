@@ -15,6 +15,7 @@ import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_group_detail.*
+import kotlinx.android.synthetic.main.row_libraryfolder_simple.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,7 +33,11 @@ class GroupDetailActivity : AppCompatActivity() {
 
 
         group_text_name.text = group.groupTitle
-        group_image_bg.setBackgroundColor(Color.parseColor(group.groupColor))
+        try{
+            group_image_bg.setBackgroundColor(Color.parseColor(group.groupColor))
+        }catch (e : IllegalArgumentException){
+            group_image_bg.setBackgroundColor(Color.parseColor("#F7F7F7"))
+        }
         Glide.with(this@GroupDetailActivity).load(group.groupBgimage).into(group_image_thumbnail)
 
         groupContentsAdapter = GroupContentsAdapter(this@GroupDetailActivity)

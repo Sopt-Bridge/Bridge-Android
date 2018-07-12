@@ -168,7 +168,6 @@ class SearchActivity : AppCompatActivity() {
 
     fun getSearchContentsList(query : String, searchType : Int, sortType : Int){
         if(searchType==0){
-            search_layout_hash.visibility = View.VISIBLE
 
             var messagesCall = api?.getSearchHashInfo(1, query!!)
             messagesCall?.enqueue(object : Callback<Network> {
@@ -178,6 +177,7 @@ class SearchActivity : AppCompatActivity() {
                     if(network?.message.equals("ok")){
                         network.data?.get(0)?.hashcontents_list?.let {
                             if(it.size!=0){
+                                search_layout_hash.visibility = View.VISIBLE
                                 Glide.with(this@SearchActivity).load(it.get(0).hashImg).into(search_image_hash_thumbnail)
                                 search_text_hash_name.text = it.get(0).hashName
                                 search_text_hash_subcount.text = "Subscribers ${it.get(0).hashCnt}"

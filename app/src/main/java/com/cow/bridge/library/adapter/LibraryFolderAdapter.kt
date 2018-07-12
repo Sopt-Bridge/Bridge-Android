@@ -2,15 +2,20 @@ package com.cow.bridge.library.adapter
 
 import android.app.Activity
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.Point
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.*
 import com.bumptech.glide.Glide
 import com.cow.bridge.R
 import com.cow.bridge.library.activity.GroupDetailActivity
 import com.cow.bridge.model.Group
+import com.cow.bridge.util.UtilController
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.row_libraryfolder_simple.view.*
 
 /**
@@ -28,7 +33,6 @@ class LibraryFolderAdapter(internal var _context: Context) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         with((holder as LibraryFolderViewHolder).itemView){
-
             folder_layout_main.post(object : Runnable{
                 override fun run() {
                     val wm : WindowManager = _context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -37,7 +41,7 @@ class LibraryFolderAdapter(internal var _context: Context) : RecyclerView.Adapte
                     display.getSize(size)
                     var width : Int = size.x
                     var params : ViewGroup.LayoutParams = folder_layout_main.layoutParams
-                    params.width = width.toInt()/2
+                    params.width = width.toInt()/2 - UtilController.convertDpToPixel(23f, _context).toInt()
                     folder_layout_main.layoutParams = params
 
                     //glideRequestManager.load(ApplicationController.pictureEndpoint+"/mentors/"+mentoringMentor.getMentorBackground()).into(((MentoringViewHolder) holder).backgroundImage);
@@ -51,9 +55,18 @@ class LibraryFolderAdapter(internal var _context: Context) : RecyclerView.Adapte
                 (_context as Activity).startActivity(intent)
             }
 
-            Glide.with(_context).load(items[position].groupBgimage).into(folder_image_thumbnail)
+            Log.v("test", Gson().toJson(items[position]));
+            //Glide.with(_context).load(items[position].groupBgimage).into(folder_image_thumbnail)
             folder_text_groupname.text = items[position].groupTitle
-            folder_layout_main.setBackgroundColor(Color.parseColor(items[position].groupColor))
+            items[position].groupColor?.let{
+                var color = if(items[position].groupColor.startsWith("#")) items[position].groupColor else "#${items[position].groupColor}"
+                try{
+                    folder_layout_main.setBackgroundColor(Color.parseColor(color))
+                }catch (e : IllegalArgumentException){
+                    folder_layout_main.setBackgroundColor(Color.parseColor("#F7F7F7"))
+                }
+            }
+
         }
 
     }
