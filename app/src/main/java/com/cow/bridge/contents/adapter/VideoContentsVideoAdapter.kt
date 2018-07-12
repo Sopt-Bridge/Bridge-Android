@@ -7,9 +7,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.cow.bridge.model.*
 import com.cow.bridge.R
 import com.cow.bridge.contents.activity.VideoContentsMainActivity
+import com.cow.bridge.model.Content
+import com.cow.bridge.model.VideoContentsVideoData
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.ServerInterface
 import kotlinx.android.synthetic.main.row_contents_simple.view.*
