@@ -45,6 +45,12 @@ interface ServerInterface {
     @POST("/contents/clike")
     fun clikeContents(@Body content : Content)  : Call<Network>
 
+    @POST("/contents/ccomment_write")
+    fun contentsCommentWrite(@Body contentsComment: ContentsComment): Call<Network>
+
+    @POST("/contents/ccomment_delete")
+    fun contentsCommentDelete(@Body contentsComment: ContentsComment): Call<Network>
+
     // feedback
 
     @POST("/feedback/feedback_write")

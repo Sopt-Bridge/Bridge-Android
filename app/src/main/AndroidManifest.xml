@@ -46,9 +46,14 @@
         <activity android:name=".subscribe.activity.BestChannelActivity" />
         <activity android:name=".request.activity.RequestWriteActivity" />
         <activity android:name=".request.activity.RequestContentActivity" />
-        <activity android:name=".contents.activity.VideoContentsMainActivity" />
-        <activity android:name=".contents.activity.ImageContentsActivity" />
         <activity android:name=".library.activity.GroupDetailActivity"></activity>
+        <activity android:name=".contents.activity.VideoContentsMainActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".contents.activity.ImageContentsActivity"
+            />
+        <!--<activity android:name=".contents.activity.VideoContentsCommentFragment"-->
+            <!--android:windowSoftInputMode="adjustResize"/>-->
+
     </application>
 
 </manifest>
