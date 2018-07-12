@@ -1,7 +1,12 @@
 package com.cow.bridge.contents.activity
 
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
@@ -9,18 +14,25 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
+import com.bumptech.glide.request.animation.GlideAnimation
 import com.cow.bridge.R
 import com.cow.bridge.model.Content
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_image_contents.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.text.method.Touch.onTouchEvent
+import android.util.AttributeSet
+import android.view.MotionEvent
+import android.view.View.OnTouchListener
+import com.cow.bridge.contents.dialog.FeedBackDialog
+import kotlinx.android.synthetic.main.fragment_other.*
+
 
 class ImageContentsActivity : AppCompatActivity() {
     private lateinit var cancelButton : ImageButton
@@ -114,15 +126,39 @@ class ImageContentsActivity : AppCompatActivity() {
             })
         }
 
+        // FeedBack Dialog
+        text3.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                val feedbackDialog : FeedBackDialog = FeedBackDialog(this@ImageContentsActivity)
+                feedbackDialog.window.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+                feedbackDialog.show()
+                feedbackDialog.setOnDismissListener(object : DialogInterface.OnDismissListener {
+                    override fun onDismiss(dialog: DialogInterface?) {
+                        with(dialog as FeedBackDialog) {
+                            if(send) {
+                                feedback?.let {
+
+                                }
+                            }
+                        }
+                    }
+                })
+            }
+
+        })
+
+
+
 
         // view pager 연결
         val adapter = ViewPagerAdapter(supportFragmentManager)
         for (i in 1..imageContents?.imgCnt!!)  {
             adapter.addFragment(ImageFragment.newInstance(i,imageContents.contentsIdx))
         }
-
         imgPager.offscreenPageLimit = 2
         imgPager.adapter = adapter
+
+
 
         imgPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
             override fun onPageScrollStateChanged(state: Int) {
@@ -152,10 +188,13 @@ class ImageContentsActivity : AppCompatActivity() {
             return mFragmentList.size
         }
 
+
         fun addFragment(fragment: Fragment) {
             mFragmentList.add(fragment)
         }
+
     }
+
 
 
     override fun onStart() {

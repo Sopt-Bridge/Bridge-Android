@@ -39,15 +39,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.activity.MypageActivity"/>
+        <activity android:name=".login.activity.MypageActivity" />
         <activity android:name=".login.activity.LoginActivity" />
         <activity android:name=".SplashActivity" />
         <activity android:name=".search.activity.SearchActivity" />
         <activity android:name=".subscribe.activity.BestChannelActivity" />
         <activity android:name=".request.activity.RequestWriteActivity" />
-        <activity android:name=".request.activity.RequestContentActivity"></activity>
-        <activity android:name=".contents.activity.VideoContentsMainActivity"/>
+        <activity android:name=".request.activity.RequestContentActivity" />
+        <activity android:name=".contents.activity.VideoContentsMainActivity" />
         <activity android:name=".contents.activity.ImageContentsActivity" />
+        <activity android:name=".contents.dialog.FeedBackDialog"></activity>
     </application>
 
 </manifest>
