@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.cow.bridge.R
 import com.cow.bridge.home.adapter.SearchResultAdapter
 import com.cow.bridge.home.dialog.OrderbyDialog
+import com.cow.bridge.model.Content
 import com.cow.bridge.model.Hash
 import com.cow.bridge.model.SearchWord
 import com.cow.bridge.network.ApplicationController
@@ -28,6 +29,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import kotlin.collections.ArrayList
 
 class SearchActivity : AppCompatActivity() {
 
@@ -247,11 +249,20 @@ class SearchActivity : AppCompatActivity() {
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()
+                Log.v("test", Gson().toJson(network))
                 if(network?.message.equals("ok")){
                     network.data?.get(0)?.contents_list?.let {
                         if(it.size!=0){
                             searchResultAdapter?.clear()
+                            searchResultAdapter?.setEmpty(false)
                             searchResultAdapter?.addAll(it)
+                            searchResultAdapter?.notifyDataSetChanged()
+                        }else{
+                            searchResultAdapter?.clear()
+                            var noresult = ArrayList<Content>()
+                            noresult.add(Content())
+                            searchResultAdapter?.setEmpty(true)
+                            searchResultAdapter?.addAll(noresult)
                             searchResultAdapter?.notifyDataSetChanged()
                         }
                     }

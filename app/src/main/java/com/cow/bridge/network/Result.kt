@@ -15,6 +15,7 @@ class Result{
     var token : String? = ""
 
     var contents_list: ArrayList<Content>? = null
+
     var hashcontents_list: ArrayList<Hash>? = null
     var recommendedhashcontents_list: ArrayList<Hash>? = null
     var request_list: ArrayList<Request>? = null
