@@ -16,6 +16,12 @@ class Hash : Serializable {
         this.userIdx = userIdx
     }
 
+    constructor(hashName : String, userIdx : Int, sortType : Int){
+        this.hashName = hashName
+        this.userIdx = userIdx
+        this.sortType = sortType
+    }
+
     var hashName : String = ""
     var hashImg : String = ""
     var hashCnt : Int = 0
@@ -25,5 +31,6 @@ class Hash : Serializable {
         set(value) {
             field = value
         }
+    var sortType : Int = 0
 
 }

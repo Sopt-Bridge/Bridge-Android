@@ -5,13 +5,18 @@
     android:layout_height="169dp"
     tools:context="com.cow.bridge.home.activity.type.hot.NowTrendFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <ImageView
         android:id="@+id/nowtrend_image_thumbnail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/nuest4" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.5"
+        android:background="@drawable/add_gradation" />
 
     <TextView
         android:id="@+id/nowtrend_text_title"

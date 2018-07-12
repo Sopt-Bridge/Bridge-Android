@@ -35,36 +35,19 @@ import retrofit2.Response
  */
 class RequestFragment : Fragment() {
     val api = ApplicationController.instance?.buildServerInterface()
+    var requestAdapter : RequestAdapter? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val convertView : View = inflater!!.inflate(R.layout.fragment_request, container, false)
 
         with(convertView){
-            val requestAdapter = RequestAdapter(context)
+            requestAdapter = RequestAdapter(context)
 
             val llm : LinearLayoutManager = LinearLayoutManager(context)
             llm.orientation = LinearLayoutManager.VERTICAL
             request_recycler.layoutManager = llm
             request_recycler.addItemDecoration(RequestDividerItemDecoration(context))
             request_recycler.adapter = requestAdapter
-
-            var messagesCall = api?.requestContentsList(0)
-            messagesCall?.enqueue(object : Callback<Network> {
-                override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
-                    var network = response!!.body()
-                    Log.v("requestContentsList : ", Gson().toJson(network))
-                    if(network?.message.equals("ok")){
-                        network.data?.get(0)?.request_list?.let {
-                            if(it.size!=0){
-                                requestAdapter.addAll(it)
-                                requestAdapter.notifyDataSetChanged()
-                            }
-                        }
-                    }
-                }
-                override fun onFailure(call: Call<Network>?, t: Throwable?) {
-
-                }
-            })
 
             //request_search.setIconifiedByDefault(false)
             val searchTextView = request_search.findViewById<AutoCompleteTextView>(request_search.context.resources.getIdentifier("android:id/search_src_text", null, null))
@@ -91,6 +74,9 @@ class RequestFragment : Fragment() {
                 }
 
                 override fun onQueryTextChange(p0: String?): Boolean {
+                    if(p0.equals("")){
+                        request_button_write.callOnClick()
+                    }
                     return false
                 }
 
@@ -99,10 +85,11 @@ class RequestFragment : Fragment() {
             request_button_write.setOnClickListener{
                 if(request_button_write.text.equals("write")){
                     var intent = Intent(context, RequestWriteActivity::class.java)
-                    startActivity(intent)
+                    //intent.putExtra("request", request)
+                    startActivityForResult(intent, 0)
                 }else if(request_button_write.text.equals("search")){
                     if(request_search.query.toString().equals("")){
-                        messagesCall = api?.requestContentsList(0)
+                        var messagesCall = api?.requestContentsList(0)
                         messagesCall?.enqueue(object : Callback<Network> {
                             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                                 var network = response!!.body()
@@ -110,9 +97,9 @@ class RequestFragment : Fragment() {
                                 if(network?.message.equals("ok")){
                                     network.data?.get(0)?.request_list?.let {
                                         if(it.size!=0){
-                                            requestAdapter.clear()
-                                            requestAdapter.addAll(it)
-                                            requestAdapter.notifyDataSetChanged()
+                                            requestAdapter?.clear()
+                                            requestAdapter?.addAll(it)
+                                            requestAdapter?.notifyDataSetChanged()
                                         }
                                     }
                                 }
@@ -122,7 +109,7 @@ class RequestFragment : Fragment() {
                             }
                         })
                     }else{
-                        messagesCall = api?.requestSearchContentsList(request_search.query.toString())
+                        var messagesCall = api?.requestSearchContentsList(request_search.query.toString())
                         messagesCall?.enqueue(object : Callback<Network> {
                             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                                 var network = response!!.body()
@@ -130,9 +117,9 @@ class RequestFragment : Fragment() {
                                 if(network?.message.equals("ok")){
                                     network.data?.get(0)?.request_list?.let {
                                         if(it.size!=0){
-                                            requestAdapter.clear()
-                                            requestAdapter.addAll(it)
-                                            requestAdapter.notifyDataSetChanged()
+                                            requestAdapter?.clear()
+                                            requestAdapter?.addAll(it)
+                                            requestAdapter?.notifyDataSetChanged()
                                         }else{
                                             Toast.makeText(context, "검색결과가 없습니다", Toast.LENGTH_SHORT).show()
                                         }
@@ -156,6 +143,51 @@ class RequestFragment : Fragment() {
         return convertView
     }
 
+    override fun onResume() {
+        super.onResume()
+        var messagesCall = api?.requestContentsList(0)
+        messagesCall?.enqueue(object : Callback<Network> {
+            override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                var network = response!!.body()
+                Log.v("requestContentsList : ", Gson().toJson(network))
+                if(network?.message.equals("ok")){
+                    network.data?.get(0)?.request_list?.let {
+                        if(it.size!=0){
+                            requestAdapter?.clear()
+                            requestAdapter?.addAll(it)
+                            requestAdapter?.notifyDataSetChanged()
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<Network>?, t: Throwable?) {
 
+            }
+        })
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==0){
+            var messagesCall = api?.requestContentsList(0)
+            messagesCall?.enqueue(object : Callback<Network> {
+                override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                    var network = response!!.body()
+                    Log.v("requestContentsList : ", Gson().toJson(network))
+                    if(network?.message.equals("ok")){
+                        network.data?.get(0)?.request_list?.let {
+                            if(it.size!=0){
+                                requestAdapter?.clear()
+                                requestAdapter?.addAll(it)
+                                requestAdapter?.notifyDataSetChanged()
+                            }
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                }
+            })
+        }
+    }
 }// Required empty public constructor

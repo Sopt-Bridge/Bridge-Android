@@ -29,12 +29,12 @@ class BestChannelAdapter(internal var _context: Context) : RecyclerView.Adapter<
     var items = ArrayList<Hash>()
     val api : ServerInterface? = ApplicationController.instance?.buildServerInterface()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val convertView = LayoutInflater.from(_context).inflate(R.layout.row_bestchannel_simple, parent, false)
         return BestChannelViewHolder(convertView)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         with((holder as BestChannelViewHolder).itemView){
             Glide.with(_context).load(items[position].hashImg).into(bestchannel_image_thumbnail)
             bestchannel_text_name.text = items[position].hashName

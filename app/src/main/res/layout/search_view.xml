@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:hint="한글로 학교를 검색해 주세요."
+                android:hint="Search"
                 android:imeOptions="actionSearch"
                 android:inputType="textNoSuggestions"
                 android:paddingLeft="50dp"
@@ -155,7 +155,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:background="@android:color/white"
-                android:divider="@android:color/transparent" />
+                android:divider="#E4E4E4"
+                android:dividerHeight="1dp" />
         </LinearLayout>
 
 

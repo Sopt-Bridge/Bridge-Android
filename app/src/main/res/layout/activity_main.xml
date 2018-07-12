@@ -51,11 +51,20 @@
                     android:textColor="#D1D1D1"
                     android:textSize="10dp" />
 
+                <Button
+                    android:id="@+id/main_button_profile"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/mypage_btn_mid_comment_profile"
+                    android:visibility="gone" />
+
             </FrameLayout>
         </android.support.v7.widget.Toolbar>
 
         <!-- 생략 -->
-        <android.support.v4.view.ViewPager
+        <com.cow.bridge.util.LockableViewPager
             android:id="@+id/main_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -63,7 +72,33 @@
             android:background="#FFFFFF"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        </android.support.v4.view.ViewPager>
+        </com.cow.bridge.util.LockableViewPager>
+
+        <LinearLayout
+            android:id="@+id/main_layout_nologin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="To use this function,
+you need to login our service.
+
+:("
+                android:textAlignment="center"
+                android:textColor="#333333"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
 
         <ImageView
             android:id="@+id/imageView2"

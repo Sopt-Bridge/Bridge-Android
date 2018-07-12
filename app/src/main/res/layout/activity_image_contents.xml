@@ -1,175 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:background="#000000"
-    android:id="@+id/imgMain"
-    android:orientation="vertical">
+    android:layout_width="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="10dp">
-
-        <!-- X 버튼 -->
-
-        <ImageButton
-            android:layout_width="17.79dp"
-            android:layout_height="17.79dp"
-            android:layout_marginLeft="18.18dp"
-            android:layout_marginTop="10.69dp"
-
-            android:background="@drawable/content_x_btn"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-
-            <!-- 사진 개수 알려주는 텍스트-->
-
-            <TextView
-                android:id="@+id/imgCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="18.15dp"
-                android:text="19/20"
-                android:textColor="#fff"
-                android:gravity="left"
-                android:textSize="14dp"/>
-
-        </LinearLayout>
-
-
-        <ImageButton
-            android:id="@+id/imgLibraryBtn"
-            android:layout_width="11.49dp"
-            android:layout_height="19.92dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="19.09dp"
-            android:background="@drawable/add_to_library_normal_icon"/>
-
-        <ImageButton
-            android:id="@+id/imgFeedbackBtn"
-            android:layout_width="23.15dp"
-            android:layout_height="19.02dp"
-            android:layout_toLeftOf="@id/imgLibraryBtn"
-            android:layout_marginRight="19.92dp"
-            android:background="@drawable/feedback_normal_icon"  />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/imgView"
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </android.support.v4.view.ViewPager>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:minHeight="73.51dp">
-
-        <TextView
-            android:id="@+id/imgDes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#fff"
-            android:layout_marginLeft="13.36dp"
-            android:layout_marginRight="8.62dp"
-            android:maxLines="4"
-            android:ellipsize="end"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusea commodo consequat."/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="#000000"
+        android:gravity="bottom"
+        sothree:umanoPanelHeight="39dp"
+        sothree:umanoShadowHeight="4dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
+            android:id="@+id/imgMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000000"
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/imgLike"
-                android:layout_width="18.8dp"
-                android:layout_height="19.37dp"
-                android:layout_marginLeft="18.15dp"
-                android:background="@drawable/good_normal_btn" />
-
-            <TextView
-                android:id="@+id/imgLikeNum"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8.62dp"
-                android:text="36"
-                android:textColor="#fff" />
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <!-- X 버튼 -->
+
+                <ImageButton
+                    android:layout_width="17.79dp"
+                    android:layout_height="17.79dp"
+                    android:layout_marginLeft="18.18dp"
+                    android:layout_marginTop="10.69dp"
+                    android:id="@+id/imgContentsBackBtn"
+                    android:background="@drawable/content_x_btn" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <!-- 사진 개수 알려주는 텍스트-->
+
+
+                    <TextView
+                        android:id="@+id/currentNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="18.15dp"
+                        android:gravity="left"
+                        android:text="1"
+                        android:textColor="#fff"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/slash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:text="/"
+                        android:textColor="#fff"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/imgCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:text="19/20"
+                        android:textColor="#fff"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+
+                <ImageButton
+                    android:id="@+id/imgLibraryBtn"
+                    android:layout_width="11.49dp"
+                    android:layout_height="19.92dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="19.09dp"
+                    android:background="@drawable/add_to_library_normal_icon" />
+
+                <ImageButton
+                    android:id="@+id/imgFeedbackBtn"
+                    android:layout_width="23.15dp"
+                    android:layout_height="19.02dp"
+                    android:layout_marginRight="19.92dp"
+                    android:layout_toLeftOf="@id/imgLibraryBtn"
+                    android:background="@drawable/feedback_normal_icon" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/imgView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v4.view.ViewPager>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:minHeight="73.51dp">
+
+                <TextView
+                    android:id="@+id/imgDes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13.36dp"
+                    android:layout_marginRight="8.62dp"
+                    android:ellipsize="end"
+                    android:maxLines="4"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusea commodo consequat."
+                    android:textColor="#fff" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/imgLike"
+                        android:layout_width="18.8dp"
+                        android:layout_height="19.37dp"
+                        android:layout_marginLeft="18.15dp"
+                        android:background="@drawable/good_normal_btn" />
+
+                    <TextView
+                        android:id="@+id/imgLikeNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8.62dp"
+                        android:text="36"
+                        android:textColor="#fff" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/imgCredit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Credit: 이호경 Instagram"
-            android:textColor="#fff"
-            android:layout_marginRight="12.45dp"
-            android:textSize="10dp"
-
-            />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/commentsBtn"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="36.39dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="22.02dp"
-            android:background="#fff"
-            android:includeFontPadding="false"
-            android:text="Comments"
-            android:textColor="#E31C9E"
-            android:textAllCaps="false"
-            android:textSize="17dp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#E31C9E"/>
+            <Button
+                android:id="@+id/commentsBtn"
+                android:layout_width="match_parent"
+                android:layout_height="36.39dp"
+                android:background="#fff"
+                android:includeFontPadding="false"
+                android:text="Comments"
+                android:textAllCaps="false"
+                android:textColor="#E31C9E"
+                android:textSize="17dp" />
 
-    </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#E31C9E" />
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/image_comments_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF" />
+
+        </LinearLayout>
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 </LinearLayout>

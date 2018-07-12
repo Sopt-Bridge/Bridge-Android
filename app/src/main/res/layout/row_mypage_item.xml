@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mywritten_layout_main"
     android:layout_width="match_parent"
     android:layout_height="62.4dp"
     android:background="@drawable/button_rect_1dp_e1e1e1">
@@ -12,7 +13,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/writing"
+            android:id="@+id/mywritten_text_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -25,7 +26,7 @@
             android:textSize="13dp" />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/mywritten_text_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
