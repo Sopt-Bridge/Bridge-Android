@@ -55,7 +55,6 @@ class LibraryFolderAdapter(internal var _context: Context) : RecyclerView.Adapte
                 (_context as Activity).startActivity(intent)
             }
 
-            Log.v("test", Gson().toJson(items[position]));
             //Glide.with(_context).load(items[position].groupBgimage).into(folder_image_thumbnail)
             folder_text_groupname.text = items[position].groupTitle
             items[position].groupColor?.let{

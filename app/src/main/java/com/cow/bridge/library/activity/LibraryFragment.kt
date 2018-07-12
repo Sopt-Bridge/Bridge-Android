@@ -66,7 +66,6 @@ class LibraryFragment : Fragment() {
                             messagesCall?.enqueue(object : Callback<Network> {
                                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                                     var network = response!!.body()
-                                    Log.v("test", Gson().toJson(network))
                                     if(network?.message.equals("ok")){
                                         getGroupList()
                                     }
@@ -117,7 +116,6 @@ class LibraryFragment : Fragment() {
         messagesCall?.enqueue(object : Callback<Network>{
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()
-                Log.v("test", Gson().toJson(network))
                 if(network?.message.equals("ok")){
                     network.data?.get(0)?.group_list?.let {
                         if(it.size!=0){

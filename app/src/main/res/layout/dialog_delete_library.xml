@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="258dp"
+    android:layout_height="180dp"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="19dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="35dp"
+        android:gravity="center_horizontal"
+        android:text="Are you sure you want to delete this folder?  "
+        android:textColor="#333333"
+        android:textSize="17dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/library_button_cancel"
+            android:layout_width="86dp"
+            android:layout_height="38dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="36dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_rect_fill_20dp_ffffff_radius"
+            android:text="Cancel"
+            android:textColor="#E31C9E"
+            android:textSize="17dp" />
+
+        <Button
+            android:id="@+id/library_button_delete"
+            android:layout_width="86dp"
+            android:layout_height="38dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_rect_fill_20dp_e31c9e_radius"
+            android:text="Delete"
+            android:textColor="#FFFFFF"
+            android:textSize="17dp" />
+    </LinearLayout>
+</LinearLayout>

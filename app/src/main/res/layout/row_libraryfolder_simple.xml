@@ -11,7 +11,7 @@
     android:orientation="vertical">
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#F4F4F4">
 
@@ -19,7 +19,8 @@
             android:id="@+id/folder_image_thumbnail"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            app:srcCompat="@drawable/home_logo_with_text_icon" />
+            android:padding="30dp"
+            app:srcCompat="@drawable/library_no_image_logo" />
 
     </FrameLayout>
 

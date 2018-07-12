@@ -17,6 +17,12 @@ class Group : Serializable{
         this.groupColor = groupColor
     }
 
+    constructor(userIdx : Int, groupIdx: Int, groupTitle : String, groupColor : String){
+        this.userIdx = userIdx
+        this.groupTitle = groupTitle
+        this.groupColor = groupColor
+    }
+
     var groupTitle : String = ""
     var groupBgimage : String = ""
     var groupIdx : Int = 0
