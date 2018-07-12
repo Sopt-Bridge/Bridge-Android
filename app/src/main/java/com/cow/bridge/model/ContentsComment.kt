@@ -6,10 +6,10 @@ import java.util.*
 class ContentsComment : Serializable {
 
     constructor()
-    constructor(contentsIdx : Int, userIdx : Int,ccmtContent : String ){
-        this.contentsIdx = contentsIdx
+
+    constructor(userIdx : Int,ccmtIdx : Int ){
         this.userIdx = userIdx
-        this.ccmtContent = ccmtContent
+        this.ccmtIdx = ccmtIdx
     }
 
     var ccmtIdx: Int = 0

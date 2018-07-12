@@ -21,6 +21,7 @@ import com.cow.bridge.model.ContentsComment
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_image_contents.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -145,6 +146,7 @@ class ImageContentsActivity : AppCompatActivity() {
                 messagesCall?.enqueue(object : Callback<Network> {
                     override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                         var network = response!!.body()
+                        Log.v("contentsCommentWrite", Gson().toJson(network))
                         if (network?.message.equals("ok")) {
                             getContentsCommentList()
                         } else {
@@ -183,7 +185,7 @@ class ImageContentsActivity : AppCompatActivity() {
 
         })
 
-        imgCommentAdapter = ImageContentsCommentAdapter(applicationContext)
+        imgCommentAdapter = ImageContentsCommentAdapter(this@ImageContentsActivity)
 
         val llm: LinearLayoutManager = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
