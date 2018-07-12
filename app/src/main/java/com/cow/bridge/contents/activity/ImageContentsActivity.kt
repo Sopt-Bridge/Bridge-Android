@@ -1,6 +1,8 @@
 package com.cow.bridge.contents.activity
 
+import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -15,6 +17,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.cow.bridge.R
 import com.cow.bridge.contents.adapter.ImageCommentAdapter
+import com.cow.bridge.contents.dialog.FeedBackDialog
+
 import com.cow.bridge.model.Content
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
@@ -24,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_image_contents.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class ImageContentsActivity : AppCompatActivity() {
     private lateinit var cancelButton : ImageButton
@@ -40,8 +45,6 @@ class ImageContentsActivity : AppCompatActivity() {
         imgPager = findViewById(R.id.viewPager)
         cancelButton = findViewById(R.id.imgContentsBackBtn)
         cancelButton.setOnClickListener{finish()}
-
-
 
         // 화면 터치 시 아이콘 보임, 안 보임
         val text1 : TextView = findViewById(R.id.imgCount)
@@ -101,17 +104,39 @@ class ImageContentsActivity : AppCompatActivity() {
                     var network = response!!.body()
                     Log.v("test", Gson().toJson(network))
                     if(network?.message.equals("ok")) {
-                        if(likeFlag==0){
-                            likeFlag =1
-                            text5.setBackgroundResource(R.drawable.good_normal_btn)
-                        } else if(likeFlag==0){
+                        if(likeFlag==1){
                             likeFlag =0
+                            text5.setBackgroundResource(R.drawable.good_normal_btn)
+                            text6.text = imageContents?.contentsLike.toString()
+                            Log.v("ctest : ", Gson().toJson(network))
+                        } else if(likeFlag==0){
+                            likeFlag =1
                             text5.setBackgroundResource(R.drawable.good_active_icon)
+                            text6.text = imageContents?.contentsLike!!.plus(1).toString()
+                            Log.v("contentsLike : ", Gson().toJson(network))
+
                         }
                     }
                 }
             })
         }
+        // FeedBack Dialog
+        text3.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                val feedbackDialog : FeedBackDialog = FeedBackDialog(this@ImageContentsActivity, imageContents?.contentsIdx!!)
+                feedbackDialog.window.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+                feedbackDialog.show()
+                feedbackDialog.setOnDismissListener(object : DialogInterface.OnDismissListener {
+                    override fun onDismiss(dialog: DialogInterface?) {
+                        with(dialog as FeedBackDialog) {
+                            if(send) {
+                            }
+                        }
+                    }
+                })
+            }
+
+        })
 
 
         // view pager 연결
@@ -119,9 +144,10 @@ class ImageContentsActivity : AppCompatActivity() {
         for (i in 1..imageContents?.imgCnt!!)  {
             adapter.addFragment(ImageFragment.newInstance(i,imageContents.contentsIdx))
         }
-
         imgPager.offscreenPageLimit = 2
         imgPager.adapter = adapter
+
+
 
         imgPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
             override fun onPageScrollStateChanged(state: Int) {
@@ -179,9 +205,11 @@ class ImageContentsActivity : AppCompatActivity() {
             return mFragmentList.size
         }
 
+
         fun addFragment(fragment: Fragment) {
             mFragmentList.add(fragment)
         }
+
     }
 
 

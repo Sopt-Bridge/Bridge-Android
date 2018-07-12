@@ -2,12 +2,9 @@ package com.cow.bridge.library.dialog
 
 import android.app.Dialog
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.Window
-import android.widget.Toast
 import com.cow.bridge.R
 import kotlinx.android.synthetic.main.dialog_delete_library.*
 
