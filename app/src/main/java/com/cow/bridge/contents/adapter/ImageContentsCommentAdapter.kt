@@ -1,6 +1,8 @@
 package com.cow.bridge.contents.adapter
 
+import android.app.Activity
 import android.content.Context
+import android.content.SharedPreferences
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +15,7 @@ import com.cow.bridge.util.UtilController
 import kotlinx.android.synthetic.main.fragment_image_comments.view.*
 import kotlinx.android.synthetic.main.row_contents_simple.view.*
 
-class ImageCommentAdapter(internal var _context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
+class ImageContentsCommentAdapter(internal var _context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
 
     var items = ArrayList<ContentsComment>()
 
@@ -25,12 +27,16 @@ class ImageCommentAdapter(internal var _context: Context) : RecyclerView.Adapter
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         with((holder as ImageContentsCommentViewHolder).itemView){
 
-            image_comment_text_title.text = items[position].CcmtContent
-            image_contents_tv_comment_date.text = items[position].CcmtDate.toString()
-            image_contents_btn_recomment.text =  "${items[position].recommentCnt} replies"
+            image_comment_name.text = items[position].userName
+            image_comment_text_title.text = items[position].ccmtContent
+            image_contents_tv_comment_date.text = items[position].ccmtDate.toString()
+            //image_contents_btn_recomment.text =  "${items[position].recommentCnt} Replies"
 
         }
     }
+//    var sp : SharedPreferences = (_context as Activity).getSharedPreferences("bridge", MODE_PRIVATE)
+//    var myUserIdx = sp.getInt("userIdx", 0)
+
 
     override fun getItemCount(): Int {
         return items.size

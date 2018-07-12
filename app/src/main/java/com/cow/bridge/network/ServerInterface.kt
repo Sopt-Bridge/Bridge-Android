@@ -1,9 +1,6 @@
 package com.cow.bridge.network
 
-import com.cow.bridge.model.Content
-import com.cow.bridge.model.Hash
-import com.cow.bridge.model.Request
-import com.cow.bridge.model.User
+import com.cow.bridge.model.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -93,4 +90,9 @@ interface ServerInterface {
     @GET("/contents/ccomment_view/{contentsIdx}/{lastcontentsIdx}")
     fun getImageContentCommentList(@Path("contentsIdx") contentsIdx : Int,@Path("lastcontentsIdx") lastcontentsIdx : Int): Call<Network>
 
+    @POST("/contents/ccomment_write")
+    fun contentsCommentWrite(@Body contentsComment: ContentsComment): Call<Network>
+
+    @POST("/contents/ccomment_delete")
+    fun contentsCommentDelete(@Body contentsComment: ContentsComment): Call<Network>
 }

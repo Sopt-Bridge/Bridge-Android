@@ -196,9 +196,50 @@
                 android:id="@+id/image_comments_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="#FFFFFF" />
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal"
+                android:background="#FFFFFF">
+
+                <FrameLayout
+                    android:id="@+id/video_contents_tv_comment_edit"
+                    android:layout_width="255.03dp"
+                    android:layout_height="34.77dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    >
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edit_enter_text"
+                        android:hint="Add a comment"
+                        android:id="@+id/contents_comment_edit"
+                        android:paddingLeft="15dp" />
+                </FrameLayout>
+
+                <Button
+                    android:id="@+id/image_contents_comment_post_btn"
+                    android:layout_width="62.73dp"
+                    android:layout_height="35.09dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="7.97dp"
+                    android:layout_marginRight="14.4dp"
+                    android:layout_toRightOf="@id/video_contents_tv_comment_edit"
+                    android:background="@drawable/round_btn_done"
+                    android:text="POST"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
         </LinearLayout>
+
 
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 </LinearLayout>
