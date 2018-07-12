@@ -2,6 +2,7 @@ package com.cow.bridge.contents.activity
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.PixelFormat
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
@@ -32,6 +33,7 @@ import com.cow.bridge.network.Network
 import com.google.gson.Gson
 import org.w3c.dom.Attr
 import java.net.HttpURLConnection
+import java.net.URI
 import java.net.URL
 import java.util.HashMap
 import javax.xml.parsers.DocumentBuilderFactory
@@ -47,6 +49,7 @@ class VideoContentsMainActivity :AppCompatActivity() {
     var txt_recommand: TextView? = null
     var btn_recommand: Button? = null
     var video_contents: WebView? = null
+    var video_contents_mp4 : VideoView ?= null
 
     var txt_video_title: TextView? = null
     var txt_origin_url: TextView? = null
@@ -73,7 +76,8 @@ class VideoContentsMainActivity :AppCompatActivity() {
         btn_feedback = video_contents_bt_feedback
         txt_recommand = video_contents_tv_recommand
         btn_recommand = video_contents_bt_recommend
-        video_contents = video_contents_vv_video
+        video_contents_mp4 = video_contents_vv_video
+        video_contents = video_contents_wv_video
         //others setting
         //video_contents?.start()
 
@@ -106,19 +110,41 @@ class VideoContentsMainActivity :AppCompatActivity() {
        // video_contents?.setOnPreparedListener(MediaPlayer.OnPreparedListener {
          //   video_contents?.start()
         //})
-        var url : String = "<iframe width=\"360dp\" height=\"186.95dp\" \" src=\""+video.contentsUrl +"\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>\n"
-        video_contents?.setWebViewClient(WebViewClient())
-        var setting : WebSettings ?= video_contents?.settings
-        var webClient : WebChromeClient = WebChromeClient()
-        var client : WebViewClient = WebViewClient()
-        video_contents?.webChromeClient = webClient
-        video_contents?.webViewClient = client
-        setting!!.javaScriptEnabled = true
-        setting!!.mediaPlaybackRequiresUserGesture = false
-        video_contents?.settings?.pluginState = WebSettings.PluginState.ON
-        video_contents?.setLayerType(View.LAYER_TYPE_HARDWARE,null)
-        setting.builtInZoomControls = true
-        video_contents?.loadDataWithBaseURL("file:///android_asset/",url,"text/html","utf-8",null)
+        if(video.contentsUrl.endsWith(".mp4")){
+            video_contents_mp4?.visibility = View.VISIBLE
+            video_contents?.visibility = View.INVISIBLE
+            window.setFormat(PixelFormat.TRANSLUCENT)
+            var url : Uri = Uri.parse(video.contentsUrl)
+            var media : MediaController ?= MediaController(this)
+            media?.setAnchorView(video_contents)
+            //video_contents_mp4?.setVideoURI(url)
+            video_contents_mp4?.setVideoPath(video.contentsUrl)
+            media?.setMediaPlayer(video_contents_mp4)
+            video_contents_mp4?.setMediaController(media)
+            video_contents_mp4?.requestFocus()
+            video_contents_mp4?.start()
+        }
+        else {
+            video_contents_mp4?.visibility = View.INVISIBLE
+            video_contents?.visibility = View.VISIBLE
+            video_contents?.setWebViewClient(WebViewClient())
+            var setting: WebSettings? = video_contents?.settings
+            var webClient: WebChromeClient = WebChromeClient()
+            var client: WebViewClient = WebViewClient()
+            video_contents?.webChromeClient = webClient
+            video_contents?.webViewClient = client
+            setting!!.javaScriptEnabled = true
+            setting!!.mediaPlaybackRequiresUserGesture = false
+            video_contents?.settings?.pluginState = WebSettings.PluginState.ON
+            video_contents?.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+            video_contents?.isHorizontalScrollBarEnabled = false
+            video_contents?.isVerticalScrollBarEnabled = false
+            setting.builtInZoomControls = true
+            var url: String = "<iframe width=\"360dp\" height=\"186.95dp\" \" src=\"" + video.contentsUrl + "\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>\n"
+            video_contents?.loadDataWithBaseURL("file:///android_asset/", url, "text/html", "utf-8", null)
+        }
+
+
         //video_contents?.loadUrl(url)
 
 
