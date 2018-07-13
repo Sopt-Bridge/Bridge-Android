@@ -55,7 +55,7 @@ class MypageActivity : AppCompatActivity() {
         recyclerView.adapter = myAdapter
         recyclerView.addItemDecoration(ItemDecoration())
 
-        var messagesCall = api?.getMyTextList(1)
+        var messagesCall = api?.getMyTextList(sp.getInt("userIdx", 0))
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()

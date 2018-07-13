@@ -51,12 +51,13 @@ class VideoContentsMainActivity :AppCompatActivity() {
     var txt_origin_url: TextView? = null
     var txt_hash: TextView? = null
 
+    var video: Content? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_contents)
         api = ApplicationController.instance?.buildServerInterface()
         val intent = Intent(this.intent)
-        val video: Content = intent.getSerializableExtra("videoContents") as Content
+        video = intent.getSerializableExtra("videoContents") as Content
 
         //tab
         tablayout = video_contents_tab
@@ -77,31 +78,31 @@ class VideoContentsMainActivity :AppCompatActivity() {
         //others setting
         //video_contents?.start()
 
-        txt_origin_url?.text = video.contentsUrl
-        txt_recommand?.text = Integer.toString(video.contentsLike)
-        txt_video_title?.text = video.contentsTitle
+        txt_origin_url?.text = video?.contentsUrl
+        txt_recommand?.text = Integer.toString(video?.contentsLike!!)
+        txt_video_title?.text = video?.contentsTitle
 
         var temp_hash = " "
-        if(video.hashName1 != null) {
-            temp_hash = video.hashName1
-            if(video.hashName2 != null) {
-                temp_hash = temp_hash + video.hashName2
-                if(video.hashName3 != null) {
-                    temp_hash = temp_hash + video.hashName3
+        if(video?.hashName1 != null) {
+            temp_hash = video?.hashName1!!
+            if(video?.hashName2 != null) {
+                temp_hash = temp_hash + video?.hashName2
+                if(video?.hashName3 != null) {
+                    temp_hash = temp_hash + video?.hashName3
                 }
             }
         }
         txt_hash?.text = temp_hash
 
-        if(video.contentsUrl.endsWith(".mp4")){
+        if(video?.contentsUrl!!.endsWith(".mp4")){
             video_contents_mp4?.visibility = View.VISIBLE
             video_contents?.visibility = View.INVISIBLE
             window.setFormat(PixelFormat.TRANSLUCENT)
-            var url : Uri = Uri.parse(video.contentsUrl)
+            var url : Uri = Uri.parse(video?.contentsUrl)
             var media : MediaController ?= MediaController(this)
             media?.setAnchorView(video_contents)
             //video_contents_mp4?.setVideoURI(url)
-            video_contents_mp4?.setVideoPath(video.contentsUrl)
+            video_contents_mp4?.setVideoPath(video?.contentsUrl)
             media?.setMediaPlayer(video_contents_mp4)
             video_contents_mp4?.setMediaController(media)
             video_contents_mp4?.requestFocus()
@@ -123,7 +124,7 @@ class VideoContentsMainActivity :AppCompatActivity() {
             video_contents?.isHorizontalScrollBarEnabled = false
             video_contents?.isVerticalScrollBarEnabled = false
             setting.builtInZoomControls = true
-            var url: String = "<iframe width=\"360dp\" height=\"186.95dp\" \" src=\"" + video.contentsUrl + "\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>\n"
+            var url: String = "<iframe width=\"360dp\" height=\"186.95dp\" \" src=\"" + video?.contentsUrl + "\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>\n"
             video_contents?.loadDataWithBaseURL("file:///android_asset/", url, "text/html", "utf-8", null)
         }
 
@@ -134,12 +135,12 @@ class VideoContentsMainActivity :AppCompatActivity() {
 
         //initialize
         //좋아요버튼
-        if (video.likeFlag == 1)
+        if (video?.likeFlag == 1)
             btn_recommand?.setBackgroundResource(R.drawable.good_active_icon)
         else
             btn_recommand?.setBackgroundResource(R.drawable.good_normal_btn)
         //library여부
-        if (video.subFlag == 1)
+        if (video?.subFlag == 1)
             btn_library?.setBackgroundResource(R.drawable.add_to_library_active_icon)
         else
             btn_library?.setBackgroundResource(R.drawable.add_to_library_normal_icon)
@@ -151,16 +152,16 @@ class VideoContentsMainActivity :AppCompatActivity() {
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
                     if (network?.message.equals("ok")) {
-                        if (video.likeFlag == 1) {
+                        if (video?.likeFlag == 1) {
                             btn_recommand?.setBackgroundResource(R.drawable.good_normal_btn)
-                            video.contentsLike--
-                            video.likeFlag = 0
-                            txt_recommand?.text = Integer.toString(video.contentsLike)
+                            video?.contentsLike!!.minus(1)
+                            video?.likeFlag = 0
+                            txt_recommand?.text = Integer.toString(video?.contentsLike!!)
                         } else {
                             btn_recommand?.setBackgroundResource(R.drawable.good_active_icon)
-                            video.contentsLike++
-                            video.likeFlag = 1
-                            txt_recommand?.text = Integer.toString(video.contentsLike)
+                            video?.contentsLike!!.plus(1)
+                            video?.likeFlag = 1
+                            txt_recommand?.text = Integer.toString(video?.contentsLike!!)
                         }
                     }
                 }
@@ -170,12 +171,12 @@ class VideoContentsMainActivity :AppCompatActivity() {
             })
         }
         btn_library?.setOnClickListener {
-            if (video.subFlag == 1) {
+            if (video?.subFlag == 1) {
                 btn_library?.setBackgroundResource(R.drawable.add_to_library_normal_icon)
-                video.subFlag = 0
+                video?.subFlag = 0
             } else {
                 btn_library?.setBackgroundResource(R.drawable.add_to_library_active_icon)
-                video.subFlag = 1
+                video?.subFlag = 1
             }
         }
 
@@ -189,7 +190,7 @@ class VideoContentsMainActivity :AppCompatActivity() {
 
     private fun setupViewPager(viewPager: ViewPager?) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(VideoContentsCommentFragment(), "Comment")
+        adapter.addFragment(VideoContentsCommentFragment.newInstance(video?.contentsIdx!!), "Comment")
         adapter.addFragment(VideoContentsVideoFragment(), "Video")
         viewPager?.adapter = adapter
     }

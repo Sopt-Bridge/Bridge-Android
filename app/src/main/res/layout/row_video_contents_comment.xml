@@ -65,17 +65,19 @@
                 android:text="04/21/2018"
                 android:textSize="10dp"
                 android:textColor="#B1B1B1"/>
+
             <Button
                 android:id="@+id/video_contents__comment_bt_comment_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="17.21dp"
-                android:drawableLeft="@drawable/open_reply_page_icon"
                 android:layout_marginTop="4.81dp"
                 android:background="#ffffff"
+                android:drawableLeft="@drawable/open_reply_page_icon"
+                android:text=" 120 Replies"
                 android:textColor="#000000"
                 android:textSize="10dp"
-                android:text=" 120 Replies" />
+                android:visibility="gone" />
         </LinearLayout>
 
     </LinearLayout>
