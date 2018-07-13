@@ -8,7 +8,8 @@ import java.util.*
  */
 
 class Content : Serializable{
-    constructor(){}
+
+    constructor()
 
     constructor(contentsIdx : Int, userIdx : Int){
         this.contentsIdx = contentsIdx

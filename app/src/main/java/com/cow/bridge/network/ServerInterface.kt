@@ -25,6 +25,9 @@ interface ServerInterface {
     @POST("/contents/getcontents")
     fun getContents(@Body content : Content): Call<Network>
 
+    @POST("/contents/getcontents/{userIdx}/{contentsIdx}/{contentsType}")
+    fun getContents(@Body userIdx : Int, @Body contentsIdx : Int, @Body contentsType : Int): Call<Network>
+
     //contents
 
     @POST("/contents/clike")

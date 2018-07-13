@@ -47,6 +47,13 @@ class FeedBackDialog(context: Context, contentsIdx: Int) : Dialog(context), View
         feedback_X_Btn.setOnClickListener(this)
         feedback_Send_Btn.setOnClickListener(this)
 
+        //다이얼로그 외부 클릭시 닫히는 문제점 해결
+        setCancelable(false)
+        btn.setOnClickListener {
+            dismiss()
+        }
+//        setCanceledOnTouchOutside(true)
+
         // 버튼 누를 시 send
         btn.setOnClickListener {
             var messagesCall = api?.writeFeedback(Feedback(1, contentsIdx!!, edt.text.toString().trim()))
@@ -79,11 +86,10 @@ class FeedBackDialog(context: Context, contentsIdx: Int) : Dialog(context), View
                     btn.setBackgroundResource(R.drawable.round_btn_send_active)
                     btn.setEnabled(true)
                     btn.setOnClickListener {
-                        Toast.makeText(context,"피드백을 보냈습니다!",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,"Feedback has been sent successfully!",Toast.LENGTH_SHORT).show()
                         dismiss()
                     }
                 } else if (text.length < 10){
-                    btn.setBackgroundResource(R.drawable.round_btn_send)
 
 
                 }
