@@ -20,89 +20,106 @@
             android:layout_height="wrap_content" />
 
     </FrameLayout>
-    //1
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            //2
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingTop="13dp"
-                android:paddingLeft="16dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/video_contents_tv_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="46.98dp"
-                    android:layout_alignParentLeft="true"
-                    android:textSize="18dp"
-                    android:textColor="#000407"
-                    android:text="Jsthis - One of them in university festival" />
-                <TextView
-                    android:id="@+id/video_contents_tv_contents_origin_url"
-                    android:layout_width="match_parent"
-                    android:layout_height="27.8dp"
-                    android:layout_marginTop="8dp"
-                    android:textSize="13dp"
-                    android:textColor="#000407"
-                    android:text="credit : Youtube Indigo" />
-            </LinearLayout>
-            //3
-         <LinearLayout
-             android:layout_width="23.18dp"
-             android:layout_height="78.68dp"
-             android:layout_marginTop="16.6dp"
-             android:layout_marginRight="14.21dp"
-             android:layout_marginLeft="3.83dp"
-             android:orientation="vertical">
-            <Button
-                android:id="@+id/video_contents_bt_library"
-                android:layout_width="12dp"
-                android:layout_height="20dp"
-                android:layout_marginBottom="16.25dp"
-                android:layout_gravity="center"
-                android:background="@drawable/add_to_library_normal_icon" />
+            android:orientation="vertical" >
 
-             <Button
-                 android:id="@+id/video_contents_bt_feedback"
-                 android:layout_width="23.21dp"
-                 android:layout_height="19.13dp"
-                 android:layout_gravity="top"
-                 android:background="@drawable/feedback_normal_icon" />
-         </LinearLayout>
-        </LinearLayout>
-        //4
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="27.8dp"
-                android:paddingLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:paddingRight="16.3dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                //2
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="13dp">
+
+                    <TextView
+                        android:id="@+id/video_contents_tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:lines="2"
+                        android:text="Jsthis - One of them in university festival"
+                        android:textColor="#000407"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/video_contents_tv_contents_origin_url"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="credit : Youtube Indigo"
+                        android:textColor="#000407"
+                        android:textSize="13dp" />
+                </LinearLayout>
+                //3
+
+                <LinearLayout
+                    android:layout_width="23.18dp"
+                    android:layout_height="78.68dp"
+                    android:layout_marginLeft="3.83dp"
+                    android:layout_marginRight="14.21dp"
+                    android:layout_marginTop="16.6dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/video_contents_bt_library"
+                        android:layout_width="12dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="16.25dp"
+                        android:background="@drawable/add_to_library_normal_icon" />
+
+                    <Button
+                        android:id="@+id/video_contents_bt_feedback"
+                        android:layout_width="23.21dp"
+                        android:layout_height="19.13dp"
+                        android:layout_gravity="top"
+                        android:background="@drawable/feedback_normal_icon" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:paddingRight="16.3dp">
 
 
                 <TextView
-                android:id="@+id/video_contents_tv_hash"
-                android:layout_width="0dp"
-                android:layout_height="27.8dp"
+                    android:id="@+id/video_contents_tv_hash"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                android:textSize="12dp"
-                android:textColor="#B1B1B1"
-                android:textStyle="bold"
-                android:text="#Hiphop #J-this " />
+                    android:text="#Hiphop #J-this "
+                    android:textColor="#B1B1B1"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/video_contents_tv_recommand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/video_contents_bt_recommend"
                     android:layout_marginRight="10.89dp"
+                    android:layout_toLeftOf="@id/video_contents_bt_recommend"
+                    android:text="36"
                     android:textColor="#333333"
-                    android:textSize="13dp"
-                    android:text="36"/>
+                    android:textSize="13dp" />
 
                 <Button
                     android:id="@+id/video_contents_bt_recommend"
@@ -111,29 +128,37 @@
                     android:background="@drawable/good_normal_btn" />
 
 
+            </LinearLayout>
 
-    </LinearLayout>
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-  <android.support.design.widget.AppBarLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-      <android.support.design.widget.TabLayout
-          android:id="@+id/video_contents_tab"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          app:tabGravity="fill"
-          app:tabMode="fixed"
-          android:background="#FFFFFF"
-          app:tabIndicatorColor="#E31C9E"
-          app:tabTextColor="#B1B1B1"
-          app:tabSelectedTextColor="#E31C9E">
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/video_contents_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="#E31C9E"
+                    app:tabMode="fixed"
+                    app:tabSelectedTextColor="#E31C9E"
+                    app:tabTextColor="#B1B1B1">
 
-      </android.support.design.widget.TabLayout>
-  </android.support.design.widget.AppBarLayout>
+                </android.support.design.widget.TabLayout>
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/video_contents_vp_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    //1
+
+    //4
 
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/video_contents_vp_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 </LinearLayout>

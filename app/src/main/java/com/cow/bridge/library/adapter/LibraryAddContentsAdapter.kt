@@ -42,56 +42,36 @@ class LibraryAddContentsAdapter(internal var _context: Context) : RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if(position==0){
+        with((holder as LibraryFolderViewHolder).itemView){
 
-            with((holder as LibraryFolderViewHolder).itemView){
+            library_layout_main.setOnClickListener {
+                var messagesCall = api?.addGroupContents(Group(items[position].groupIdx, contentsIdx!!))
+                messagesCall?.enqueue(object : Callback<Network> {
+                    override fun onFailure(call: Call<Network>?, t: Throwable?) {
+                        Log.v("test fail : ", t.toString())
+                    }
 
-                library_layout_main.setOnClickListener {
-                    val libraryAddFolderDialog : LibraryAddFolderDialog = LibraryAddFolderDialog(_context)
-                    libraryAddFolderDialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    libraryAddFolderDialog.show()
-                    (_context as Dialog).dismiss()
-                }
-
-                library_text_name.text = "Make a new Library Group"
-
-
-            }
-
-        }else{
-
-            with((holder as LibraryFolderViewHolder).itemView){
-
-                library_layout_main.setOnClickListener {
-                    var messagesCall = api?.addGroupContents(Group(items[position-1].groupIdx, contentsIdx!!))
-                    messagesCall?.enqueue(object : Callback<Network> {
-                        override fun onFailure(call: Call<Network>?, t: Throwable?) {
-                            Log.v("test fail : ", t.toString())
-                        }
-
-                        override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
-                            var network = response!!.body()
-                            if(network?.message.equals("ok")) {
-                                Toast.makeText(_context, "Add a Contents in ${items[position-1].groupTitle}", Toast.LENGTH_SHORT).show()
-                                if (onLibraryFolderItemClickListener != null) {
-                                    onLibraryFolderItemClickListener!!.onLibraryFolderItemClickListener(true)
-                                }
-
+                    override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                        var network = response!!.body()
+                        if(network?.message.equals("ok")) {
+                            Toast.makeText(_context, "Add a Contents in ${items[position].groupTitle}", Toast.LENGTH_SHORT).show()
+                            if (onLibraryFolderItemClickListener != null) {
+                                onLibraryFolderItemClickListener!!.onLibraryFolderItemClickListener(true)
                             }
+
                         }
-                    })
-                }
-                library_text_name.text = items[position-1].groupTitle
-
-
+                    }
+                })
             }
+            library_text_name.text = items[position].groupTitle
+
 
         }
     }
 
     override fun getItemCount(): Int {
         //return 5
-        return items.size+1
+        return items.size
     }
 
     fun setContentsIdx(contentsIdx : Int){

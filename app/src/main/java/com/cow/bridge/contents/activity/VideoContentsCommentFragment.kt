@@ -43,8 +43,15 @@ class VideoContentsCommentFragment() :Fragment() {
             val llm : LinearLayoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
             video_contents_comment_recycler.layoutManager = llm
             video_contents_comment_recycler.adapter = videoContentsCommentAdapter
-
+            video_contents_comment_recycler.setHasFixedSize(true)
             getCommentList()
+
+            videoContentsCommentAdapter?.setOnCommentDeleteItemClickListener(object : VideoContentsCommentAdapter.OnCommentDeleteItemClickListener{
+                override fun onCommentDeleteItemClickListener() {
+                    getCommentList()
+                }
+
+            })
 
             video_contents_comment_post_btn.setOnClickListener {
                 var commentTmp = ContentsComment()

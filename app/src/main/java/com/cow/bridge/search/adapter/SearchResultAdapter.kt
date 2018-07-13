@@ -63,7 +63,7 @@ class SearchResultAdapter(internal var _context: Context) : RecyclerView.Adapter
                         contents_text_count.text = items[position].contentsRuntime
                     }
                     Glide.with(_context).load(R.drawable.home_video_thumnail_icon).into(contents_image_type)
-                    Glide.with(_context).load(ApplicationController.videoThumbnailUrl(items[position].contentsIdx)).override(UtilController.convertDpToPixel(153f, context).toInt(), UtilController.convertDpToPixel(100f, context).toInt()).into(contents_image_thumbnail)
+                    Glide.with(_context).load(items[position].thumbnailUrl).override(UtilController.convertDpToPixel(153f, context).toInt(), UtilController.convertDpToPixel(100f, context).toInt()).into(contents_image_thumbnail)
                 }
             }
         }else{

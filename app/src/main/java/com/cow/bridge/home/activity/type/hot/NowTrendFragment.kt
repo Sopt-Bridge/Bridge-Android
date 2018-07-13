@@ -36,7 +36,7 @@ class NowTrendFragment : Fragment() {
             if(content?.contentsType==0){
                 Glide.with(context).load(ApplicationController.imageUrl(content?.contentsIdx!!, 1)).into(nowtrend_image_thumbnail)
             }else{
-                Glide.with(context).load(ApplicationController.videoThumbnailUrl(content?.contentsIdx!!)).into(nowtrend_image_thumbnail)
+                Glide.with(context).load(content?.thumbnailUrl).into(nowtrend_image_thumbnail)
             }
             nowtrend_image_thumbnail
         }

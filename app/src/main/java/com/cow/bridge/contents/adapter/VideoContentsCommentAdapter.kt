@@ -30,6 +30,13 @@ class VideoContentsCommentAdapter(val _context : Context ) : RecyclerView.Adapte
     var items = ArrayList<ContentsComment>()
     var api = ApplicationController.instance?.buildServerInterface()
 
+
+    internal var onCommentDeleteItemClickListener: OnCommentDeleteItemClickListener? = null
+
+    fun setOnCommentDeleteItemClickListener(onCommentDeleteItemClickListener: OnCommentDeleteItemClickListener) {
+        this.onCommentDeleteItemClickListener = onCommentDeleteItemClickListener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoContentsCommentViewHolder {
         val mainView : View = LayoutInflater.from(parent!!.context).inflate(R.layout.row_video_contents_comment,parent,false)
         return VideoContentsCommentViewHolder(mainView)
@@ -60,7 +67,9 @@ class VideoContentsCommentAdapter(val _context : Context ) : RecyclerView.Adapte
                         Log.v("contentsCommentDelet", Gson().toJson(network))
                         if(network?.message.equals("ok")){
                             Toast.makeText(_context, "Remove a comment", Toast.LENGTH_SHORT).show()
-                            (_context as VideoContentsCommentFragment).getCommentList()
+                            if (onCommentDeleteItemClickListener != null) {
+                                onCommentDeleteItemClickListener!!.onCommentDeleteItemClickListener()
+                            }
                         }
                     }
                     override fun onFailure(call: Call<Network>?, t: Throwable?) {
@@ -82,5 +91,9 @@ class VideoContentsCommentAdapter(val _context : Context ) : RecyclerView.Adapte
 
     fun addAll(contentsComment: java.util.ArrayList<ContentsComment>) {
         this.items.addAll(contentsComment)
+    }
+
+    interface OnCommentDeleteItemClickListener {
+        fun onCommentDeleteItemClickListener()
     }
 }

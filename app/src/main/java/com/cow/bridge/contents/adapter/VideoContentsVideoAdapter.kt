@@ -40,8 +40,7 @@ class VideoContentsVideoAdapter(val context : Context) : RecyclerView.Adapter<Vi
                 }
             }
             video_contents_video_tv_hash.text = temp_hash
-            Log.v("test", ApplicationController.videoThumbnailUrl(items[position].contentsIdx))
-            Glide.with(context).load(ApplicationController.videoThumbnailUrl(items[position].contentsIdx)).override(UtilController.convertDpToPixel(143f, context).toInt(), UtilController.convertDpToPixel(92f, context).toInt()).into(video_contents_video_iv_video_image)
+            Glide.with(context).load(items[position].thumbnailUrl).override(UtilController.convertDpToPixel(144f, context).toInt(), UtilController.convertDpToPixel(90f, context).toInt()).into(video_contents_video_iv_video_image)
 
             if(items[position].contentsRuntime==null){
                 video_contents_video_tv_contents_time.text = "00:00"

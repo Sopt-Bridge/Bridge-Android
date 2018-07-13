@@ -50,7 +50,7 @@ class RecentVideoAdapter(internal var _context: Context) : RecyclerView.Adapter<
                 Glide.with(_context).load(ApplicationController.imageUrl(items[position].contentsIdx, 1)).override(UtilController.convertDpToPixel(120f, context).toInt(), UtilController.convertDpToPixel(78f, context).toInt()).into(recent_image_thumbnail)
             }else{
                 Glide.with(_context).load(R.drawable.home_video_thumnail_icon).into(recent_image_type)
-                Glide.with(_context).load(ApplicationController.videoThumbnailUrl(items[position].contentsIdx)).override(UtilController.convertDpToPixel(120f, context).toInt(), UtilController.convertDpToPixel(78f, context).toInt()).into(recent_image_thumbnail)
+                Glide.with(_context).load(items[position].thumbnailUrl).override(UtilController.convertDpToPixel(120f, context).toInt(), UtilController.convertDpToPixel(78f, context).toInt()).into(recent_image_thumbnail)
             }
         }
 

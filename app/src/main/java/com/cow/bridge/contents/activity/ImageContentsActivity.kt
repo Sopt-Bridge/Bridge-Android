@@ -87,8 +87,7 @@ class ImageContentsActivity : AppCompatActivity() {
 
         var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
         var myUserIdx = sp.getInt("userIdx", 0)
-        Log.v("testtttt", imageContents?.contentsIdx.toString()!!)
-        Log.v("testtttt", myUserIdx.toString())
+
         var messagesCall = api?.getContents(Content(imageContents?.contentsIdx!!, myUserIdx, 0))
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {

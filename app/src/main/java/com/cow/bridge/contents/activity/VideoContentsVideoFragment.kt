@@ -31,6 +31,7 @@ class VideoContentsVideoFragment : Fragment() {
             val llm : LinearLayoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
             video_contents_video_recycler.layoutManager = llm
             video_contents_video_recycler.adapter = videoContentsVideoAdapter
+            video_contents_video_recycler.setHasFixedSize(true)
 
             var messagesCall = api?.recommandVideoContentsList(0,2)
             messagesCall?.enqueue(object : Callback<Network> {
@@ -39,6 +40,7 @@ class VideoContentsVideoFragment : Fragment() {
                 }
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
+
                     if (network?.message.equals("ok")) {
                         network.data?.get(0)?.contents_list?.let {
                             if (it.size != 0) {

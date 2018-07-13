@@ -1,6 +1,8 @@
 package com.cow.bridge.contents.activity
 
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.PixelFormat
 import android.graphics.drawable.ColorDrawable
@@ -24,7 +26,9 @@ import android.widget.TextView
 import android.widget.VideoView
 import com.cow.bridge.R
 import com.cow.bridge.contents.dialog.FeedBackDialog
+import com.cow.bridge.library.dialog.LibraryAddContentsDialog
 import com.cow.bridge.model.Content
+import com.cow.bridge.model.Group
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
@@ -131,35 +135,66 @@ class VideoContentsMainActivity :AppCompatActivity() {
 
         //video_contents?.loadUrl(url)
 
+        var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
+        var myUserIdx = sp.getInt("userIdx", 0)
 
+        var messagesCall = api?.getContents(Content(video?.contentsIdx!!, myUserIdx, 1))
+        messagesCall?.enqueue(object : Callback<Network> {
+            override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                var network = response!!.body()
+                Log.v("test", Gson().toJson(network))
+                if(network?.message.equals("ok")){
+                    network.data?.get(0)?.contents_list?.let {
+                        if(it.size!=0){
+
+                            if (it[0].likeFlag == 1) {
+                                video?.likeFlag = 1
+                                btn_recommand?.setBackgroundResource(R.drawable.good_active_icon)
+                            }
+                            else {
+                                video?.likeFlag = 0
+                                btn_recommand?.setBackgroundResource(R.drawable.good_normal_btn)
+                            }
+                            //library여부
+                            if (it[0].subFlag == 1) {
+                                video?.subFlag = 1
+                                btn_library?.setBackgroundResource(R.drawable.add_to_library_active_icon)
+                            }
+                            else {
+                                video?.subFlag = 0
+                                btn_library?.setBackgroundResource(R.drawable.add_to_library_normal_icon)
+                            }
+
+
+
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+            }
+        })
 
         //initialize
         //좋아요버튼
-        if (video?.likeFlag == 1)
-            btn_recommand?.setBackgroundResource(R.drawable.good_active_icon)
-        else
-            btn_recommand?.setBackgroundResource(R.drawable.good_normal_btn)
-        //library여부
-        if (video?.subFlag == 1)
-            btn_library?.setBackgroundResource(R.drawable.add_to_library_active_icon)
-        else
-            btn_library?.setBackgroundResource(R.drawable.add_to_library_normal_icon)
 
         btn_recommand?.setOnClickListener {
 
-            var messagesCall = api?.clikeContents(Content(video?.contentsIdx!!, 1))
+            var messagesCall = api?.clikeContents(Content(video?.contentsIdx!!, myUserIdx))
             messagesCall?.enqueue(object : Callback<Network> {
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
+                    Log.v("test", Gson().toJson(network))
                     if (network?.message.equals("ok")) {
                         if (video?.likeFlag == 1) {
                             btn_recommand?.setBackgroundResource(R.drawable.good_normal_btn)
-                            video?.contentsLike!!.minus(1)
+                            video?.contentsLike = video?.contentsLike!!.minus(1)
                             video?.likeFlag = 0
                             txt_recommand?.text = Integer.toString(video?.contentsLike!!)
                         } else {
                             btn_recommand?.setBackgroundResource(R.drawable.good_active_icon)
-                            video?.contentsLike!!.plus(1)
+                            video?.contentsLike = video?.contentsLike!!.plus(1)
                             video?.likeFlag = 1
                             txt_recommand?.text = Integer.toString(video?.contentsLike!!)
                         }
@@ -170,13 +205,43 @@ class VideoContentsMainActivity :AppCompatActivity() {
                 }
             })
         }
+
         btn_library?.setOnClickListener {
+
+            if (video?.subFlag == 0) {
+                val libraryAddContentsDialog : LibraryAddContentsDialog = LibraryAddContentsDialog(this@VideoContentsMainActivity, video?.contentsIdx!!)
+                libraryAddContentsDialog.window.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+                libraryAddContentsDialog.show()
+                libraryAddContentsDialog.setOnDismissListener(object : DialogInterface.OnDismissListener{
+                    override fun onDismiss(dialog: DialogInterface?) {
+                        with(dialog as LibraryAddContentsDialog){
+                            if(addContents){
+                                btn_library?.setBackgroundResource(R.drawable.add_to_library_active_icon)
+                                video?.subFlag = 1
+                            }
+                        }
+                    }
+
+                })
+
+            }
             if (video?.subFlag == 1) {
-                btn_library?.setBackgroundResource(R.drawable.add_to_library_normal_icon)
-                video?.subFlag = 0
-            } else {
-                btn_library?.setBackgroundResource(R.drawable.add_to_library_active_icon)
-                video?.subFlag = 1
+                var group = Group()
+                group.contentsIdx = video?.contentsIdx!!
+                var messagesCall = api?.deleteGroupGontents(group)
+                messagesCall?.enqueue(object : Callback<Network> {
+                    override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                        var network = response!!.body()
+                        Log.v("deleteGroupGontents", Gson().toJson(network))
+                        if(network?.message.equals("ok")){
+                            btn_library?.setBackgroundResource(R.drawable.add_to_library_normal_icon)
+                            video?.subFlag = 0
+                        }
+                    }
+                    override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                    }
+                })
             }
         }
 

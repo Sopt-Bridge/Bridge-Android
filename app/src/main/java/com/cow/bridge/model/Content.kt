@@ -41,4 +41,5 @@ class Content : Serializable{
     var likeFlag : Int = 0
     var subFlag : Int = 1
     var userIdx : Int = 0
+    var thumbnailUrl : String = ""
 }
