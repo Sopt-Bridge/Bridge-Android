@@ -22,8 +22,8 @@ interface ServerInterface {
     @GET("/contents/nextcontents/{lastcontentsIdx}/{contentsIdx}")
     fun recommandVideoContentsList (@Path("lastcontentsIdx") lastcontentsIdx : Int, @Path("contentsIdx") contentsIdx: Int): Call<Network>
 
-    @POST("/contents/getcontents/{userIdx}/{contentsIdx}/{contentsType}")
-    fun getVideoContents(@Body userIdx : Int, @Body contentsIdx : Int, @Body contentsType : Int): Call<Network>
+    @POST("/contents/getcontents")
+    fun getContents(@Body content : Content): Call<Network>
 
     //contents
 

@@ -56,7 +56,7 @@ class GroupDetailActivity : AppCompatActivity() {
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()
-                Log.v("test", Gson().toJson(network))
+                Log.v("getGroupContentsList", Gson().toJson(network))
                 if(network?.message.equals("ok")){
                     network.data?.get(0)?.contents_list?.let {
                         if(it.size!=0){
@@ -112,12 +112,10 @@ class GroupDetailActivity : AppCompatActivity() {
                 with(dialog as LibraryDialog){
                     if(confirm){
                         var sp : SharedPreferences = getSharedPreferences("bridge", AppCompatActivity.MODE_PRIVATE)
-                        Log.v("test", "${group.groupIdx} fdsfsdf")
                         var messagesCall = api?.modifyGroup(Group(sp.getInt("userIdx", 0), group.groupIdx, groupName!!, groupColor!!))
                         messagesCall?.enqueue(object : Callback<Network> {
                             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                                 var network = response!!.body()
-                                Log.v("test", Gson().toJson(network))
                                 if(network?.message.equals("ok")){
                                     this@GroupDetailActivity.group_text_name.text = groupName
                                     try{

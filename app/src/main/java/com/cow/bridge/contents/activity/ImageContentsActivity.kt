@@ -40,6 +40,8 @@ class ImageContentsActivity : AppCompatActivity() {
     val api: ServerInterface? = ApplicationController.instance?.buildServerInterface()
     var imgCommentAdapter: ImageContentsCommentAdapter? = null
     var imageContents : Content? = null
+    var likeFlag: Int = 0
+    var libraryFlag: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,20 +85,49 @@ class ImageContentsActivity : AppCompatActivity() {
         var intent = Intent(this.intent)
         imageContents = intent.getSerializableExtra("imageContents") as? Content
 
+        var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
+        var myUserIdx = sp.getInt("userIdx", 0)
+
+        var messagesCall = api?.getContents(Content(imageContents?.contentsIdx!!, myUserIdx, 0))
+        messagesCall?.enqueue(object : Callback<Network> {
+            override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                var network = response!!.body()
+                if(network?.message.equals("ok")){
+                    network.data?.get(0)?.contents_list?.let {
+                        if(it.size!=0){
+
+                            //imgLike 아이콘 부분
+                            likeFlag = it[0].likeFlag
+
+                            if (likeFlag == 0) {
+                                text5.setBackgroundResource(R.drawable.good_normal_btn)
+                            }
+                            if (likeFlag == 1) {
+                                text5.setBackgroundResource(R.drawable.good_active_icon)
+                            }
+
+
+                            libraryFlag = it[0].subFlag
+
+                            if (libraryFlag == 0) {
+                                text2.setBackgroundResource(R.drawable.add_to_library_normal_icon)
+                            }
+                            if (libraryFlag == 1) {
+                                text2.setBackgroundResource(R.drawable.add_to_library_active_icon)
+                            }
+
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+            }
+        })
+
         text1.text = imageContents?.imgCnt.toString()
         text4.text = imageContents?.contentsInfo
         text6.text = imageContents?.contentsLike.toString()
-
-        //imgLike 아이콘 부분
-        var likeFlag: Int?
-        likeFlag = imageContents?.likeFlag
-
-        if (likeFlag == 0) {
-            text5.setBackgroundResource(R.drawable.good_normal_btn)
-        }
-        if (likeFlag == 1) {
-            text5.setBackgroundResource(R.drawable.good_active_icon)
-        }
 
 
         text5.setOnClickListener {
@@ -126,16 +157,6 @@ class ImageContentsActivity : AppCompatActivity() {
             })
         }
 
-
-        var libraryFlag: Int?
-        libraryFlag = imageContents?.subFlag
-
-        if (libraryFlag == 0) {
-            text2.setBackgroundResource(R.drawable.add_to_library_normal_icon)
-        }
-        if (libraryFlag == 1) {
-            text2.setBackgroundResource(R.drawable.add_to_library_active_icon)
-        }
 
 
         text2.setOnClickListener {

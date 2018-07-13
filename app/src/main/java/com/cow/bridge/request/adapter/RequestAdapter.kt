@@ -36,7 +36,7 @@ class RequestAdapter(internal var _context: Context) : RecyclerView.Adapter<Recy
             }
 
             request_text_title.text = items[position].iboardTitle
-            request_text_name.text = "${items[position].userIdx}"
+            request_text_name.text = "${items[position].userName}"
             request_text_date.text = UtilController.timeformat(items[position].iboardDate)
         }
 

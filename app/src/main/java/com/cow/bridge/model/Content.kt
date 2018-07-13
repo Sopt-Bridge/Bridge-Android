@@ -14,6 +14,13 @@ class Content : Serializable{
         this.contentsIdx = contentsIdx
         this.userIdx = userIdx
     }
+
+    constructor(contentsIdx : Int, userIdx : Int, contentsType : Int){
+        this.contentsIdx = contentsIdx
+        this.userIdx = userIdx
+        this.contentsType = contentsType
+    }
+
     var contentsIdx : Int = 0
     var contentsTitle : String = ""
     var contentsInfo : String = ""

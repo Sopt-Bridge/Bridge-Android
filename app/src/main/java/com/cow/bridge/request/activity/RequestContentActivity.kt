@@ -23,5 +23,6 @@ class RequestContentActivity : AppCompatActivity() {
         request_text_link.text = request?.iboardUrl
         request_text_content.text = request?.iboardContent
 
+        request_image_back.setOnClickListener { finish() }
     }
 }

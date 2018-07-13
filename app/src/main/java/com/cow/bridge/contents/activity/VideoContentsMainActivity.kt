@@ -190,8 +190,8 @@ class VideoContentsMainActivity :AppCompatActivity() {
 
     private fun setupViewPager(viewPager: ViewPager?) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(VideoContentsCommentFragment(), "댓글")
-        adapter.addFragment(VideoContentsVideoFragment(), "영상")
+        adapter.addFragment(VideoContentsCommentFragment(), "Comment")
+        adapter.addFragment(VideoContentsVideoFragment(), "Video")
         viewPager?.adapter = adapter
     }
 

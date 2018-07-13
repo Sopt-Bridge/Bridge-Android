@@ -64,7 +64,7 @@
                 android:id="@+id/group_image_thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="172dp"
-                android:src="@drawable/nuest10" />
+                android:src="@drawable/library_no_image_logo" />
 
             <ImageView
                 android:id="@+id/group_image_bg"
