@@ -22,15 +22,8 @@ interface ServerInterface {
     @GET("/contents/nextcontents/{lastcontentsIdx}/{contentsIdx}")
     fun recommandVideoContentsList (@Path("lastcontentsIdx") lastcontentsIdx : Int, @Path("contentsIdx") contentsIdx: Int): Call<Network>
 
-    @GET("/contents/{contentsIdx}/{lastcontentsIdx}")
-    fun videoCommentList (@Path("contentsIdx") pageIdx : Int, @Path("lastcontentsIdx") userIdx : Int): Call<Network>
-
     @POST("/contents/getcontents/{userIdx}/{contentsIdx}/{contentsType}")
     fun getVideoContents(@Body userIdx : Int, @Body contentsIdx : Int, @Body contentsType : Int): Call<Network>
-
-    @POST("/contents/clike/{contentsIdx}/{userIdx}")
-    fun changeVideoContentsLike(@Body contentsIdx : Int, @Body userIdx : Int): Call<Network>
-
 
     //contents
 
@@ -42,6 +35,9 @@ interface ServerInterface {
 
     @POST("/contents/ccomment_delete")
     fun contentsCommentDelete(@Body contentsComment: ContentsComment): Call<Network>
+
+    @GET("/contents/ccomment_view/{contentsIdx}/{lastcontentsIdx}")
+    fun getContentCommentList(@Path("contentsIdx") contentsIdx : Int, @Path("lastcontentsIdx") lastcontentsIdx : Int): Call<Network>
 
 
     //home
@@ -115,19 +111,13 @@ interface ServerInterface {
     fun withdrawal(@Body user : User): Call<Network>
 
 
-    //comment
-
-    @GET("/contents/ccomment_view/{contentsIdx}/{lastcontentsIdx}")
-    fun getImageContentCommentList(@Path("contentsIdx") contentsIdx : Int,@Path("lastcontentsIdx") lastcontentsIdx : Int): Call<Network>
-
-
     //library
 
     @POST("/library/addgroupcontents")
-    fun addGroupContents(@Body group : Group)
+    fun addGroupContents(@Body group : Group): Call<Network>
 
     @POST("/library/contentsdelete")
-    fun deleteGroupGontents(@Body group : Group)
+    fun deleteGroupGontents(@Body group : Group): Call<Network>
 
     @GET("/library/recentvideo/{userIdx}")
     fun getRecentVideoList(@Path("userIdx") userIdx : Int): Call<Network>

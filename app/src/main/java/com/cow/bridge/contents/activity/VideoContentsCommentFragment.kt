@@ -30,7 +30,7 @@ class VideoContentsCommentFragment() :Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val convertView = inflater!!.inflate(R.layout.row_video_contents_comment,container,false)
+        val convertView = inflater!!.inflate(R.layout.fragment_video_contents_comment,container,false)
         api = ApplicationController.instance?.buildServerInterface()
 
         with(convertView){
@@ -38,7 +38,7 @@ class VideoContentsCommentFragment() :Fragment() {
             val llm : LinearLayoutManager = LinearLayoutManager(context)
             llm.orientation = LinearLayoutManager.VERTICAL
 
-            video_contents_video_recycler.layoutManager = llm
+            video_contents_comment_recycler.layoutManager = llm
             video_contents_comment_recycler.adapter = videoContentsCommentAdapter
 
             var messagesCall = api?.recommandVideoContentsList(0, 0)
