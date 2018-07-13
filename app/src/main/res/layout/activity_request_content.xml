@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:layout_width="match_parent"
     android:orientation="vertical">
 
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        sothree:umanoPanelHeight="39dp"
+        sothree:umanoShadowHeight="4dp">
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/main_toolbar"
@@ -116,5 +129,75 @@
             android:textSize="14dp" />
 
     </LinearLayout>
+    </LinearLayout>
 
+<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/request_commentsBtn"
+                android:layout_width="match_parent"
+                android:layout_height="36.39dp"
+                android:background="#fff"
+                android:includeFontPadding="false"
+                android:text="Comments"
+                android:textAllCaps="false"
+                android:textColor="#E31C9E"
+                android:textSize="17dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#E31C9E" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/request_comments_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#FFFFFF" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_gravity="bottom"
+                android:background="#FFFFFF"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:id="@+id/request_contents_comment_edit"
+                    android:layout_width="255.03dp"
+                    android:layout_height="34.77dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/request_comment_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edit_enter_text"
+                        android:hint="Add a comment"
+                        android:paddingLeft="15dp" />
+                </FrameLayout>
+
+                <Button
+                    android:id="@+id/request_contents_comment_post_btn"
+                    android:layout_width="62.73dp"
+                    android:layout_height="35.09dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="7.97dp"
+                    android:layout_marginRight="14.4dp"
+                    android:layout_toRightOf="@id/request_contents_comment_edit"
+                    android:background="@drawable/round_btn_done"
+                    android:text="POST"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 </LinearLayout>

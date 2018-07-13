@@ -92,6 +92,15 @@ interface ServerInterface {
     @POST("/trequest/trequest_write")
     fun requestWriteContents(@Body request : Request): Call<Network>
 
+    @GET("/trequest/trequestcomment_view/{iboardIdx}/{lastcontentsIdx}")
+    fun getrequestComment(@Path("iboardIdx") iboardIdx: Int,@Path("lastcontentsIdx") lastcontentsIdx: Int): Call<Network>
+
+    @POST("/trequest/trequestcomment_write")
+    fun requestCommentWrite(@Body request : Request): Call<Network>
+
+    @POST("/trequest/trequestcomment_delete")
+    fun requestCommentDelete(@Body request : Request): Call<Network>
+
 
     //search
 

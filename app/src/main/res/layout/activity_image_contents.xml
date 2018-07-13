@@ -203,8 +203,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_gravity="bottom"
-                android:orientation="horizontal"
-                android:background="#FFFFFF">
+                android:background="#FFFFFF"
+                android:orientation="horizontal">
 
                 <FrameLayout
                     android:id="@+id/video_contents_tv_comment_edit"
@@ -213,15 +213,14 @@
                     android:layout_alignParentLeft="true"
                     android:layout_gravity="center"
                     android:layout_marginLeft="16dp"
-                    android:layout_weight="1"
-                    >
+                    android:layout_weight="1">
 
                     <EditText
+                        android:id="@+id/contents_comment_edit"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/edit_enter_text"
                         android:hint="Add a comment"
-                        android:id="@+id/contents_comment_edit"
                         android:paddingLeft="15dp" />
                 </FrameLayout>
 

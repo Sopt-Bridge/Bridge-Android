@@ -40,6 +40,8 @@ class ImageContentsCommentAdapter(internal var _context: Context) : RecyclerView
             image_comment_text_title.text = items[position].ccmtContent
             image_contents_tv_comment_date.text = UtilController.timeformat(items[position].ccmtDate)
             //image_contents_btn_recomment.text =  "${items[position].recommentCnt} Replies"
+
+
             var sp : SharedPreferences = (_context as Activity).getSharedPreferences("bridge", MODE_PRIVATE)
             var myUserIdx = sp.getInt("userIdx", 0)
             if(items[position].userIdx==myUserIdx){

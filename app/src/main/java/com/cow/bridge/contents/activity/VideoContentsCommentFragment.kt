@@ -41,11 +41,13 @@ class VideoContentsCommentFragment() :Fragment() {
             video_contents_comment_recycler.layoutManager = llm
             video_contents_comment_recycler.adapter = videoContentsCommentAdapter
 
+
             var messagesCall = api?.recommandVideoContentsList(0, 0)
             messagesCall?.enqueue(object : Callback<Network> {
                 override fun onFailure(call: Call<Network>?, t: Throwable?) {
 
                 }
+
 
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()

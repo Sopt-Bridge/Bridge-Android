@@ -17,6 +17,8 @@ class Result{
     var hashcontents_list: ArrayList<Hash>? = null
     var recommendedhashcontents_list: ArrayList<Hash>? = null
     var request_list: ArrayList<Request>? = null
+
+    var request_comment_list: ArrayList<Request>? = null
     var comments_list : ArrayList<ContentsComment>? = null
     var group_list : ArrayList<Group>? = null
 }
