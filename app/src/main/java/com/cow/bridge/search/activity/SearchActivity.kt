@@ -57,9 +57,10 @@ class SearchActivity : AppCompatActivity() {
         searchView?.setCursorDrawable(R.drawable.color_cursor_white)
 
         searchView?.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
+
+            override fun onQueryTextSubmit(query: String): Boolean {
                 searchView?.hidePreview()
-                searchView?.hideKeyboard(searchView)
+                searchView?.hideKeyboard(searchView!!)
 
                 //TODO 썸네일 중복 제거
                 searchView?.setLayoutParams(FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, UtilController.convertDpToPixel(48f, applicationContext).toInt()));
@@ -69,7 +70,7 @@ class SearchActivity : AppCompatActivity() {
                     realm.executeTransaction {
                         var searchWord = realm.createObject(SearchWord::class.java)
                         searchWord.recentlyWord = query
-                        searchWord.searchDateTime = Date().time.toString()
+                        searchWord.searchDateTime = UtilController.timeformat(Date())
                     }
                     realm.close()
                     getSearchContentsList(query!!, 1, 0)
@@ -82,7 +83,7 @@ class SearchActivity : AppCompatActivity() {
                 return false
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
+            override fun onQueryTextChange(newText: String): Boolean {
 
                 return false
             }
@@ -118,7 +119,6 @@ class SearchActivity : AppCompatActivity() {
         var normalRecentlyWords : RealmResults<SearchWord> = realm.where(SearchWord::class.java).findAll();
         var searchName : Array<String?> = arrayOfNulls<String>(normalRecentlyWords.size)
         var count = 0
-        Log.v("test", "${normalRecentlyWords.size}")
         for(word in normalRecentlyWords){
             searchName[count++] = word.recentlyWord!!
         }
@@ -197,6 +197,7 @@ class SearchActivity : AppCompatActivity() {
             messagesCall?.enqueue(object : Callback<Network> {
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
+                    Log.v("testtt", Gson().toJson(network))
                     if(network?.message.equals("ok")){
                         network.data?.get(0)?.hashcontents_list?.let {
                             if(it.size!=0){

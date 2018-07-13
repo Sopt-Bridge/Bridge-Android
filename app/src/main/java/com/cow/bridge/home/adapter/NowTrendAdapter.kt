@@ -48,7 +48,7 @@ class NowTrendAdapter(internal var _context: Context) : RecyclerView.Adapter<Rec
             if(items[position].contentsType==0){
                 contents_text_count.text = "+ ${items[position].imgCnt}"
                 Glide.with(_context).load(R.drawable.home_image_thumnail_icon).into(contents_image_type)
-                Glide.with(_context).load(ApplicationController.imageUrl(1, 1)).override(UtilController.convertDpToPixel(153f, context).toInt(), UtilController.convertDpToPixel(100f, context).toInt()).into(contents_image_thumbnail)
+                Glide.with(_context).load(ApplicationController.imageUrl(items[position].contentsIdx, 1)).override(UtilController.convertDpToPixel(153f, context).toInt(), UtilController.convertDpToPixel(100f, context).toInt()).into(contents_image_thumbnail)
             }else{
                 if(items[position].contentsRuntime==null){
                     contents_text_count.text = "00:00"
@@ -56,7 +56,7 @@ class NowTrendAdapter(internal var _context: Context) : RecyclerView.Adapter<Rec
                     contents_text_count.text = items[position].contentsRuntime
                 }
                 Glide.with(_context).load(R.drawable.home_video_thumnail_icon).into(contents_image_type)
-                Glide.with(_context).load(ApplicationController.videoThumbnailUrl(4)).override(UtilController.convertDpToPixel(153f, context).toInt(), UtilController.convertDpToPixel(100f, context).toInt()).into(contents_image_thumbnail)
+                Glide.with(_context).load(items[position].thumbnailUrl).override(UtilController.convertDpToPixel(153f, context).toInt(), UtilController.convertDpToPixel(100f, context).toInt()).into(contents_image_thumbnail)
             }
         }
     }

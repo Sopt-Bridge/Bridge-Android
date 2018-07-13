@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,7 +51,12 @@ class RecentVideoAdapter(internal var _context: Context) : RecyclerView.Adapter<
                 Glide.with(_context).load(ApplicationController.imageUrl(items[position].contentsIdx, 1)).override(UtilController.convertDpToPixel(120f, context).toInt(), UtilController.convertDpToPixel(78f, context).toInt()).into(recent_image_thumbnail)
             }else{
                 Glide.with(_context).load(R.drawable.home_video_thumnail_icon).into(recent_image_type)
-                Glide.with(_context).load(items[position].thumbnailUrl).override(UtilController.convertDpToPixel(120f, context).toInt(), UtilController.convertDpToPixel(78f, context).toInt()).into(recent_image_thumbnail)
+                Log.v("testttt", items[position].thumbnailUrl)
+                if(items[position].thumbnailUrl!=null) {
+                    Glide.with(_context).load(items[position].thumbnailUrl).override(UtilController.convertDpToPixel(120f, context).toInt(), UtilController.convertDpToPixel(78f, context).toInt()).into(recent_image_thumbnail)
+                }else{
+
+                }
             }
         }
 

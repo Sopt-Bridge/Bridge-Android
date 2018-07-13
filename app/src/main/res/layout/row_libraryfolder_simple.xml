@@ -7,19 +7,19 @@
     android:layout_marginBottom="20dp"
     android:layout_marginLeft="9dp"
     android:layout_marginRight="9dp"
-    android:background="#F7F7F7"
+    android:background="#F4F4F4"
     android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F4F4F4">
+        android:background="#FFFFFF">
 
         <ImageView
             android:id="@+id/folder_image_thumbnail"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            app:srcCompat="@drawable/library_no_image_logo" />
+            app:srcCompat="@drawable/default_logo" />
 
     </FrameLayout>
 

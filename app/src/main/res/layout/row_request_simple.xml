@@ -19,9 +19,9 @@
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:lines="1"
-        android:text="What’s the meaning of “Apple” at this time?"
         android:textColor="#333333"
-        android:textSize="13dp" />
+        android:textSize="13dp"
+        tools:text="What’s the meaning of “Apple” at this time?" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,16 +33,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="KimKim"
             android:textColor="#8D8D8D"
-            android:textSize="11dp" />
+            android:textSize="11dp"
+            tools:text="KimKim" />
 
         <TextView
             android:id="@+id/request_text_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="04/07/2018"
             android:textColor="#AEAEAE"
-            android:textSize="11dp" />
+            android:textSize="11dp"
+            tools:text="04/07/2018" />
     </LinearLayout>
 </LinearLayout>

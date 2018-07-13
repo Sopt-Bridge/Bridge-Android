@@ -16,14 +16,13 @@
         android:layout_width="54dp"
         android:layout_height="54dp"
         android:layout_marginBottom="5dp"
-        app:srcCompat="@drawable/bottom_bar_home_active_icon" />
+        app:srcCompat="@drawable/default_logo" />
 
     <TextView
         android:id="@+id/subscribe_text_hashname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="#NU'EST"
         android:textColor="#333333"
         android:textSize="10dp"
         android:textStyle="bold" />

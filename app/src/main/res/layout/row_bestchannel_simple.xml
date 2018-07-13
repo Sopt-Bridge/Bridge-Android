@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="96dp"
+    android:background="#FFFFFF"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
@@ -13,7 +15,7 @@
         android:layout_height="70dp"
         android:layout_marginLeft="27dp"
         android:layout_marginRight="16dp"
-        app:srcCompat="@drawable/nuest10" />
+        app:srcCompat="@drawable/default_logo" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,19 +28,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="#NU'EST"
             android:textColor="#333333"
             android:textSize="18dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="#NU'EST" />
 
         <TextView
             android:id="@+id/bestchannel_text_subscribe_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="구독자 234,234,234"
             android:textColor="#333333"
             android:textSize="10dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="구독자 234,234,234" />
     </LinearLayout>
 
     <LinearLayout
@@ -70,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="Subscribe"
-            android:textColor="#E31C9E"
+            android:textColor="#D1D1D1"
             android:textSize="10dp"
             android:textStyle="bold" />
     </LinearLayout>

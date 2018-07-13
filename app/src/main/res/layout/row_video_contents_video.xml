@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/video_contents_video_layout_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -18,7 +20,8 @@
             <ImageView
                 android:id="@+id/video_contents_video_iv_video_image"
                 android:layout_width="144.5dp"
-                android:layout_height="92.03dp" />
+                android:layout_height="92.03dp"
+                app:srcCompat="@drawable/default_logo" />
 
             <ImageView
                 android:id="@+id/video_icon"
@@ -54,17 +57,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5.4dp"
-                android:text="BTS - Anpanman fancam focus on Jungkuk king"
                 android:textColor="#000000"
-                android:textSize="13dp" />
+                android:textSize="13dp"
+                tools:text="BTS - Anpanman fancam focus on Jungkuk king" />
 
             <TextView
                 android:id="@+id/video_contents_video_tv_hash"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="#BTS #Anpanman #Jungkuk"
                 android:textColor="#B1B1B1"
-                android:textSize="12dp" />
+                android:textSize="12dp"
+                tools:text="#BTS #Anpanman #Jungkuk" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

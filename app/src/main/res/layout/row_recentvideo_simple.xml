@@ -16,7 +16,7 @@
             android:id="@+id/recent_image_thumbnail"
             android:layout_width="120dp"
             android:layout_height="78dp"
-            app:srcCompat="@drawable/home_logo_with_text_icon" />
+            app:srcCompat="@drawable/default_logo" />
 
         <ImageView
             android:id="@+id/recent_image_type"

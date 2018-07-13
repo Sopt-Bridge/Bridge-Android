@@ -38,7 +38,7 @@ class RequestContentActivity : AppCompatActivity() {
 
 
         request_text_title.text = request?.iboardTitle
-        request_text_date.text = UtilController.timeformat(request?.iboardDate)
+        request_text_date.text = UtilController.timeformat(request?.iboardDate!!)
         request_text_name.text = "${request?.userName}"
         request_text_link.text = request?.iboardUrl
         request_text_content.text = request?.iboardContent

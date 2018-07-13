@@ -25,8 +25,8 @@
         android:layout_marginBottom="18dp"
         android:layout_marginLeft="13dp"
         android:layout_marginRight="120dp"
-        android:text="BTS Earns First No. 1 Album on Billboard 200 Chart  "
         android:textColor="#FFFFFF"
         android:textSize="16dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:text="BTS Earns First No. 1 Album on Billboard 200 Chart  " />
 </FrameLayout>
