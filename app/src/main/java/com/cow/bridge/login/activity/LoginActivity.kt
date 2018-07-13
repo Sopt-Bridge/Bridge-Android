@@ -123,40 +123,43 @@ class LoginActivity : AppCompatActivity() {
         if (requestCode == 57) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            val account = task.getResult(ApiException::class.java)
-            account?.let {
-                var messagesCall = api?.login(User(account.id!!.toString(), account.displayName!!, 0))
-                messagesCall?.enqueue(object : Callback<Network> {
-                    override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
-                        var network = response!!.body()
-                        Log.v("test1", Gson().toJson(network))
-                        if(network?.message.equals("Updated") || network?.message.equals("success")){
-                            network.data?.get(0)?.userIdx?.let{
-                                var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
-                                var editor : SharedPreferences.Editor = sp.edit()
-                                editor.putBoolean("login", true)
-                                editor.putString("loginUuid", account.id)
-                                editor.putString("loginType", "google")
-                                editor.putString("loginName", account.displayName)
-                                editor.putString("loginToken", network.data?.get(0)?.token)
-                                editor.putInt("userIdx", network.data?.get(0)?.userIdx!!)
-                                //editor.putString("loginEmail", account.email)
-                                editor.commit()
-                                Toast.makeText(applicationContext, account.displayName+ " 구글 로그인 성공", Toast.LENGTH_SHORT).show()
-                                val intent = Intent(this@LoginActivity, MypageActivity::class.java)
-                                startActivity(intent)
-                                finish()
+            if(data!=null){
+                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+                val account = task.getResult(ApiException::class.java)
+                account?.let {
+                    var messagesCall = api?.login(User(account.id!!.toString(), account.displayName!!, 0))
+                    messagesCall?.enqueue(object : Callback<Network> {
+                        override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                            var network = response!!.body()
+                            Log.v("test1", Gson().toJson(network))
+                            if(network?.message.equals("Updated") || network?.message.equals("success")){
+                                network.data?.get(0)?.userIdx?.let{
+                                    var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
+                                    var editor : SharedPreferences.Editor = sp.edit()
+                                    editor.putBoolean("login", true)
+                                    editor.putString("loginUuid", account.id)
+                                    editor.putString("loginType", "google")
+                                    editor.putString("loginName", account.displayName)
+                                    editor.putString("loginToken", network.data?.get(0)?.token)
+                                    editor.putInt("userIdx", network.data?.get(0)?.userIdx!!)
+                                    //editor.putString("loginEmail", account.email)
+                                    editor.commit()
+                                    Toast.makeText(applicationContext, account.displayName+ " 구글 로그인 성공", Toast.LENGTH_SHORT).show()
+                                    val intent = Intent(this@LoginActivity, MypageActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
                             }
                         }
-                    }
-                    override fun onFailure(call: Call<Network>?, t: Throwable?) {
-                        Log.v("test", t.toString())
+                        override fun onFailure(call: Call<Network>?, t: Throwable?) {
+                            Log.v("test", t.toString())
 
-                    }
-                })
+                        }
+                    })
 
+                }
             }
+
         }else{
             callbackManager?.onActivityResult(requestCode, resultCode, data)
         }

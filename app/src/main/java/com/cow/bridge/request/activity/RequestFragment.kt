@@ -69,13 +69,17 @@ class RequestFragment : Fragment() {
 
             request_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
                 override fun onQueryTextSubmit(p0: String?): Boolean {
-                    request_button_write.callOnClick()
+                    if(request_button_write.text.equals("search")){
+                        request_button_write.callOnClick()
+                    }
                     return false
                 }
 
                 override fun onQueryTextChange(p0: String?): Boolean {
                     if(p0.equals("")){
-                        request_button_write.callOnClick()
+                        if(request_button_write.text.equals("search")){
+                            request_button_write.callOnClick()
+                        }
                     }
                     return false
                 }

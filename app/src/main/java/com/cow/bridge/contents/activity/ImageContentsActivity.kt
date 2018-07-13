@@ -87,11 +87,13 @@ class ImageContentsActivity : AppCompatActivity() {
 
         var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
         var myUserIdx = sp.getInt("userIdx", 0)
-
+        Log.v("testtttt", imageContents?.contentsIdx.toString()!!)
+        Log.v("testtttt", myUserIdx.toString())
         var messagesCall = api?.getContents(Content(imageContents?.contentsIdx!!, myUserIdx, 0))
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()
+                Log.v("test", Gson().toJson(network))
                 if(network?.message.equals("ok")){
                     network.data?.get(0)?.contents_list?.let {
                         if(it.size!=0){
@@ -227,6 +229,7 @@ class ImageContentsActivity : AppCompatActivity() {
                         var network = response!!.body()
                         Log.v("contentsCommentWrite", Gson().toJson(network))
                         if (network?.message.equals("ok")) {
+                            contents_comment_edit.setText("")
                             getContentsCommentList()
                         } else {
                             Toast.makeText(applicationContext, "error : ${network?.message}", Toast.LENGTH_SHORT).show()

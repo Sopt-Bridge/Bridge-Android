@@ -55,7 +55,7 @@ class ImageContentsCommentAdapter(internal var _context: Context) : RecyclerView
                         var network = response!!.body()
                         Log.v("contentsCommentDelet", Gson().toJson(network))
                         if(network?.message.equals("ok")){
-                            Toast.makeText(_context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(_context, "Remove a comment", Toast.LENGTH_SHORT).show()
                             (_context as ImageContentsActivity).getContentsCommentList()
                         }
                     }

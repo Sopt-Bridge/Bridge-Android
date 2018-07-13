@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.widget.NestedScrollView
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -117,6 +118,48 @@ class HotFragment : Fragment() {
                 }
                 override fun onFailure(call: Call<Network>?, t: Throwable?) {
 
+                }
+            })
+
+            var scrollFlag = 0
+            var page= 1
+            hot_scrollview.setOnScrollChangeListener(object : NestedScrollView.OnScrollChangeListener{
+                override fun onScrollChange(v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
+                    Log.v("test", "${v?.getChildAt(0)?.height!!- v?.height!! - scrollY} ")
+                    if(v?.getChildAt(0)?.height!!- v?.height!! - scrollY <=200){
+                        if(scrollFlag!=2){
+                            scrollFlag = 1
+                        }else{
+
+                        }
+                        if(scrollFlag==1){
+                            scrollFlag=2
+                            messagesCall = api?.recentContentsList(0, page)
+                            page++
+                            messagesCall?.enqueue(object : Callback<Network>{
+                                override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                                    var network = response!!.body()
+                                    Log.v("test", Gson().toJson(network))
+                                    if(network?.message.equals("ok")){
+                                        network.data?.get(0)?.contents_list?.let {
+                                            if(it.size!=0){
+                                                recentAdapter.addAll(it)
+                                                recentAdapter.notifyDataSetChanged()
+                                                scrollFlag = 0
+                                            }
+                                        }
+                                    }else {
+                                        scrollFlag = 0
+                                    }
+                                }
+                                override fun onFailure(call: Call<Network>?, t: Throwable?) {
+                                    scrollFlag = 0
+                                }
+                            })
+                        }else{
+
+                        }
+                    }
                 }
             })
         }

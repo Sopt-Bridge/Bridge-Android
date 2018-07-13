@@ -65,13 +65,13 @@ public class UtilController {
             DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
             time_str = sdFormat.format(get_time);
         }else if(days >= 1){
-            time_str = days+"일 전";
+            time_str = days+"days ago";
         }else if(hours >= 1){
-            time_str = hours+"시간 전";
+            time_str = hours+"hours ago";
         }else if(minutes >= 1){
-            time_str = minutes+"분 전";
+            time_str = minutes+"mins ago";
         }else if(seconds < 60){
-            time_str = "방금";
+            time_str = "now";
         }else{
             DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
             time_str = sdFormat.format(get_time);
