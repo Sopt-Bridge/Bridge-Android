@@ -146,7 +146,7 @@ class ImageContentsActivity : AppCompatActivity() {
         image_comments_list.adapter = imgCommentAdapter
 
 
-        var messagesCall = api?.getImageContentCommentList(13, 0)
+        var messagesCall = api?.getContentCommentList(13, 0)
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()

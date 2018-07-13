@@ -1,9 +1,10 @@
 package com.cow.bridge.network
 
+import com.cow.bridge.model.*
 import com.cow.bridge.model.Content
+import com.cow.bridge.model.Feedback
 import com.cow.bridge.model.Hash
 import com.cow.bridge.model.Request
-import com.cow.bridge.model.User
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -12,23 +13,33 @@ import retrofit2.http.Query
 import retrofit2.http.*
 import java.util.ArrayList
 
+
 /**
  * Created by jihaeseong on 2017. 2. 13.. //Good....
  */
 interface ServerInterface {
 
+
     //Video contents
     @GET("/contents/nextcontents/{lastcontentsIdx}/{contentsIdx}")
     fun recommandVideoContentsList (@Path("lastcontentsIdx") lastcontentsIdx : Int, @Path("contentsIdx") contentsIdx: Int): Call<Network>
 
-    @GET("/contents/{contentsIdx}/{lastcontentsIdx}")
-    fun videoCommentList (@Path("contentsIdx") pageIdx : Int, @Path("lastcontentsIdx") userIdx : Int): Call<Network>
-
     @POST("/contents/getcontents/{userIdx}/{contentsIdx}/{contentsType}")
     fun getVideoContents(@Body userIdx : Int, @Body contentsIdx : Int, @Body contentsType : Int): Call<Network>
 
-    @POST("/contents/clike/{contentsIdx}/{userIdx}")
-    fun changeVideoContentsLike(@Body contentsIdx : Int, @Body userIdx : Int): Call<Network>
+    //contents
+
+    @POST("/contents/clike")
+    fun clikeContents(@Body content : Content)  : Call<Network>
+
+    @POST("/contents/ccomment_write")
+    fun contentsCommentWrite(@Body contentsComment: ContentsComment): Call<Network>
+
+    @POST("/contents/ccomment_delete")
+    fun contentsCommentDelete(@Body contentsComment: ContentsComment): Call<Network>
+
+    @GET("/contents/ccomment_view/{contentsIdx}/{lastcontentsIdx}")
+    fun getContentCommentList(@Path("contentsIdx") contentsIdx : Int, @Path("lastcontentsIdx") lastcontentsIdx : Int): Call<Network>
 
 
     //home
@@ -47,12 +58,11 @@ interface ServerInterface {
     @GET("/home/recommended")
     fun recommendedContentsList(): Call<Network>
 
-//    // 이미지 컨텐츠 보기
-//    @GET ("/contents/getcontents{userIdx}/{contentsIdx}/{contentsType}")
-//    fun imageContents(@Path(""))
 
-    @POST("/contents/clike")
-    fun clikeContents(@Body content : Content)  : Call<Network>
+    // feedback
+
+    @POST("/feedback/feedback_write")
+    fun writeFeedback(@Body feedback : Feedback ) : Call<Network>
 
 
     //subscribe
@@ -102,8 +112,32 @@ interface ServerInterface {
     @POST("/user/quit")
     fun withdrawal(@Body user : User): Call<Network>
 
-    //comment
-    @GET("/contents/ccomment_view/{contentsIdx}/{lastcontentsIdx}")
-    fun getImageContentCommentList(@Path("contentsIdx") contentsIdx : Int,@Path("lastcontentsIdx") lastcontentsIdx : Int): Call<Network>
+
+    //library
+
+    @POST("/library/addgroupcontents")
+    fun addGroupContents(@Body group : Group): Call<Network>
+
+    @POST("/library/contentsdelete")
+    fun deleteGroupGontents(@Body group : Group): Call<Network>
+
+    @GET("/library/recentvideo/{userIdx}")
+    fun getRecentVideoList(@Path("userIdx") userIdx : Int): Call<Network>
+
+    @GET("/library/getgroupcontents/{lastcontentsIdx}/{userIdx}/{groupIdx}")
+    fun getGroupContentsList(@Path("lastcontentsIdx") lastcontentsIdx : Int, @Path("userIdx") userIdx : Int, @Path("groupIdx") groupIdx : Int): Call<Network>
+
+    @GET("/library/grouplist/{userIdx}")
+    fun getGroupList(@Path("userIdx") userIdx : Int): Call<Network>
+
+    @POST("/library/addgroup")
+    fun addGroup(@Body group : Group): Call<Network>
+
+    @POST("/library/groupmodify")
+    fun modifyGroup(@Body group : Group): Call<Network>
+
+    @POST("/library/groupdelete")
+    fun deleteGroup(@Body group : Group): Call<Network>
+
 
 }

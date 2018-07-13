@@ -15,7 +15,7 @@ import com.cow.bridge.network.ServerInterface
 import kotlinx.android.synthetic.main.row_contents_simple.view.*
 import kotlinx.android.synthetic.main.row_video_contents_video.view.*
 
-class VideoContentsVideoAdapter(val context : Context, val videoDataItem : ArrayList<VideoContentsVideoData> ) : RecyclerView.Adapter<VideoContentsVideoAdapter.VideoContentsVideoViewHolder>(){
+class VideoContentsVideoAdapter(val context : Context) : RecyclerView.Adapter<VideoContentsVideoAdapter.VideoContentsVideoViewHolder>(){
     var items = ArrayList<Content>()
     val api : ServerInterface? = ApplicationController.instance?.buildServerInterface()
 
@@ -24,7 +24,7 @@ class VideoContentsVideoAdapter(val context : Context, val videoDataItem : Array
         return VideoContentsVideoViewHolder(mainView)
     }
 
-    override fun getItemCount(): Int = videoDataItem.size
+    override fun getItemCount(): Int =items.size
 
     override fun onBindViewHolder(holder: VideoContentsVideoViewHolder, position: Int) {
         with((holder as VideoContentsVideoViewHolder).itemView) {
@@ -60,5 +60,12 @@ class VideoContentsVideoAdapter(val context : Context, val videoDataItem : Array
     }
     inner class VideoContentsVideoViewHolder(val view : View):RecyclerView.ViewHolder(view){
 
+    }
+    fun clear(){
+        this.items.clear()
+    }
+
+    fun addAll(content: java.util.ArrayList<Content>) {
+        this.items.addAll(content)
     }
 }

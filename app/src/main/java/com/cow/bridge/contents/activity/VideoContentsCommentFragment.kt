@@ -22,7 +22,6 @@ import retrofit2.Response
 class VideoContentsCommentFragment() :Fragment() {
     private var pageName: String? = null
     var api : ServerInterface? = null
-    var videoContentsCommentAdapter : VideoContentsCommentAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,27 +36,28 @@ class VideoContentsCommentFragment() :Fragment() {
 
         with(convertView){
             val videoContentsCommentAdapter : VideoContentsCommentAdapter = VideoContentsCommentAdapter(context)
-            val llm : LinearLayoutManager = LinearLayoutManager(context)
-            llm.orientation = LinearLayoutManager.VERTICAL
-
+            val llm : LinearLayoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
             video_contents_video_recycler.layoutManager = llm
-            video_contents_comment_recycler.adapter = videoContentsCommentAdapter
+            video_contents_video_recycler.adapter = videoContentsCommentAdapter
 
-            var messagesCall = api?.recommandVideoContentsList(0,)
+            var messagesCall = api?.getContentCommentList(0,13)
             messagesCall?.enqueue(object : Callback<Network>{
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
                     if (network?.message.equals("ok")) {
                         network.data?.get(0)?.contents_list?.let {
                             if (it.size != 0) {
-                                val video
+                                videoContentsCommentAdapter.clear()
+                                videoContentsCommentAdapter.addAll(it)
+                                videoContentsCommentAdapter.notifyDataSetChanged()
                             }
                         }
                     }
                 }
 
-        }
+        })
+
+    }
         return convertView
     }
-
 }
