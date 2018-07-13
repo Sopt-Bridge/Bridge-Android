@@ -4,14 +4,17 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.cow.bridge.R
 import com.cow.bridge.contents.activity.VideoContentsMainActivity
 import com.cow.bridge.model.Content
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.ServerInterface
+import com.cow.bridge.util.UtilController
 import kotlinx.android.synthetic.main.row_video_contents_video.view.*
 
 class VideoContentsVideoAdapter(val context : Context) : RecyclerView.Adapter<VideoContentsVideoAdapter.VideoContentsVideoViewHolder>(){
@@ -37,6 +40,9 @@ class VideoContentsVideoAdapter(val context : Context) : RecyclerView.Adapter<Vi
                 }
             }
             video_contents_video_tv_hash.text = temp_hash
+            Log.v("test", ApplicationController.videoThumbnailUrl(items[position].contentsIdx))
+            Glide.with(context).load(ApplicationController.videoThumbnailUrl(items[position].contentsIdx)).override(UtilController.convertDpToPixel(143f, context).toInt(), UtilController.convertDpToPixel(92f, context).toInt()).into(video_contents_video_iv_video_image)
+
             if(items[position].contentsRuntime==null){
                 video_contents_video_tv_contents_time.text = "00:00"
             }else{

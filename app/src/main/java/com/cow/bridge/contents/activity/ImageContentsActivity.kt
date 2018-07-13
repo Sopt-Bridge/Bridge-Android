@@ -39,6 +39,7 @@ class ImageContentsActivity : AppCompatActivity() {
 
     val api: ServerInterface? = ApplicationController.instance?.buildServerInterface()
     var imgCommentAdapter: ImageContentsCommentAdapter? = null
+    var imageContents : Content? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +81,7 @@ class ImageContentsActivity : AppCompatActivity() {
 
         // imgCnt, imgDes, imgLikeNum 부분
         var intent = Intent(this.intent)
-        var imageContents = intent.getSerializableExtra("imageContents") as? Content
+        imageContents = intent.getSerializableExtra("imageContents") as? Content
 
         text1.text = imageContents?.imgCnt.toString()
         text4.text = imageContents?.contentsInfo
@@ -99,7 +100,9 @@ class ImageContentsActivity : AppCompatActivity() {
 
 
         text5.setOnClickListener {
-            var messagesCall = api?.clikeContents(Content(imageContents?.contentsIdx!!, 1))
+            var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
+            var myUserIdx = sp.getInt("userIdx", 0)
+            var messagesCall = api?.clikeContents(Content(imageContents?.contentsIdx!!, myUserIdx))
             messagesCall?.enqueue(object : Callback<Network> {
                 override fun onFailure(call: Call<Network>?, t: Throwable?) {
                     Log.v("test fail : ", t.toString())
@@ -221,7 +224,7 @@ class ImageContentsActivity : AppCompatActivity() {
         // view pager 연결
         val adapter = ViewPagerAdapter(supportFragmentManager)
         for (i in 1..imageContents?.imgCnt!!) {
-            adapter.addFragment(ImageFragment.newInstance(i, imageContents.contentsIdx))
+            adapter.addFragment(ImageFragment.newInstance(i, imageContents?.contentsIdx!!))
         }
         imgPager.offscreenPageLimit = 2
         imgPager.adapter = adapter
@@ -251,7 +254,7 @@ class ImageContentsActivity : AppCompatActivity() {
     }
 
     fun getContentsCommentList(){
-        var messagesCall = api?.getContentCommentList(13, 0)
+        var messagesCall = api?.getContentCommentList(imageContents?.contentsIdx!!, 0)
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()
