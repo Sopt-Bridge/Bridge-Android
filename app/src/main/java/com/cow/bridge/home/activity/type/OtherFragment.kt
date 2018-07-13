@@ -1,9 +1,7 @@
 package com.cow.bridge.home.activity.type
 
 
-import android.app.Dialog
-import android.content.DialogInterface
-import android.graphics.drawable.ColorDrawable
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -11,14 +9,18 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 
 import com.cow.bridge.R
 import com.cow.bridge.home.adapter.OtherAdapter
-import com.cow.bridge.home.dialog.OrderbyDialog
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
+import com.cow.bridge.util.UtilController
+import com.skydoves.powermenu.MenuAnimation
+import com.skydoves.powermenu.OnMenuItemClickListener
+import com.skydoves.powermenu.PowerMenu
+import com.skydoves.powermenu.PowerMenuItem
+import kotlinx.android.synthetic.main.fragment_other.*
 import kotlinx.android.synthetic.main.fragment_other.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,6 +37,7 @@ class OtherFragment : Fragment() {
     private var pageName: String? = null
     var api : ServerInterface? = null
     var otherAdapter : OtherAdapter? = null
+    var powerMenu : PowerMenu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,25 +50,26 @@ class OtherFragment : Fragment() {
         val convertView = inflater!!.inflate(R.layout.fragment_other, container, false)
         api = ApplicationController.instance?.buildServerInterface()
 
+        powerMenu = PowerMenu.Builder(context)
+                .addItem(PowerMenuItem("Upload date", false))
+                .addItem(PowerMenuItem("View count", false))
+                .addItem(PowerMenuItem("Rating", false))
+                .setDividerHeight(UtilController.convertDpToPixel(1f, context).toInt())
+                .setDivider(resources.getDrawable(R.drawable.line_rect_1dp_e4e4e4))
+                .setAnimation(MenuAnimation.SHOWUP_TOP_RIGHT)
+                .setWith(UtilController.convertDpToPixel(150f, context).toInt())
+                .setMenuRadius(16f)
+                .setMenuShadow(8f)
+                .setTextColor(Color.parseColor("#333333"))
+                .setMenuColor(Color.parseColor("#FFFFFF"))
+                .setOnMenuItemClickListener(onMenuItemClickListener())
+                .build()
+
         with(convertView){
             other_layout_orderby.setOnClickListener(object : View.OnClickListener{
                 override fun onClick(p0: View?) {
-                    val orderbyDialog : OrderbyDialog = OrderbyDialog(activity!!, other_text_orderby.text.toString())
-                    orderbyDialog.window.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
-                    orderbyDialog.show()
-                    orderbyDialog.setOnDismissListener(object : DialogInterface.OnDismissListener{
-                        override fun onDismiss(dialog: DialogInterface?) {
-                            with(dialog as OrderbyDialog){
-                                if(confirm){
-                                    orderby?.let {
-                                        other_text_orderby.text = it
-                                        getContentsList(pageName, orderby)
-                                    }
-                                }
-                            }
-                        }
+                    powerMenu?.showAsDropDown(other_layout_orderby, UtilController.convertDpToPixel(15f, context).toInt(), 0)
 
-                    })
                 }
 
             })
@@ -81,6 +85,22 @@ class OtherFragment : Fragment() {
         }
 
         return convertView
+    }
+
+    private fun onMenuItemClickListener() = OnMenuItemClickListener<PowerMenuItem>(){ position: Int, powerMenuItem: PowerMenuItem ->
+        if(position==0){
+            other_text_orderby.text = "Upload date"
+            getContentsList(pageName, "Upload date")
+        }else if(position==1){
+            other_text_orderby.text = "View count"
+            getContentsList(pageName, "View count")
+        }else if(position==2){
+            other_text_orderby.text = "Rating"
+            getContentsList(pageName, "Rating")
+        }
+
+        powerMenu?.dismiss()
+
     }
 
     companion object {

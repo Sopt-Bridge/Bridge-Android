@@ -9,7 +9,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.cow.bridge.R
+import com.cow.bridge.contents.activity.ImageContentsActivity
 import com.cow.bridge.model.ContentsComment
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
@@ -53,7 +55,8 @@ class ImageContentsCommentAdapter(internal var _context: Context) : RecyclerView
                         var network = response!!.body()
                         Log.v("contentsCommentDelet", Gson().toJson(network))
                         if(network?.message.equals("ok")){
-
+                            Toast.makeText(_context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                            (_context as ImageContentsActivity).getContentsCommentList()
                         }
                     }
                     override fun onFailure(call: Call<Network>?, t: Throwable?) {

@@ -13,7 +13,6 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.cow.bridge.R
 import com.cow.bridge.home.adapter.SearchResultAdapter
-import com.cow.bridge.home.dialog.OrderbyDialog
 import com.cow.bridge.model.Content
 import com.cow.bridge.model.Hash
 import com.cow.bridge.model.SearchWord
@@ -22,9 +21,14 @@ import com.cow.bridge.network.Network
 import com.cow.bridge.search.searchlibrary.MaterialSearchView
 import com.cow.bridge.util.UtilController
 import com.google.gson.Gson
+import com.skydoves.powermenu.MenuAnimation
+import com.skydoves.powermenu.OnMenuItemClickListener
+import com.skydoves.powermenu.PowerMenu
+import com.skydoves.powermenu.PowerMenuItem
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.fragment_other.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,6 +42,7 @@ class SearchActivity : AppCompatActivity() {
     var searchResultAdapter : SearchResultAdapter? = null
     var queryTmp = ""
     var hashSubFlag = 0
+    var powerMenu : PowerMenu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -133,27 +138,49 @@ class SearchActivity : AppCompatActivity() {
         search_recycler_result.layoutManager = llm
         search_recycler_result.adapter = searchResultAdapter
 
+        powerMenu = PowerMenu.Builder(this@SearchActivity)
+                .addItem(PowerMenuItem("Upload date", false))
+                .addItem(PowerMenuItem("View count", false))
+                .addItem(PowerMenuItem("Rating", false))
+                .setDividerHeight(UtilController.convertDpToPixel(1f, this@SearchActivity).toInt())
+                .setDivider(resources.getDrawable(R.drawable.line_rect_1dp_e4e4e4))
+                .setAnimation(MenuAnimation.SHOWUP_TOP_RIGHT)
+                .setWith(UtilController.convertDpToPixel(150f, this@SearchActivity).toInt())
+                .setMenuRadius(16f)
+                .setMenuShadow(8f)
+                .setTextColor(Color.parseColor("#333333"))
+                .setMenuColor(Color.parseColor("#FFFFFF"))
+                .setOnMenuItemClickListener(onMenuItemClickListener())
+                .build()
+
         search_layout_orderby.setOnClickListener(object : View.OnClickListener{
             override fun onClick(p0: View?) {
-                val orderbyDialog : OrderbyDialog = OrderbyDialog(this@SearchActivity, search_text_orderby.text.toString())
-                orderbyDialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                orderbyDialog.show()
-                orderbyDialog.setOnDismissListener(object : DialogInterface.OnDismissListener{
-                    override fun onDismiss(dialog: DialogInterface?) {
-                        with(dialog as OrderbyDialog){
-                            dialog.orderby?.let {
-                                this@SearchActivity.search_text_orderby?.text = it
-                                var searchType = if(searchView?.searchType.equals("normal")) 1 else 0
-                                var sortType = if(orderby?.equals("Upload date")!!) 0 else if(orderby?.equals("Rating")!!) 1 else 2
-                                getSearchContentsList(queryTmp, searchType, sortType)
-                            }
-                        }
-                    }
+                powerMenu?.showAsDropDown(search_layout_orderby, UtilController.convertDpToPixel(15f, this@SearchActivity).toInt(), 0)
 
-                })
             }
 
         })
+
+    }
+
+    private fun onMenuItemClickListener() = OnMenuItemClickListener<PowerMenuItem>(){ position: Int, powerMenuItem: PowerMenuItem ->
+        if(position==0){
+            Log.v("test", queryTmp)
+            this@SearchActivity.search_text_orderby?.text = "Upload date"
+            var searchType = if(searchView?.searchType.equals("normal")) 1 else 0
+            getSearchContentsList(if(queryTmp.startsWith("#")) queryTmp.substring(1) else queryTmp, searchType, 0)
+
+        }else if(position==1){
+            this@SearchActivity.search_text_orderby?.text = "View count"
+            var searchType = if(searchView?.searchType.equals("normal")) 1 else 0
+            getSearchContentsList(if(queryTmp.startsWith("#")) queryTmp.substring(1) else queryTmp, searchType, 2)
+        }else if(position==2){
+            this@SearchActivity.search_text_orderby?.text = "Rating"
+            var searchType = if(searchView?.searchType.equals("normal")) 1 else 0
+            getSearchContentsList(if(queryTmp.startsWith("#")) queryTmp.substring(1) else queryTmp, searchType, 1)
+        }
+
+        powerMenu?.dismiss()
 
     }
 
@@ -213,7 +240,8 @@ class SearchActivity : AppCompatActivity() {
                                         })
                                     }else{
                                         //bestchannel_image_subscribe.init(_context as Activity?)
-                                        var messagesCall = api?.subscribeModify(Hash(network.data?.get(0)?.hashcontents_list?.get(0)?.hashName!!, 1))
+                                        var hashName = network.data?.get(0)?.hashcontents_list?.get(0)?.hashName!!
+                                        var messagesCall = api?.subscribeModify(Hash(hashName, 1))
                                         messagesCall?.enqueue(object : Callback<Network> {
                                             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                                                 var network = response!!.body()
@@ -222,7 +250,7 @@ class SearchActivity : AppCompatActivity() {
                                                     hashSubFlag = 0
                                                     search_image_hash_sub.setImageResource(R.drawable.subscribe_normal_btn)
                                                     search_text_hash_sub.setTextColor(Color.parseColor("#D1D1D1"))
-                                                    Toast.makeText(this@SearchActivity, "${network.data?.get(0)?.hashcontents_list?.get(0)?.hashName} removed", Toast.LENGTH_SHORT).show()
+                                                    Toast.makeText(this@SearchActivity, "${hashName} removed", Toast.LENGTH_SHORT).show()
                                                 }
                                             }
                                             override fun onFailure(call: Call<Network>?, t: Throwable?) {
@@ -245,6 +273,7 @@ class SearchActivity : AppCompatActivity() {
         }else{
             search_layout_hash.visibility = View.GONE
         }
+        Log.v("testttt", query)
         var messagesCall = api?.searchContents(0, query!! ,searchType, sortType)
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
