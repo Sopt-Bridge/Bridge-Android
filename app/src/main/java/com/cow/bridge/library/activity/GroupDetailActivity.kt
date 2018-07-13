@@ -80,7 +80,10 @@ class GroupDetailActivity : AppCompatActivity() {
                 override fun onDismiss(dialog: DialogInterface?) {
                     with(dialog as LibraryDeleteDialog){
                         if(confirm){
-                            var messagesCall = api?.deleteGroup(Group(group.groupIdx))
+                            var groupTmp = Group(group.groupIdx)
+                            groupTmp.userIdx = sp.getInt("userIdx", 0)
+                            Log.v("test", "${groupTmp.groupIdx} ${groupTmp.userIdx}")
+                            var messagesCall = api?.deleteGroup(groupTmp)
                             messagesCall?.enqueue(object : Callback<Network> {
                                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                                     var network = response!!.body()
@@ -109,7 +112,8 @@ class GroupDetailActivity : AppCompatActivity() {
                 with(dialog as LibraryDialog){
                     if(confirm){
                         var sp : SharedPreferences = getSharedPreferences("bridge", AppCompatActivity.MODE_PRIVATE)
-                        var messagesCall = api?.modifyGroup(Group(1, group.groupIdx, groupName!!, groupColor!!))
+                        Log.v("test", "${group.groupIdx} fdsfsdf")
+                        var messagesCall = api?.modifyGroup(Group(sp.getInt("userIdx", 0), group.groupIdx, groupName!!, groupColor!!))
                         messagesCall?.enqueue(object : Callback<Network> {
                             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                                 var network = response!!.body()

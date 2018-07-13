@@ -30,6 +30,12 @@ class LibraryAddContentsAdapter(internal var _context: Context) : RecyclerView.A
     var api = ApplicationController.instance?.buildServerInterface()
     var contentsIdx : Int? = null
 
+    internal var onLibraryFolderItemClickListener: OnLibraryFolderItemClickListener? = null
+
+    fun setOnLibraryFolderItemClickListener(onLibraryFolderItemClickListener: OnLibraryFolderItemClickListener) {
+        this.onLibraryFolderItemClickListener = onLibraryFolderItemClickListener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val convertView = LayoutInflater.from(_context).inflate(R.layout.row_library_add_contents_simple, parent, false)
         return LibraryFolderViewHolder(convertView)
@@ -67,14 +73,14 @@ class LibraryAddContentsAdapter(internal var _context: Context) : RecyclerView.A
                             var network = response!!.body()
                             if(network?.message.equals("ok")) {
                                 Toast.makeText(_context, "Add a Contents in ${items[position-1].groupTitle}", Toast.LENGTH_SHORT).show()
-                                (_context as LibraryAddContentsDialog).addContents = true
-                                (_context as Dialog).dismiss()
+                                if (onLibraryFolderItemClickListener != null) {
+                                    onLibraryFolderItemClickListener!!.onLibraryFolderItemClickListener(true)
+                                }
 
                             }
                         }
                     })
                 }
-
                 library_text_name.text = items[position-1].groupTitle
 
 
@@ -91,6 +97,7 @@ class LibraryAddContentsAdapter(internal var _context: Context) : RecyclerView.A
     fun setContentsIdx(contentsIdx : Int){
         this.contentsIdx = contentsIdx
     }
+
     fun clear(){
         this.items.clear()
     }
@@ -104,5 +111,9 @@ class LibraryAddContentsAdapter(internal var _context: Context) : RecyclerView.A
 
     }
 
+
+    interface OnLibraryFolderItemClickListener {
+        fun onLibraryFolderItemClickListener(addContents : Boolean)
+    }
 
 }

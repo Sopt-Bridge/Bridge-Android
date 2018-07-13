@@ -62,7 +62,7 @@ class LibraryFragment : Fragment() {
                     with(dialog as LibraryDialog){
                         if(confirm){
                             var sp : SharedPreferences = (_context as Activity).getSharedPreferences("bridge", AppCompatActivity.MODE_PRIVATE)
-                            var messagesCall = api?.addGroup(Group(1, groupName!!, groupColor!!))
+                            var messagesCall = api?.addGroup(Group(sp.getInt("userIdx", 0), groupName!!, groupColor!!))
                             messagesCall?.enqueue(object : Callback<Network> {
                                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                                     var network = response!!.body()
@@ -88,7 +88,7 @@ class LibraryFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         var sp : SharedPreferences = (activity as MainActivity).getSharedPreferences("bridge", AppCompatActivity.MODE_PRIVATE)
-        var messagesCall = api?.getRecentVideoList(1)
+        var messagesCall = api?.getRecentVideoList(sp.getInt("userIdx", 0))
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()
@@ -112,10 +112,11 @@ class LibraryFragment : Fragment() {
 
     fun getGroupList(){
         var sp : SharedPreferences = (activity as MainActivity).getSharedPreferences("bridge", AppCompatActivity.MODE_PRIVATE)
-        var messagesCall = api?.getGroupList(1)
+        var messagesCall = api?.getGroupList(sp.getInt("userIdx", 0))
         messagesCall?.enqueue(object : Callback<Network>{
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()
+                Log.v("getGroupList : ", Gson().toJson(network))
                 if(network?.message.equals("ok")){
                     network.data?.get(0)?.group_list?.let {
                         if(it.size!=0){

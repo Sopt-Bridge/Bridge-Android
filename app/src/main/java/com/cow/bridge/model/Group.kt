@@ -26,6 +26,7 @@ class Group : Serializable{
 
     constructor(userIdx : Int, groupIdx: Int, groupTitle : String, groupColor : String){
         this.userIdx = userIdx
+        this.groupIdx = groupIdx
         this.groupTitle = groupTitle
         this.groupColor = groupColor
     }

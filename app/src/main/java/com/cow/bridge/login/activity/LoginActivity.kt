@@ -41,7 +41,6 @@ class LoginActivity : AppCompatActivity() {
 
         LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult>{
             override fun onSuccess(result: LoginResult?) {
-                Log.v("test", Profile.getCurrentProfile().id)
                 var messagesCall = api?.login(User(Profile.getCurrentProfile().id.toString(), Profile.getCurrentProfile().name, 1))
                 messagesCall?.enqueue(object : Callback<Network> {
                     override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
@@ -67,6 +66,7 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
                     override fun onFailure(call: Call<Network>?, t: Throwable?) {
+                        Log.v("test", t.toString())
 
                     }
                 })
@@ -126,12 +126,11 @@ class LoginActivity : AppCompatActivity() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             val account = task.getResult(ApiException::class.java)
             account?.let {
-                Log.v("test", account.id!!)
                 var messagesCall = api?.login(User(account.id!!.toString(), account.displayName!!, 0))
                 messagesCall?.enqueue(object : Callback<Network> {
                     override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                         var network = response!!.body()
-                        Log.v("test", Gson().toJson(network))
+                        Log.v("test1", Gson().toJson(network))
                         if(network?.message.equals("Updated") || network?.message.equals("success")){
                             network.data?.get(0)?.userIdx?.let{
                                 var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
@@ -152,6 +151,7 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
                     override fun onFailure(call: Call<Network>?, t: Throwable?) {
+                        Log.v("test", t.toString())
 
                     }
                 })

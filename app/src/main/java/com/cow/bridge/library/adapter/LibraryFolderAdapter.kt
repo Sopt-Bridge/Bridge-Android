@@ -55,7 +55,9 @@ class LibraryFolderAdapter(internal var _context: Context) : RecyclerView.Adapte
                 (_context as Activity).startActivity(intent)
             }
 
-            //Glide.with(_context).load(items[position].groupBgimage).into(folder_image_thumbnail)
+            items[position].groupBgimage?.let{
+                Glide.with(_context).load(items[position].groupBgimage).into(folder_image_thumbnail)
+            }
             folder_text_groupname.text = items[position].groupTitle
             items[position].groupColor?.let{
                 var color = if(items[position].groupColor.startsWith("#")) items[position].groupColor else "#${items[position].groupColor}"

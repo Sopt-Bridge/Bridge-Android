@@ -7,12 +7,14 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import android.view.Window
 import com.cow.bridge.R
 import com.cow.bridge.library.adapter.LibraryAddContentsAdapter
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.dialog_add_library_contents.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,9 +37,15 @@ class LibraryAddContentsDialog(context: Context, contentsIdx : Int) : Dialog(con
         setContentView(R.layout.dialog_add_library_contents)
 
         val libraryAddContentsAdapter : LibraryAddContentsAdapter = LibraryAddContentsAdapter(context)
+        libraryAddContentsAdapter.setOnLibraryFolderItemClickListener(object : LibraryAddContentsAdapter.OnLibraryFolderItemClickListener{
+            override fun onLibraryFolderItemClickListener(addContentsTmp: Boolean) {
+                addContents = addContentsTmp
+                dismiss()
+            }
 
+        })
         val llm : LinearLayoutManager = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.HORIZONTAL
+        llm.orientation = LinearLayoutManager.VERTICAL
         library_recycler.layoutManager = llm
         library_recycler.adapter = libraryAddContentsAdapter
 
@@ -48,6 +56,7 @@ class LibraryAddContentsDialog(context: Context, contentsIdx : Int) : Dialog(con
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()
+                Log.v("test", Gson().toJson(network))
                 if(network?.message.equals("ok")){
                     network.data?.get(0)?.group_list?.let {
                         if(it.size!=0){
