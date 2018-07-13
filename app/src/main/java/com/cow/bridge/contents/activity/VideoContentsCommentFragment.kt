@@ -37,7 +37,7 @@ class VideoContentsCommentFragment() :Fragment() {
             video_contents_comment_recycler.layoutManager = llm
             video_contents_comment_recycler.adapter = videoContentsCommentAdapter
 
-            var messagesCall = api?.getContentCommentList(0,13)
+            var messagesCall = api?.getContentCommentList(13,0)
             messagesCall?.enqueue(object : Callback<Network>{
                 override fun onFailure(call: Call<Network>?, t: Throwable?) {
 
