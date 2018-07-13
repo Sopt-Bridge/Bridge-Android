@@ -5,14 +5,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.cow.bridge.model.VideoContentsCommentData
-import kotlinx.android.synthetic.main.row_video_contents_comment.view.*
 import com.cow.bridge.R
 import com.cow.bridge.model.Content
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.ServerInterface
 
-class VideoContentsCommentAdapter(val context : Context, val commentDataItem : ArrayList<VideoContentsCommentData> ) : RecyclerView.Adapter<VideoContentsCommentAdapter.VideoContentsCommentViewHolder>(){
+class VideoContentsCommentAdapter(val context : Context) : RecyclerView.Adapter<VideoContentsCommentAdapter.VideoContentsCommentViewHolder>(){
     var items = ArrayList<Content>()
     val api : ServerInterface? = ApplicationController.instance?.buildServerInterface()
 
@@ -21,7 +19,7 @@ class VideoContentsCommentAdapter(val context : Context, val commentDataItem : A
         return VideoContentsCommentViewHolder(mainView)
     }
 
-    override fun getItemCount(): Int = commentDataItem.size
+    override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: VideoContentsCommentViewHolder, position: Int) {
         with((holder as VideoContentsCommentViewHolder).itemView) {

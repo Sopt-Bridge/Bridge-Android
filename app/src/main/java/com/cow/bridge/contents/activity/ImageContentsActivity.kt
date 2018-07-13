@@ -1,7 +1,8 @@
 package com.cow.bridge.contents.activity
 
-import android.content.DialogInterface
+import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -21,7 +22,6 @@ import com.cow.bridge.model.ContentsComment
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_image_contents.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,6 +35,7 @@ class ImageContentsActivity : AppCompatActivity() {
     var clickId: ArrayList<View> = ArrayList()
 
     val api: ServerInterface? = ApplicationController.instance?.buildServerInterface()
+    var imgCommentAdapter: ImageContentsCommentAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,7 +104,6 @@ class ImageContentsActivity : AppCompatActivity() {
 
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
-                    Log.v("test", Gson().toJson(network))
                     if(network?.message.equals("ok")) {
                         if(likeFlag==1){
                             likeFlag =0
@@ -125,14 +125,6 @@ class ImageContentsActivity : AppCompatActivity() {
                 val feedbackDialog : FeedBackDialog = FeedBackDialog(this@ImageContentsActivity, imageContents?.contentsIdx!!)
                 feedbackDialog.window.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
                 feedbackDialog.show()
-                feedbackDialog.setOnDismissListener(object : DialogInterface.OnDismissListener {
-                    override fun onDismiss(dialog: DialogInterface?) {
-                        with(dialog as FeedBackDialog) {
-                            if(send) {
-                            }
-                        }
-                    }
-                })
             }
 
         })
@@ -144,15 +136,18 @@ class ImageContentsActivity : AppCompatActivity() {
             if (contents_comment_edit.text.toString().trim().equals("")) {
                 Toast.makeText(applicationContext, "enter the comment", Toast.LENGTH_SHORT).show()
             } else {
-                commentTmp.ccmtContent= (contents_comment_edit.text.toString())
+                commentTmp.ccmtContent = (contents_comment_edit.text.toString())
+                commentTmp.contentsIdx = imageContents?.contentsIdx!!
+                var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
+                var myUserIdx = sp.getInt("userIdx", 0)
+                commentTmp.userIdx = myUserIdx
 
                 var messagesCall = api?.contentsCommentWrite(commentTmp)
                 messagesCall?.enqueue(object : Callback<Network> {
                     override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                         var network = response!!.body()
-                        Log.v("test", Gson().toJson(network))
                         if (network?.message.equals("ok")) {
-                            finish()
+                            getContentsCommentList()
                         } else {
                             Toast.makeText(applicationContext, "error : ${network?.message}", Toast.LENGTH_SHORT).show()
                         }
@@ -185,29 +180,34 @@ class ImageContentsActivity : AppCompatActivity() {
 
             override fun onPageSelected(position: Int) {
                 text7.text = position.plus(1).toString()
-                Log.v("test : ", "$position")
             }
 
         })
 
-        val imgCommentAdapter: ImageContentsCommentAdapter = ImageContentsCommentAdapter(applicationContext)
+        imgCommentAdapter = ImageContentsCommentAdapter(applicationContext)
 
         val llm: LinearLayoutManager = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         image_comments_list.layoutManager = llm
         image_comments_list.adapter = imgCommentAdapter
 
+        getContentsCommentList()
+    }
 
+//    var sp : SharedPreferences = (_context as Activity).getSharedPreferences("bridge", MODE_PRIVATE)
+//    var myUserIdx = sp.getInt("userIdx", 0)
+
+    fun getContentsCommentList(){
         var messagesCall = api?.getImageContentCommentList(13, 0)
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()
-                Log.v("imageCommentList : ", Gson().toJson(network))
                 if (network?.message.equals("ok")) {
                     network.data?.get(0)?.comments_list?.let {
                         if (it.size != 0) {
-                            imgCommentAdapter.addAll(it)
-                            imgCommentAdapter.notifyDataSetChanged()
+                            imgCommentAdapter?.clear()
+                            imgCommentAdapter?.addAll(it)
+                            imgCommentAdapter?.notifyDataSetChanged()
                         }
                     }
                 }
@@ -217,8 +217,6 @@ class ImageContentsActivity : AppCompatActivity() {
                 Log.v("test fail : ", t.toString())
             }
         })
-
-
     }
 
     inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {

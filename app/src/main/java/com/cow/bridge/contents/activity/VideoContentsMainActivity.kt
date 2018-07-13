@@ -1,9 +1,7 @@
 package com.cow.bridge.contents.activity
 
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.PixelFormat
-import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.TabLayout
@@ -25,18 +23,13 @@ import android.widget.VideoView
 import com.cow.bridge.R
 import com.cow.bridge.model.Content
 import com.cow.bridge.network.ApplicationController
-import com.cow.bridge.network.ServerInterface
-import kotlinx.android.synthetic.main.activity_video_contents.*
-import kotlinx.android.synthetic.main.row_contents_simple.view.*
-import retrofit2.*
 import com.cow.bridge.network.Network
+import com.cow.bridge.network.ServerInterface
 import com.google.gson.Gson
-import org.w3c.dom.Attr
-import java.net.HttpURLConnection
-import java.net.URI
-import java.net.URL
-import java.util.HashMap
-import javax.xml.parsers.DocumentBuilderFactory
+import kotlinx.android.synthetic.main.activity_video_contents.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class VideoContentsMainActivity :AppCompatActivity() {

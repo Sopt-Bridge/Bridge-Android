@@ -32,6 +32,18 @@ interface ServerInterface {
     fun changeVideoContentsLike(@Body contentsIdx : Int, @Body userIdx : Int): Call<Network>
 
 
+    //contents
+
+    @POST("/contents/clike")
+    fun clikeContents(@Body content : Content)  : Call<Network>
+
+    @POST("/contents/ccomment_write")
+    fun contentsCommentWrite(@Body contentsComment: ContentsComment): Call<Network>
+
+    @POST("/contents/ccomment_delete")
+    fun contentsCommentDelete(@Body contentsComment: ContentsComment): Call<Network>
+
+
     //home
     @GET("/home/recent/{contentsCategory}/{lastcontentsIdx}")
     fun recentContentsList(@Path("contentsCategory") category : Int, @Path("lastcontentsIdx") lastcontentsIdx : Int): Call<Network>
@@ -48,21 +60,6 @@ interface ServerInterface {
     @GET("/home/recommended")
     fun recommendedContentsList(): Call<Network>
 
-
-    //contents
-
-//    // 이미지 컨텐츠 보기
-//    @GET ("/contents/getcontents{userIdx}/{contentsIdx}/{contentsType}")
-//    fun imageContents(@Path(""))
-
-    @POST("/contents/clike")
-    fun clikeContents(@Body content : Content)  : Call<Network>
-
-    @POST("/contents/ccomment_write")
-    fun contentsCommentWrite(@Body contentsComment: ContentsComment): Call<Network>
-
-    @POST("/contents/ccomment_delete")
-    fun contentsCommentDelete(@Body contentsComment: ContentsComment): Call<Network>
 
     // feedback
 

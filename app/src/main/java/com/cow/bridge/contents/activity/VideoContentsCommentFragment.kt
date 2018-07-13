@@ -2,9 +2,7 @@ package com.cow.bridge.contents.activity
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,19 +41,25 @@ class VideoContentsCommentFragment() :Fragment() {
             video_contents_video_recycler.layoutManager = llm
             video_contents_comment_recycler.adapter = videoContentsCommentAdapter
 
-            var messagesCall = api?.recommandVideoContentsList(0
-            messagesCall?.enqueue(object : Callback<Network>{
+
+            var messagesCall = api?.recommandVideoContentsList(0, 0)
+            messagesCall?.enqueue(object : Callback<Network> {
+                override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                }
+
+
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
                     if (network?.message.equals("ok")) {
                         network.data?.get(0)?.contents_list?.let {
                             if (it.size != 0) {
-                                val video
+
                             }
                         }
                     }
                 }
-
+            })
         }
         return convertView
     }
