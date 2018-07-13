@@ -9,6 +9,12 @@ import java.util.*
 class Request : Serializable {
     constructor()
 
+    constructor(userIdx : Int,icmtContent : String,iboardIdx : Int) {
+        this.userIdx = userIdx
+        this.icmtContent = icmtContent
+        this.iboardIdx = iboardIdx
+    }
+
     var iboardIdx : Int = 0
     var iboardTitle : String = ""
     var iboardUrl : String = ""
@@ -16,5 +22,10 @@ class Request : Serializable {
     var iboardDate : Date = Date()
     var userIdx : Int = 0
     var userName : String = ""
+    var icmtDate: Date = Date()
+    var icmtContent : String = ""
+    var recommentcnt : Int = 0
+
+
 
 }
