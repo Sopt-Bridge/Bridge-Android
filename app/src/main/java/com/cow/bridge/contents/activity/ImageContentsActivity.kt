@@ -1,6 +1,7 @@
 package com.cow.bridge.contents.activity
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
@@ -17,11 +18,14 @@ import android.widget.*
 import com.cow.bridge.R
 import com.cow.bridge.contents.adapter.ImageContentsCommentAdapter
 import com.cow.bridge.contents.dialog.FeedBackDialog
+import com.cow.bridge.library.dialog.LibraryAddContentsDialog
 import com.cow.bridge.model.Content
 import com.cow.bridge.model.ContentsComment
+import com.cow.bridge.model.Group
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_image_contents.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -119,6 +123,58 @@ class ImageContentsActivity : AppCompatActivity() {
                 }
             })
         }
+
+
+        var libraryFlag: Int?
+        libraryFlag = imageContents?.subFlag
+
+        if (libraryFlag == 0) {
+            text2.setBackgroundResource(R.drawable.add_to_library_normal_icon)
+        }
+        if (libraryFlag == 1) {
+            text2.setBackgroundResource(R.drawable.add_to_library_active_icon)
+        }
+
+
+        text2.setOnClickListener {
+            if (libraryFlag == 0) {
+                val libraryAddContentsDialog : LibraryAddContentsDialog = LibraryAddContentsDialog(this@ImageContentsActivity, imageContents?.contentsIdx!!)
+                libraryAddContentsDialog.window.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+                libraryAddContentsDialog.show()
+                libraryAddContentsDialog.setOnDismissListener(object : DialogInterface.OnDismissListener{
+                    override fun onDismiss(dialog: DialogInterface?) {
+                        with(dialog as LibraryAddContentsDialog){
+                            if(addContents){
+                                libraryFlag = 1
+                                text2.setBackgroundResource(R.drawable.add_to_library_active_icon)
+                            }
+                        }
+                    }
+
+                })
+
+            }
+            if (libraryFlag == 1) {
+                var group = Group()
+                group.contentsIdx = imageContents?.contentsIdx!!
+                var messagesCall = api?.deleteGroupGontents(group)
+                messagesCall?.enqueue(object : Callback<Network> {
+                    override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                        var network = response!!.body()
+                        Log.v("deleteGroupGontents", Gson().toJson(network))
+                        if(network?.message.equals("ok")){
+                            libraryFlag = 0
+                            text2.setBackgroundResource(R.drawable.add_to_library_normal_icon)
+                        }
+                    }
+                    override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                    }
+                })
+            }
+        }
+
+
         // FeedBack Dialog
         text3.setOnClickListener(object : View.OnClickListener{
             override fun onClick(v: View?) {
@@ -146,6 +202,7 @@ class ImageContentsActivity : AppCompatActivity() {
                 messagesCall?.enqueue(object : Callback<Network> {
                     override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                         var network = response!!.body()
+                        Log.v("contentsCommentWrite", Gson().toJson(network))
                         if (network?.message.equals("ok")) {
                             getContentsCommentList()
                         } else {
@@ -184,7 +241,7 @@ class ImageContentsActivity : AppCompatActivity() {
 
         })
 
-        imgCommentAdapter = ImageContentsCommentAdapter(applicationContext)
+        imgCommentAdapter = ImageContentsCommentAdapter(this@ImageContentsActivity)
 
         val llm: LinearLayoutManager = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
@@ -198,7 +255,7 @@ class ImageContentsActivity : AppCompatActivity() {
 //    var myUserIdx = sp.getInt("userIdx", 0)
 
     fun getContentsCommentList(){
-        var messagesCall = api?.getImageContentCommentList(13, 0)
+        var messagesCall = api?.getContentCommentList(13, 0)
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()

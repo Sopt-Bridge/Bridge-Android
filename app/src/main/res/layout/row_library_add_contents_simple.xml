@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/library_layout_main"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="#F7F7F7">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="25dp"
+        app:srcCompat="@drawable/add_foler_name" />
+
+    <TextView
+        android:id="@+id/library_text_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textColor="#333333"
+        android:textSize="17dp"
+        tools:text="Group 1" />
+</LinearLayout>

@@ -63,12 +63,12 @@
                 android:layout_gravity="center"
                 android:background="@drawable/add_to_library_normal_icon" />
 
-            <Button
-                android:id="@+id/video_contents_bt_feedback"
-                android:layout_width="23.21dp"
-                android:layout_height="19.13dp"
-                android:layout_gravity="top"
-                android:background="@drawable/feedback_normal_icon" />
+             <Button
+                 android:id="@+id/video_contents_bt_feedback"
+                 android:layout_width="23.21dp"
+                 android:layout_height="19.13dp"
+                 android:layout_gravity="top"
+                 android:background="@drawable/feedback_normal_icon" />
          </LinearLayout>
         </LinearLayout>
         //4

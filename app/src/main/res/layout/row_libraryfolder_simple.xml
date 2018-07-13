@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/folder_layout_main"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
     android:layout_marginLeft="9dp"
@@ -19,7 +19,6 @@
             android:id="@+id/folder_image_thumbnail"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:padding="30dp"
             app:srcCompat="@drawable/library_no_image_logo" />
 
     </FrameLayout>

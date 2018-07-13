@@ -10,13 +10,11 @@ import android.view.ViewGroup
 import com.cow.bridge.R
 import com.cow.bridge.contents.activity.VideoContentsMainActivity
 import com.cow.bridge.model.Content
-import com.cow.bridge.model.VideoContentsVideoData
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.ServerInterface
-import kotlinx.android.synthetic.main.row_contents_simple.view.*
 import kotlinx.android.synthetic.main.row_video_contents_video.view.*
 
-class VideoContentsVideoAdapter(val context : Context, val videoDataItem : ArrayList<VideoContentsVideoData> ) : RecyclerView.Adapter<VideoContentsVideoAdapter.VideoContentsVideoViewHolder>(){
+class VideoContentsVideoAdapter(val context : Context) : RecyclerView.Adapter<VideoContentsVideoAdapter.VideoContentsVideoViewHolder>(){
     var items = ArrayList<Content>()
     val api : ServerInterface? = ApplicationController.instance?.buildServerInterface()
 
@@ -24,8 +22,6 @@ class VideoContentsVideoAdapter(val context : Context, val videoDataItem : Array
         val mainView : View = LayoutInflater.from(parent!!.context).inflate(R.layout.row_video_contents_video,parent,false)
         return VideoContentsVideoViewHolder(mainView)
     }
-
-    override fun getItemCount(): Int = videoDataItem.size
 
     override fun onBindViewHolder(holder: VideoContentsVideoViewHolder, position: Int) {
         with((holder as VideoContentsVideoViewHolder).itemView) {
@@ -42,23 +38,31 @@ class VideoContentsVideoAdapter(val context : Context, val videoDataItem : Array
             }
             video_contents_video_tv_hash.text = temp_hash
             if(items[position].contentsRuntime==null){
-                contents_text_count.text = "00:00"
+                video_contents_video_tv_contents_time.text = "00:00"
             }else{
-                contents_text_count.text = items[position].contentsRuntime
+                video_contents_video_tv_contents_time.text = items[position].contentsRuntime
             }
 
-            video_contents_video_tv_video_title.setOnClickListener {
-                val intent = Intent(context, VideoContentsMainActivity::class.java)
-                intent.putExtra("videoContents", items[position])
-                (context as Activity).startActivity(intent)
-            }
-            video_contents_video_iv_video_image.setOnClickListener {
+            video_contents_video_layout_main.setOnClickListener {
                 val intent = Intent(context, VideoContentsMainActivity::class.java)
                 intent.putExtra("videoContents", items[position])
                 (context as Activity).startActivity(intent)
             }
         }
     }
+
+    override fun getItemCount(): Int {
+        return items.size
+    }
+
+    fun clear(){
+        this.items.clear()
+    }
+
+    fun addAll(contents: java.util.ArrayList<Content>) {
+        this.items.addAll(contents)
+    }
+
     inner class VideoContentsVideoViewHolder(val view : View):RecyclerView.ViewHolder(view){
 
     }
