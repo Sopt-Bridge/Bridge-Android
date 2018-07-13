@@ -11,6 +11,7 @@ import com.cow.bridge.R
 import com.cow.bridge.model.Content
 import com.cow.bridge.model.Request
 import com.cow.bridge.request.activity.RequestContentActivity
+import com.cow.bridge.util.UtilController
 import kotlinx.android.synthetic.main.row_request_simple.view.*
 
 /**
@@ -36,7 +37,7 @@ class RequestAdapter(internal var _context: Context) : RecyclerView.Adapter<Recy
 
             request_text_title.text = items[position].iboardTitle
             request_text_name.text = "${items[position].userIdx}"
-            request_text_date.text = items[position].iboardDate?.toString()
+            request_text_date.text = UtilController.timeformat(items[position].iboardDate)
         }
 
     }

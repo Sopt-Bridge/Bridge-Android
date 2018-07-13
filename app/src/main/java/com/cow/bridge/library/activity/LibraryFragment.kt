@@ -26,6 +26,7 @@ import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.android.synthetic.main.fragment_library.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -55,7 +56,7 @@ class LibraryFragment : Fragment() {
             library_recycler_folder.adapter = libraryFolderAdapter
 
             library_image_add.setOnClickListener {
-                val libraryDialog : LibraryDialog = LibraryDialog(activity!!, "#FFFFFF", "Group ${libraryFolderAdapter?.itemCount!! +1}")
+                val libraryDialog : LibraryDialog = LibraryDialog(activity!!, "#FFFFFF", if(libraryFolderAdapter?.getEmpty()!!) "Group ${libraryFolderAdapter?.itemCount!!}" else "Group ${libraryFolderAdapter?.itemCount!!+1}")
                 libraryDialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 libraryDialog.show()
                 libraryDialog.setOnDismissListener {dialog ->
@@ -120,8 +121,25 @@ class LibraryFragment : Fragment() {
                 if(network?.message.equals("ok")){
                     network.data?.get(0)?.group_list?.let {
                         if(it.size!=0){
+                            val llm3 : RecyclerView.LayoutManager = GridLayoutManager(context, 2)
+                            library_recycler_folder.layoutManager = llm3
+                            library_recycler_folder.adapter = libraryFolderAdapter
+
                             libraryFolderAdapter?.clear()
+                            libraryFolderAdapter?.setEmpty(false)
                             libraryFolderAdapter?.addAll(it)
+                            libraryFolderAdapter?.notifyDataSetChanged()
+                        }else{
+
+                            val llm3 : RecyclerView.LayoutManager = GridLayoutManager(context, 1)
+                            library_recycler_folder.layoutManager = llm3
+                            library_recycler_folder.adapter = libraryFolderAdapter
+
+                            libraryFolderAdapter?.clear()
+                            var noresult = ArrayList<Group>()
+                            noresult.add(Group())
+                            libraryFolderAdapter?.setEmpty(true)
+                            libraryFolderAdapter?.addAll(noresult)
                             libraryFolderAdapter?.notifyDataSetChanged()
                         }
                     }

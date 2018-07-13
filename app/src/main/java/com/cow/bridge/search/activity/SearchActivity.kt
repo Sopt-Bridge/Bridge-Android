@@ -1,6 +1,7 @@
 package com.cow.bridge.search.activity
 
 import android.content.DialogInterface
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -43,6 +44,7 @@ class SearchActivity : AppCompatActivity() {
     var queryTmp = ""
     var hashSubFlag = 0
     var powerMenu : PowerMenu? = null
+    var searchFlag : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +61,7 @@ class SearchActivity : AppCompatActivity() {
                 searchView?.hidePreview()
                 searchView?.hideKeyboard(searchView)
 
+                //TODO 썸네일 중복 제거
                 searchView?.setLayoutParams(FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, UtilController.convertDpToPixel(48f, applicationContext).toInt()));
                 queryTmp = query!!
                 if(searchView?.searchType.equals("normal")){
@@ -71,15 +74,8 @@ class SearchActivity : AppCompatActivity() {
                     realm.close()
                     getSearchContentsList(query!!, 1, 0)
                 }else{
-                    var realm = Realm.getDefaultInstance()
-                    realm.executeTransaction {
-                        var searchWord = realm.createObject(SearchWord::class.java)
-                        searchWord.recentlyWord = if(query.startsWith("#")) "${query}" else "#${query}"
-                        searchWord.searchDateTime = Date().time.toString()
-                        searchWord.thumbnailImage = ""
-                        //TODO 썸네일 넣기
-                    }
-                    realm.close()
+                    searchFlag = true
+
                     getSearchContentsList(if(query.startsWith("#")) query.substring(1) else query, 0, 0)
                 }
 
@@ -196,11 +192,11 @@ class SearchActivity : AppCompatActivity() {
     fun getSearchContentsList(query : String, searchType : Int, sortType : Int){
         if(searchType==0){
 
-            var messagesCall = api?.getSearchHashInfo(1, query!!)
+            var sp : SharedPreferences = this@SearchActivity.getSharedPreferences("bridge", AppCompatActivity.MODE_PRIVATE)
+            var messagesCall = api?.getSearchHashInfo(sp.getInt("userIdx", 0), query!!)
             messagesCall?.enqueue(object : Callback<Network> {
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
-                    Log.v("test", Gson().toJson(network))
                     if(network?.message.equals("ok")){
                         network.data?.get(0)?.hashcontents_list?.let {
                             if(it.size!=0){
@@ -208,6 +204,18 @@ class SearchActivity : AppCompatActivity() {
                                 Glide.with(this@SearchActivity).load(it.get(0).hashImg).into(search_image_hash_thumbnail)
                                 search_text_hash_name.text = it.get(0).hashName
                                 search_text_hash_subcount.text = "Subscribers ${it.get(0).hashCnt}"
+                                if(searchFlag){
+                                    searchFlag=false
+                                    var realm = Realm.getDefaultInstance()
+                                    realm.executeTransaction {
+                                        var searchWord = realm.createObject(SearchWord::class.java)
+                                        searchWord.recentlyWord = if(query.startsWith("#")) "${query}" else "#${query}"
+                                        searchWord.searchDateTime = UtilController.timeformat(Date())
+                                        searchWord.thumbnailImage = network.data?.get(0)?.hashcontents_list?.get(0)!!.hashImg
+                                    }
+                                    realm.close()
+                                }
+
                                 if(it.get(0).subflagresult==0){
                                     hashSubFlag = 0
                                     search_image_hash_sub.setImageResource(R.drawable.subscribe_normal_btn)
@@ -221,8 +229,8 @@ class SearchActivity : AppCompatActivity() {
                                 search_layout_hash_sub.setOnClickListener {
                                     if(hashSubFlag==0){
                                         //bestchannel_image_subscribe.init(_context as Activity?)
-                                        //TODO userIdx 수정
-                                        var messagesCall = api?.subscribeModify(Hash(network.data?.get(0)?.hashcontents_list?.get(0)?.hashName!!, 1))
+                                        var sp : SharedPreferences = this@SearchActivity.getSharedPreferences("bridge", AppCompatActivity.MODE_PRIVATE)
+                                        var messagesCall = api?.subscribeModify(Hash(network.data?.get(0)?.hashcontents_list?.get(0)?.hashName!!, sp.getInt("userIdx", 0)))
                                         messagesCall?.enqueue(object : Callback<Network> {
                                             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                                                 var network = response!!.body()
@@ -241,7 +249,9 @@ class SearchActivity : AppCompatActivity() {
                                     }else{
                                         //bestchannel_image_subscribe.init(_context as Activity?)
                                         var hashName = network.data?.get(0)?.hashcontents_list?.get(0)?.hashName!!
-                                        var messagesCall = api?.subscribeModify(Hash(hashName, 1))
+                                        var sp : SharedPreferences = this@SearchActivity.getSharedPreferences("bridge", AppCompatActivity.MODE_PRIVATE)
+
+                                        var messagesCall = api?.subscribeModify(Hash(hashName, sp.getInt("userIdx", 0)))
                                         messagesCall?.enqueue(object : Callback<Network> {
                                             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                                                 var network = response!!.body()
@@ -273,7 +283,6 @@ class SearchActivity : AppCompatActivity() {
         }else{
             search_layout_hash.visibility = View.GONE
         }
-        Log.v("testttt", query)
         var messagesCall = api?.searchContents(0, query!! ,searchType, sortType)
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {

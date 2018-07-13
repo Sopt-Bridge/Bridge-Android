@@ -15,11 +15,13 @@ import com.cow.bridge.contents.activity.ImageContentsActivity
 import com.cow.bridge.model.ContentsComment
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
+import com.cow.bridge.util.UtilController
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_image_comments.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class ImageContentsCommentAdapter(internal var _context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
 
@@ -36,7 +38,7 @@ class ImageContentsCommentAdapter(internal var _context: Context) : RecyclerView
 
             image_comment_name.text = items[position].userName
             image_comment_text_title.text = items[position].ccmtContent
-            image_contents_tv_comment_date.text = items[position].ccmtDate.toString()
+            image_contents_tv_comment_date.text = UtilController.timeformat(items[position].ccmtDate)
             //image_contents_btn_recomment.text =  "${items[position].recommentCnt} Replies"
             var sp : SharedPreferences = (_context as Activity).getSharedPreferences("bridge", MODE_PRIVATE)
             var myUserIdx = sp.getInt("userIdx", 0)
