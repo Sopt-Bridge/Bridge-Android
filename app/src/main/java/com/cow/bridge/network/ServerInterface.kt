@@ -93,7 +93,10 @@ interface ServerInterface {
     fun getrequestComment(@Path("iboardIdx") iboardIdx: Int,@Path("lastcontentsIdx") lastcontentsIdx: Int): Call<Network>
 
     @POST("/trequest/trequestcomment_write")
-    fun requestCommentWriteContents(@Body request : Request): Call<Network>
+    fun requestCommentWrite(@Body request : Request): Call<Network>
+
+    @POST("/trequest/trequestcomment_delete")
+    fun requestCommentDelete(@Body request : Request): Call<Network>
 
 
     //search

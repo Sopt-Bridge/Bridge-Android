@@ -59,7 +59,39 @@ class RequestContentActivity : AppCompatActivity() {
 
         getRequestCommentList()
 
+        //request 댓글 post하기
+        request_postbtn.setOnClickListener {
+            var requestTmp = Request()
 
+            if (request_comment_edit.text.toString().trim().equals("")) {
+                Toast.makeText(applicationContext, "enter the comment", Toast.LENGTH_SHORT).show()
+            } else {
+                requestTmp.icmtContent= (request_comment_edit.text.toString())
+                requestTmp.iboardIdx= request?.iboardIdx!!
+
+
+                var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
+                var myUserIdx = sp.getInt("userIdx", 0)
+                requestTmp.userIdx = myUserIdx
+
+                var messagesCall = api?. requestCommentWrite(requestTmp)
+                messagesCall?.enqueue(object : Callback<Network> {
+                    override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                        var network = response!!.body()
+                        Log.v("requestCommentWrite", Gson().toJson(network))
+                        if (network?.message.equals("ok")) {
+                            getRequestCommentList()
+                        } else {
+                            Toast.makeText(applicationContext, "error : ${network?.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Network>?, t: Throwable?) {
+                        Toast.makeText(applicationContext, "error : ${t.toString()}", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+        }
     }
 
     //request 댓글 불러오기
@@ -68,8 +100,9 @@ class RequestContentActivity : AppCompatActivity() {
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()
+                Log.v("getrequestComment", Gson().toJson(network))
                 if (network?.message.equals("ok")) {
-                    network.data?.get(0)?.request_list?.let {
+                    network.data?.get(0)?.request_comment_list?.let {
                         if (it.size != 0) {
                             requestCommentAdapter?.clear()
                             requestCommentAdapter?.addAll(it)

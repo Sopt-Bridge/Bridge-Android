@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.cow.bridge.R
+import com.cow.bridge.contents.activity.ImageContentsActivity
 import com.cow.bridge.model.ContentsComment
 import com.cow.bridge.model.Request
 import com.cow.bridge.network.ApplicationController
@@ -53,6 +54,22 @@ class RequestCommentAdapter(internal var _context: Context) : RecyclerView.Adapt
                     override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                         var network = response!!.body()
                         Log.v("requestCommentDelet", Gson().toJson(network))
+                        if(network?.message.equals("ok")){
+                            Toast.makeText(_context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                            (_context as RequestContentActivity).getRequestCommentList()
+                        }
+                    }
+                    override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                    }
+                })
+            }
+            image_comment_delete.setOnClickListener {
+                var messagesCall = api?. requestCommentDelete(Request(myUserIdx, items[position].icmtIdx))
+                messagesCall?.enqueue(object : Callback<Network> {
+                    override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                        var network = response!!.body()
+                        Log.v("requestCommentDelete", Gson().toJson(network))
                         if(network?.message.equals("ok")){
                             Toast.makeText(_context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
                             (_context as RequestContentActivity).getRequestCommentList()
