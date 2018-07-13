@@ -3,7 +3,7 @@ package com.cow.bridge.contents.activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PixelFormat
-import android.media.MediaPlayer
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.TabLayout
@@ -23,20 +23,16 @@ import android.widget.MediaController
 import android.widget.TextView
 import android.widget.VideoView
 import com.cow.bridge.R
+import com.cow.bridge.contents.dialog.FeedBackDialog
 import com.cow.bridge.model.Content
 import com.cow.bridge.network.ApplicationController
-import com.cow.bridge.network.ServerInterface
-import kotlinx.android.synthetic.main.activity_video_contents.*
-import kotlinx.android.synthetic.main.row_contents_simple.view.*
-import retrofit2.*
 import com.cow.bridge.network.Network
+import com.cow.bridge.network.ServerInterface
 import com.google.gson.Gson
-import org.w3c.dom.Attr
-import java.net.HttpURLConnection
-import java.net.URI
-import java.net.URL
-import java.util.HashMap
-import javax.xml.parsers.DocumentBuilderFactory
+import kotlinx.android.synthetic.main.activity_video_contents.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class VideoContentsMainActivity :AppCompatActivity() {
@@ -150,20 +146,22 @@ class VideoContentsMainActivity :AppCompatActivity() {
 
         btn_recommand?.setOnClickListener {
 
-            var messagesCall = api?.changeVideoContentsLike(video.contentsIdx, 1)
+            var messagesCall = api?.clikeContents(Content(video?.contentsIdx!!, 1))
             messagesCall?.enqueue(object : Callback<Network> {
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
-                    Log.v("getHashContentList : ", Gson().toJson(network))
                     if (network?.message.equals("ok")) {
                         if (video.likeFlag == 1) {
                             btn_recommand?.setBackgroundResource(R.drawable.good_normal_btn)
                             video.contentsLike--
                             video.likeFlag = 0
+                            txt_recommand?.text = Integer.toString(video.contentsLike)
+
                         } else {
                             btn_recommand?.setBackgroundResource(R.drawable.good_active_icon)
                             video.contentsLike++
                             video.likeFlag = 1
+                            txt_recommand?.text = Integer.toString(video.contentsLike)
                         }
                     }
                 }
@@ -181,8 +179,13 @@ class VideoContentsMainActivity :AppCompatActivity() {
                 video.subFlag = 1
             }
         }
-    }
 
+        video_contents_bt_feedback.setOnClickListener {
+            val feedbackDialog : FeedBackDialog = FeedBackDialog(this@VideoContentsMainActivity, video?.contentsIdx!!)
+            feedbackDialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            feedbackDialog.show()
+        }
+    }
 
 
     private fun setupViewPager(viewPager: ViewPager?) {

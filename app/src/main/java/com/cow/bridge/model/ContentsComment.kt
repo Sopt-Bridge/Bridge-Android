@@ -4,12 +4,20 @@ import java.io.Serializable
 import java.util.*
 
 class ContentsComment : Serializable {
-    var CcmtIdx: Int = 0  //컨텐츠
-    var recommentCnt: Int = 0
-    var CcmtContent: String = ""
+
+    constructor()
+
+    constructor(userIdx : Int,ccmtIdx : Int ){
+        this.userIdx = userIdx
+        this.ccmtIdx = ccmtIdx
+    }
+
+    var ccmtIdx: Int = 0
+   // var recommentCnt: Int = 0
     var userName: String = ""
-    var CcmtDate : Date = Date()
-
-
+    var ccmtDate : Date = Date()
+    var contentsIdx: Int = 0
+    var ccmtContent: String = ""
+    var userIdx: Int = 0
 
 }

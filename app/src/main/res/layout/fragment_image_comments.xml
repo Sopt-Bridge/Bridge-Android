@@ -37,12 +37,14 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/image_comment_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="17.63dp"
                 android:layout_marginTop="9.32dp"
                 android:text="Delete"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:visibility="gone" />
         </LinearLayout>
 
         <TextView
@@ -75,18 +77,18 @@
                 android:textColor="#B1B1B1"
                 android:textSize="10dp" />
 
-            <Button
-                android:id="@+id/image_contents_btn_recomment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="17.21dp"
-                android:layout_marginTop="4.81dp"
-                android:background="#ffffff"
-                android:drawableLeft="@drawable/open_reply_page_icon"
-                android:text=" 120 Replies"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="10dp" />
+            <!--<Button-->
+                <!--android:id="@+id/image_contents_btn_recomment"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginRight="17.21dp"-->
+                <!--android:layout_marginTop="4.81dp"-->
+                <!--android:background="#ffffff"-->
+                <!--android:drawableLeft="@drawable/open_reply_page_icon"-->
+                <!--android:text=" 120 Replies"-->
+                <!--android:textAllCaps="false"-->
+                <!--android:textColor="#000000"-->
+                <!--android:textSize="10dp" />-->
         </LinearLayout>
 
     </LinearLayout>

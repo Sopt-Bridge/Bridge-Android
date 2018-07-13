@@ -1,6 +1,9 @@
 package com.cow.bridge.contents.activity
 
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -10,12 +13,14 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import com.cow.bridge.R
-import com.cow.bridge.contents.adapter.ImageCommentAdapter
+import com.cow.bridge.contents.adapter.ImageContentsCommentAdapter
+import com.cow.bridge.contents.dialog.FeedBackDialog
+import com.cow.bridge.library.dialog.LibraryAddContentsDialog
 import com.cow.bridge.model.Content
+import com.cow.bridge.model.ContentsComment
+import com.cow.bridge.model.Group
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
@@ -25,13 +30,16 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class ImageContentsActivity : AppCompatActivity() {
-    private lateinit var cancelButton : ImageButton
+    private lateinit var cancelButton: ImageButton
     lateinit var imgPager: ViewPager
 
-    var clickId : ArrayList<View> = ArrayList()
+    var clickId: ArrayList<View> = ArrayList()
 
-    val api : ServerInterface? = ApplicationController.instance?.buildServerInterface()
+    val api: ServerInterface? = ApplicationController.instance?.buildServerInterface()
+    var imgCommentAdapter: ImageContentsCommentAdapter? = null
+    var imageContents : Content? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,17 +49,16 @@ class ImageContentsActivity : AppCompatActivity() {
         cancelButton = findViewById(R.id.imgContentsBackBtn)
         cancelButton.setOnClickListener{finish()}
 
-
-
         // 화면 터치 시 아이콘 보임, 안 보임
-        val text1 : TextView = findViewById(R.id.imgCount)
-        val text2 : ImageButton = findViewById(R.id.imgLibraryBtn)
-        val text3 : ImageButton = findViewById(R.id.imgFeedbackBtn)
-        val text4 : TextView = findViewById(R.id.imgDes)
-        val text5 : ImageButton = findViewById(R.id.imgLike)
-        val text6 : TextView = findViewById(R.id.imgLikeNum)
-        val text7 : TextView = findViewById(R.id.currentNum)
-        val text8 : TextView = findViewById(R.id.slash)
+        val text1: TextView = findViewById(R.id.imgCount)
+        val text2: ImageButton = findViewById(R.id.imgLibraryBtn)
+        val text3: ImageButton = findViewById(R.id.imgFeedbackBtn)
+        val text4: TextView = findViewById(R.id.imgDes)
+        val text5: ImageButton = findViewById(R.id.imgLike)
+        val text6: TextView = findViewById(R.id.imgLikeNum)
+        val text7: TextView = findViewById(R.id.currentNum)
+        val text8: TextView = findViewById(R.id.slash)
+        val text9: Button = findViewById(R.id.image_contents_comment_post_btn)
 
         clickId.add(text1)
         clickId.add(text2)
@@ -61,52 +68,58 @@ class ImageContentsActivity : AppCompatActivity() {
         clickId.add(text6)
         clickId.add(text7)
         clickId.add(text8)
+        clickId.add(text9)
 
-        val container : LinearLayout = findViewById(R.id.imgMain)
+        val container: LinearLayout = findViewById(R.id.imgMain)
         container.setOnClickListener {
-            for(s in clickId) {
-                if(s.visibility == View.VISIBLE) {
+            for (s in clickId) {
+                if (s.visibility == View.VISIBLE) {
                     s.visibility = View.INVISIBLE
-                }
-                else s.visibility = View.VISIBLE
+                } else s.visibility = View.VISIBLE
             }
         }
 
         // imgCnt, imgDes, imgLikeNum 부분
         var intent = Intent(this.intent)
-        var imageContents= intent.getSerializableExtra("imageContents") as? Content
+        imageContents = intent.getSerializableExtra("imageContents") as? Content
 
         text1.text = imageContents?.imgCnt.toString()
         text4.text = imageContents?.contentsInfo
         text6.text = imageContents?.contentsLike.toString()
 
         //imgLike 아이콘 부분
-        var likeFlag : Int?
+        var likeFlag: Int?
         likeFlag = imageContents?.likeFlag
 
-        if(likeFlag == 0) {
+        if (likeFlag == 0) {
             text5.setBackgroundResource(R.drawable.good_normal_btn)
         }
         if (likeFlag == 1) {
             text5.setBackgroundResource(R.drawable.good_active_icon)
         }
 
+
         text5.setOnClickListener {
-            var messagesCall = api?.clikeContents(Content(imageContents?.contentsIdx!! , 1))
+            var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
+            var myUserIdx = sp.getInt("userIdx", 0)
+            var messagesCall = api?.clikeContents(Content(imageContents?.contentsIdx!!, myUserIdx))
             messagesCall?.enqueue(object : Callback<Network> {
                 override fun onFailure(call: Call<Network>?, t: Throwable?) {
                     Log.v("test fail : ", t.toString())
                 }
+
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
-                    Log.v("test", Gson().toJson(network))
                     if(network?.message.equals("ok")) {
-                        if(likeFlag==0){
-                            likeFlag =1
-                            text5.setBackgroundResource(R.drawable.good_normal_btn)
-                        } else if(likeFlag==0){
+                        if(likeFlag==1){
                             likeFlag =0
+                            text5.setBackgroundResource(R.drawable.good_normal_btn)
+                            text6.text = imageContents?.contentsLike!!.minus(1).toString()
+                        } else if(likeFlag==0){
+                            likeFlag =1
                             text5.setBackgroundResource(R.drawable.good_active_icon)
+                            text6.text = imageContents?.contentsLike!!.plus(1).toString()
+
                         }
                     }
                 }
@@ -114,16 +127,109 @@ class ImageContentsActivity : AppCompatActivity() {
         }
 
 
-        // view pager 연결
-        val adapter = ViewPagerAdapter(supportFragmentManager)
-        for (i in 1..imageContents?.imgCnt!!)  {
-            adapter.addFragment(ImageFragment.newInstance(i,imageContents.contentsIdx))
+        var libraryFlag: Int?
+        libraryFlag = imageContents?.subFlag
+
+        if (libraryFlag == 0) {
+            text2.setBackgroundResource(R.drawable.add_to_library_normal_icon)
+        }
+        if (libraryFlag == 1) {
+            text2.setBackgroundResource(R.drawable.add_to_library_active_icon)
         }
 
+
+        text2.setOnClickListener {
+            if (libraryFlag == 0) {
+                val libraryAddContentsDialog : LibraryAddContentsDialog = LibraryAddContentsDialog(this@ImageContentsActivity, imageContents?.contentsIdx!!)
+                libraryAddContentsDialog.window.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+                libraryAddContentsDialog.show()
+                libraryAddContentsDialog.setOnDismissListener(object : DialogInterface.OnDismissListener{
+                    override fun onDismiss(dialog: DialogInterface?) {
+                        with(dialog as LibraryAddContentsDialog){
+                            if(addContents){
+                                libraryFlag = 1
+                                text2.setBackgroundResource(R.drawable.add_to_library_active_icon)
+                            }
+                        }
+                    }
+
+                })
+
+            }
+            if (libraryFlag == 1) {
+                var group = Group()
+                group.contentsIdx = imageContents?.contentsIdx!!
+                var messagesCall = api?.deleteGroupGontents(group)
+                messagesCall?.enqueue(object : Callback<Network> {
+                    override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                        var network = response!!.body()
+                        Log.v("deleteGroupGontents", Gson().toJson(network))
+                        if(network?.message.equals("ok")){
+                            libraryFlag = 0
+                            text2.setBackgroundResource(R.drawable.add_to_library_normal_icon)
+                        }
+                    }
+                    override fun onFailure(call: Call<Network>?, t: Throwable?) {
+
+                    }
+                })
+            }
+        }
+
+
+        // FeedBack Dialog
+        text3.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                val feedbackDialog : FeedBackDialog = FeedBackDialog(this@ImageContentsActivity, imageContents?.contentsIdx!!)
+                feedbackDialog.window.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+                feedbackDialog.show()
+            }
+
+        })
+
+        //comment post
+        text9.setOnClickListener {
+            var commentTmp = ContentsComment()
+
+            if (contents_comment_edit.text.toString().trim().equals("")) {
+                Toast.makeText(applicationContext, "enter the comment", Toast.LENGTH_SHORT).show()
+            } else {
+                commentTmp.ccmtContent = (contents_comment_edit.text.toString())
+                commentTmp.contentsIdx = imageContents?.contentsIdx!!
+                var sp : SharedPreferences = getSharedPreferences("bridge", MODE_PRIVATE)
+                var myUserIdx = sp.getInt("userIdx", 0)
+                commentTmp.userIdx = myUserIdx
+
+                var messagesCall = api?.contentsCommentWrite(commentTmp)
+                messagesCall?.enqueue(object : Callback<Network> {
+                    override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+                        var network = response!!.body()
+                        Log.v("contentsCommentWrite", Gson().toJson(network))
+                        if (network?.message.equals("ok")) {
+                            getContentsCommentList()
+                        } else {
+                            Toast.makeText(applicationContext, "error : ${network?.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Network>?, t: Throwable?) {
+                        Toast.makeText(applicationContext, "error : ${t.toString()}", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+        }
+
+
+
+        // view pager 연결
+        val adapter = ViewPagerAdapter(supportFragmentManager)
+        for (i in 1..imageContents?.imgCnt!!) {
+            adapter.addFragment(ImageFragment.newInstance(i, imageContents?.contentsIdx!!))
+        }
         imgPager.offscreenPageLimit = 2
         imgPager.adapter = adapter
 
-        imgPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+        imgPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
 
             }
@@ -133,29 +239,30 @@ class ImageContentsActivity : AppCompatActivity() {
 
             override fun onPageSelected(position: Int) {
                 text7.text = position.plus(1).toString()
-                Log.v("test : ", "$position")
             }
 
         })
 
-        val imgCommentAdapter: ImageCommentAdapter = ImageCommentAdapter(applicationContext)
+        imgCommentAdapter = ImageContentsCommentAdapter(this@ImageContentsActivity)
 
         val llm: LinearLayoutManager = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         image_comments_list.layoutManager = llm
         image_comments_list.adapter = imgCommentAdapter
 
-
-        var messagesCall = api?.getContentCommentList(13, 0)
+        getContentsCommentList()
+    }
+   public fun getContentsCommentList(){
+        var messagesCall = api?.getContentCommentList(imageContents?.contentsIdx!!, 0)
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()
-                Log.v("imageCommentList : ", Gson().toJson(network))
                 if (network?.message.equals("ok")) {
                     network.data?.get(0)?.comments_list?.let {
                         if (it.size != 0) {
-                            imgCommentAdapter.addAll(it)
-                            imgCommentAdapter.notifyDataSetChanged()
+                            imgCommentAdapter?.clear()
+                            imgCommentAdapter?.addAll(it)
+                            imgCommentAdapter?.notifyDataSetChanged()
                         }
                     }
                 }
@@ -165,7 +272,6 @@ class ImageContentsActivity : AppCompatActivity() {
                 Log.v("test fail : ", t.toString())
             }
         })
-
     }
 
     inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
@@ -179,9 +285,11 @@ class ImageContentsActivity : AppCompatActivity() {
             return mFragmentList.size
         }
 
+
         fun addFragment(fragment: Fragment) {
             mFragmentList.add(fragment)
         }
+
     }
 
 
@@ -189,7 +297,6 @@ class ImageContentsActivity : AppCompatActivity() {
         super.onStart()
 
     }
-
 
 
 }

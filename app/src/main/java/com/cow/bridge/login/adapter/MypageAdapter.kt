@@ -12,6 +12,7 @@ import com.cow.bridge.R
 import com.cow.bridge.model.MypageItems
 import com.cow.bridge.model.Request
 import com.cow.bridge.request.activity.RequestContentActivity
+import com.cow.bridge.util.UtilController
 import kotlinx.android.synthetic.main.row_mypage_item.view.*
 
 /**
@@ -31,7 +32,7 @@ class MypageAdapter(internal var _context: Context) : RecyclerView.Adapter<Recyc
 
         with(((viewHolder as MypageViewHolder).itemView)){
             mywritten_text_title.text = items[position].iboardTitle
-            mywritten_text_date.text = items[position].iboardDate?.toString()
+            mywritten_text_date.text = UtilController.timeformat(items[position].iboardDate)
 
             mywritten_layout_main.setOnClickListener {
                 var intent = Intent(_context, RequestContentActivity::class.java)

@@ -1,6 +1,7 @@
 package com.cow.bridge.subscribe.adapter
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -50,8 +51,9 @@ class MySubscriptionsAdapter(internal var _context: Context) : RecyclerView.Adap
             bestchannel_layout_subscribe.setOnClickListener {
                 if(items[position].subflagresult==0){
                     //bestchannel_image_subscribe.init(_context as Activity?)
-                    //TODO userIdx 수정
-                    var messagesCall = api?.subscribeModify(Hash(items[position].hashName, 1))
+
+                    var sp : SharedPreferences = _context.getSharedPreferences("bridge", Context.MODE_PRIVATE)
+                    var messagesCall = api?.subscribeModify(Hash(items[position].hashName, sp.getInt("userIdx", 0)))
                     messagesCall?.enqueue(object : Callback<Network> {
                         override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                             var network = response!!.body()
@@ -69,7 +71,8 @@ class MySubscriptionsAdapter(internal var _context: Context) : RecyclerView.Adap
                     })
                 }else{
                     //bestchannel_image_subscribe.init(_context as Activity?)
-                    var messagesCall = api?.subscribeModify(Hash(items[position].hashName, 1))
+                    var sp : SharedPreferences = _context.getSharedPreferences("bridge", Context.MODE_PRIVATE)
+                    var messagesCall = api?.subscribeModify(Hash(items[position].hashName, sp.getInt("userIdx", 0)))
                     messagesCall?.enqueue(object : Callback<Network> {
                         override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                             var network = response!!.body()

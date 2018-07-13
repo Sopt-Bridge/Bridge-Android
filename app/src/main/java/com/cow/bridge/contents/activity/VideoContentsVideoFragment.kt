@@ -9,11 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.cow.bridge.R
 import com.cow.bridge.contents.adapter.VideoContentsVideoAdapter
-import com.cow.bridge.model.Content
 import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
-import kotlinx.android.synthetic.main.fragment_video_contents_video.*
 import kotlinx.android.synthetic.main.fragment_video_contents_video.view.*
 import retrofit2.Call
 import retrofit2.Callback

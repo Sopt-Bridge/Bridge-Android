@@ -276,7 +276,8 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
                 hashButton.setTextColor(Color.parseColor("#AAAAAA"));
                 hashImage.setBackgroundColor(Color.parseColor("#AAAAAA"));
                 searchType = "normal";
-                mAdapter.setSearchType("normal");
+                if(mAdapter!=null)
+                    mAdapter.setSearchType("normal");
                 startFilter(mSearchSrcTextView.getText());
             } else if (v == hashButton) {
                 normalButton.setTextColor(Color.parseColor("#AAAAAA"));
@@ -284,7 +285,8 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
                 hashButton.setTextColor(Color.parseColor("#E31C9E"));
                 hashImage.setBackgroundColor(Color.parseColor("#E31C9E"));
                 searchType = "hash";
-                mAdapter.setSearchType("hash");
+                if(mAdapter!=null)
+                    mAdapter.setSearchType("hash");
                 startFilter(mSearchSrcTextView.getText());
             }
         }
