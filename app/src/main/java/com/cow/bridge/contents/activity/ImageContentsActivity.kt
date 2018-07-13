@@ -100,6 +100,7 @@ class ImageContentsActivity : AppCompatActivity() {
 
 
         text5.setOnClickListener {
+
             var messagesCall = api?.clikeContents(Content(imageContents?.contentsIdx!!, 1))
             messagesCall?.enqueue(object : Callback<Network> {
                 override fun onFailure(call: Call<Network>?, t: Throwable?) {

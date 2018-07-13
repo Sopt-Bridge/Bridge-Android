@@ -245,32 +245,32 @@ class SearchActivity : AppCompatActivity() {
         }else{
             search_layout_hash.visibility = View.GONE
         }
-        var messagesCall = api?.searchContents(0, query!! ,searchType, sortType)
-        messagesCall?.enqueue(object : Callback<Network> {
-            override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
-                var network = response!!.body()
-                Log.v("test", Gson().toJson(network))
-                if(network?.message.equals("ok")){
-                    network.data?.get(0)?.contents_list?.let {
-                        if(it.size!=0){
-                            searchResultAdapter?.clear()
-                            searchResultAdapter?.setEmpty(false)
-                            searchResultAdapter?.addAll(it)
-                            searchResultAdapter?.notifyDataSetChanged()
-                        }else{
-                            searchResultAdapter?.clear()
-                            var noresult = ArrayList<Content>()
-                            noresult.add(Content())
-                            searchResultAdapter?.setEmpty(true)
-                            searchResultAdapter?.addAll(noresult)
-                            searchResultAdapter?.notifyDataSetChanged()
-                        }
-                    }
-                }
-            }
-            override fun onFailure(call: Call<Network>?, t: Throwable?) {
-
-            }
-        })
+//        var messagesCall = api?.searchContents(0, query!! ,searchType, sortType)
+//        messagesCall?.enqueue(object : Callback<Network> {
+//            override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
+//                var network = response!!.body()
+//                Log.v("test", Gson().toJson(network))
+//                if(network?.message.equals("ok")){
+//                    network.data?.get(0)?.contents_list?.let {
+//                        if(it.size!=0){
+//                            searchResultAdapter?.clear()
+//                            searchResultAdapter?.setEmpty(false)
+//                            searchResultAdapter?.addAll(it)
+//                            searchResultAdapter?.notifyDataSetChanged()
+//                        }else{
+//                            searchResultAdapter?.clear()
+//                            var noresult = ArrayList<Content>()
+//                            noresult.add(Content())
+//                            searchResultAdapter?.setEmpty(true)
+//                            searchResultAdapter?.addAll(noresult)
+//                            searchResultAdapter?.notifyDataSetChanged()
+//                        }
+//                    }
+//                }
+//            }
+//            override fun onFailure(call: Call<Network>?, t: Throwable?) {
+//
+//            }
+//        })
     }
 }
