@@ -144,11 +144,12 @@ class SubscribeFragment : Fragment() {
         super.onResume()
 
         var sp : SharedPreferences = activity!!.getSharedPreferences("bridge", AppCompatActivity.MODE_PRIVATE)
-
+        Log.v("test 1", sp.getInt("userIdx", 0).toString())
         var messagesCall = api?.getMySubscribeHashList(0, sp.getInt("userIdx", 0))
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                 var network = response!!.body()
+                Log.v("getMySubscribeHashList", Gson().toJson(network))
                 if(network?.message.equals("ok")){
                     network.data?.get(0)?.hashcontents_list?.let {
                         if(it.size!=0){
@@ -160,6 +161,18 @@ class SubscribeFragment : Fragment() {
                             hash.pageIdx = 0
                             hash.sortType = 0
                             getHashContentList(hash)
+                        }else{
+
+                            val llm2 : RecyclerView.LayoutManager = GridLayoutManager(context, 1)
+                            subscribe_recycler.layoutManager = llm2
+                            subscribe_recycler.adapter = subscribeContentAdapter
+
+                            subscribeContentAdapter?.clear()
+                            var noresult = ArrayList<Content>()
+                            noresult.add(Content())
+                            subscribeContentAdapter?.setEmpty(true)
+                            subscribeContentAdapter?.addAll(noresult)
+                            subscribeContentAdapter?.notifyDataSetChanged()
                         }
                     }
                 }
@@ -172,6 +185,7 @@ class SubscribeFragment : Fragment() {
     }
 
     fun getHashContentList(hash : Hash){
+        hashName = hash.hashName
         Log.v("getHashContentList", Gson().toJson(hash))
         var messagesCall = api?.getHashContentList(hash)
         messagesCall?.enqueue(object : Callback<Network> {
@@ -181,11 +195,21 @@ class SubscribeFragment : Fragment() {
                 if(network?.message.equals("ok")){
                     network.data?.get(0)?.contents_list?.let {
                         if(it.size!=0){
+
+                            val llm2 : RecyclerView.LayoutManager = GridLayoutManager(context, 2)
+                            subscribe_recycler.layoutManager = llm2
+                            subscribe_recycler.adapter = subscribeContentAdapter
+
                             subscribeContentAdapter?.clear()
                             subscribeContentAdapter?.setEmpty(false)
                             subscribeContentAdapter?.addAll(it)
                             subscribeContentAdapter?.notifyDataSetChanged()
                         }else{
+
+                            val llm2 : RecyclerView.LayoutManager = GridLayoutManager(context, 1)
+                            subscribe_recycler.layoutManager = llm2
+                            subscribe_recycler.adapter = subscribeContentAdapter
+
                             subscribeContentAdapter?.clear()
                             var noresult = ArrayList<Content>()
                             noresult.add(Content())

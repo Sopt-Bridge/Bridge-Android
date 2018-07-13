@@ -253,7 +253,7 @@ class ImageContentsActivity : AppCompatActivity() {
         getContentsCommentList()
     }
 
-    fun getContentsCommentList(){
+    public fun getContentsCommentList(){
         var messagesCall = api?.getContentCommentList(imageContents?.contentsIdx!!, 0)
         messagesCall?.enqueue(object : Callback<Network> {
             override fun onResponse(call: Call<Network>?, response: Response<Network>?) {

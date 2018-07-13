@@ -1,6 +1,7 @@
 package com.cow.bridge.subscribe.activity
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -31,6 +32,7 @@ class BestChannelActivity : AppCompatActivity() {
 
         subscribe_text_title.text = titleStr
 
+        subscribe_image_back.setOnClickListener { finish() }
 
         val llm : LinearLayoutManager = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
@@ -40,7 +42,8 @@ class BestChannelActivity : AppCompatActivity() {
             val bestChannelAdapter = BestChannelAdapter(this)
             subscribe_recycler.adapter = bestChannelAdapter
 
-            var messagesCall = api?.recommendedHashList(0, 1)
+            var sp : SharedPreferences = this@BestChannelActivity.getSharedPreferences("bridge", AppCompatActivity.MODE_PRIVATE)
+            var messagesCall = api?.recommendedHashList(0, sp.getInt("userIdx", 0))
             messagesCall?.enqueue(object : Callback<Network> {
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
@@ -63,7 +66,8 @@ class BestChannelActivity : AppCompatActivity() {
             val mySubscriptionsAdapter = MySubscriptionsAdapter(this)
             subscribe_recycler.adapter = mySubscriptionsAdapter
 
-            var messagesCall = api?.getMySubscribeHashList(0, 1)
+            var sp : SharedPreferences = this@BestChannelActivity.getSharedPreferences("bridge", AppCompatActivity.MODE_PRIVATE)
+            var messagesCall = api?.getMySubscribeHashList(0, sp.getInt("userIdx", 0))
             messagesCall?.enqueue(object : Callback<Network> {
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
