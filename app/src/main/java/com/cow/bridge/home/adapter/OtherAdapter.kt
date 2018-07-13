@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Point
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.*
 import com.bumptech.glide.Glide
 import com.cow.bridge.R
@@ -58,7 +59,6 @@ class OtherAdapter(internal var _context: Context) : RecyclerView.Adapter<Recycl
                     (_context as Activity).startActivity(intent)
                 }
             }
-
             contents_text_title.text = items[position].contentsTitle
             if(items[position].contentsType==0){
                 contents_text_count.text = "+ ${items[position].imgCnt}"

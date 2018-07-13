@@ -14,11 +14,11 @@ import com.bumptech.glide.Glide
 
 import com.cow.bridge.R
 import com.cow.bridge.model.SearchWord
-
-import java.util.ArrayList
+import com.cow.bridge.util.UtilController
 
 import io.realm.Realm
 import io.realm.RealmResults
+import java.util.*
 
 /**
  * Suggestions Adapter.
@@ -132,7 +132,11 @@ class SearchAdapter : BaseAdapter, Filterable {
             val currentWord = realm.where(SearchWord::class.java).equalTo("recentlyWord", currentListData).findFirst()
             if (currentWord != null) {
                 viewHolderHash!!.wordText.text = currentWord.recentlyWord
-                viewHolderHash.dateText.text = currentWord.searchDateTime
+                viewHolderHash.dateText.text = UtilController.timeformat(Date(currentWord.searchDateTime))
+                try {
+                    }catch (e : Exception){
+
+                }
                 viewHolderHash.deleteImage.setOnClickListener {
                     realm = Realm.getDefaultInstance()
                     realm.executeTransaction { realm ->
@@ -146,7 +150,7 @@ class SearchAdapter : BaseAdapter, Filterable {
                     realm.close()
                 }
             }
-            Glide.with(_context).load(currentWord.thumbnailImage).into(viewHolderHash?.thumbnailImage);
+            Glide.with(_context).load(currentWord?.thumbnailImage).into(viewHolderHash?.thumbnailImage);
 
             realm.close()
         } else {
@@ -154,7 +158,11 @@ class SearchAdapter : BaseAdapter, Filterable {
             val currentWord = realm.where(SearchWord::class.java).equalTo("recentlyWord", currentListData).findFirst()
             if (currentWord != null) {
                 viewHolderNormal!!.wordText.text = currentWord.recentlyWord
-                viewHolderNormal.dateText.text = currentWord.searchDateTime
+                viewHolderNormal.dateText.text = UtilController.timeformat(Date(currentWord.searchDateTime))
+                try {
+                    }catch (e : Exception){
+
+                }
                 viewHolderNormal.deleteImage.setOnClickListener {
                     realm = Realm.getDefaultInstance()
                     realm.executeTransaction { realm ->

@@ -82,7 +82,11 @@ class VideoContentsMainActivity :AppCompatActivity() {
         //others setting
         //video_contents?.start()
 
-        txt_origin_url?.text = video?.contentsUrl
+        if(video?.contentsUrl?.matches((".*"+"youtube"+".*").toRegex())!!){
+            txt_origin_url?.text = video?.contentsUrl
+        }else{
+            txt_origin_url?.text = video?.contentsInfo
+        }
         txt_recommand?.text = Integer.toString(video?.contentsLike!!)
         txt_video_title?.text = video?.contentsTitle
 
@@ -98,6 +102,7 @@ class VideoContentsMainActivity :AppCompatActivity() {
         }
         txt_hash?.text = temp_hash
 
+        Log.v("testtt", video?.contentsUrl)
         if(video?.contentsUrl!!.endsWith(".mp4")){
             video_contents_mp4?.visibility = View.VISIBLE
             video_contents?.visibility = View.INVISIBLE

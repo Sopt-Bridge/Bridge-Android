@@ -51,7 +51,17 @@ class SearchResultAdapter(internal var _context: Context) : RecyclerView.Adapter
                     }
                 }
                 contents_text_title.text = items[position].contentsTitle
-                contents_text_hash.text = "${items[position].hashName1} ${items[position].hashName2} ${items[position].hashName3}"
+                var temp_hash = " "
+                if(items[position].hashName1 != null) {
+                    temp_hash = items[position].hashName1
+                    if(items[position].hashName2 != null) {
+                        temp_hash = temp_hash + items[position].hashName2
+                        if(items[position].hashName3 != null) {
+                            temp_hash = temp_hash + items[position].hashName3
+                        }
+                    }
+                }
+                contents_text_hash.text = temp_hash
                 if(items[position].contentsType==0){
                     contents_text_count.text = "+ ${items[position].imgCnt}"
                     Glide.with(_context).load(R.drawable.home_image_thumnail_icon).into(contents_image_type)

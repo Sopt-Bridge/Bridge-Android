@@ -1,9 +1,7 @@
 package com.cow.bridge.search.activity
 
-import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -14,7 +12,6 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.cow.bridge.R
 import com.cow.bridge.home.adapter.SearchResultAdapter
-import com.cow.bridge.model.Content
 import com.cow.bridge.model.Hash
 import com.cow.bridge.model.SearchWord
 import com.cow.bridge.network.ApplicationController
@@ -29,12 +26,10 @@ import com.skydoves.powermenu.PowerMenuItem
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_search.*
-import kotlinx.android.synthetic.main.fragment_other.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import kotlin.collections.ArrayList
 
 class SearchActivity : AppCompatActivity() {
 
@@ -70,7 +65,7 @@ class SearchActivity : AppCompatActivity() {
                     realm.executeTransaction {
                         var searchWord = realm.createObject(SearchWord::class.java)
                         searchWord.recentlyWord = query
-                        searchWord.searchDateTime = UtilController.timeformat(Date())
+                        searchWord.searchDateTime = Date().toString()
                     }
                     realm.close()
                     getSearchContentsList(query!!, 1, 0)
@@ -211,7 +206,7 @@ class SearchActivity : AppCompatActivity() {
                                     realm.executeTransaction {
                                         var searchWord = realm.createObject(SearchWord::class.java)
                                         searchWord.recentlyWord = if(query.startsWith("#")) "${query}" else "#${query}"
-                                        searchWord.searchDateTime = UtilController.timeformat(Date())
+                                        searchWord.searchDateTime = Date().toString()
                                         searchWord.thumbnailImage = network.data?.get(0)?.hashcontents_list?.get(0)!!.hashImg
                                     }
                                     realm.close()
