@@ -13,10 +13,12 @@ import retrofit2.http.Query
 import retrofit2.http.*
 import java.util.ArrayList
 
+
 /**
  * Created by jihaeseong on 2017. 2. 13.. //Good....
  */
 interface ServerInterface {
+
 
     //Video contents
     @GET("/contents/nextcontents/{lastcontentsIdx}/{contentsIdx}")

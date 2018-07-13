@@ -37,7 +37,6 @@ class VideoContentsVideoFragment : Fragment() {
                 override fun onFailure(call: Call<Network>?, t: Throwable?) {
 
                 }
-
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
                     if (network?.message.equals("ok")) {
@@ -55,5 +54,6 @@ class VideoContentsVideoFragment : Fragment() {
 
         return convertView
     }
+
 
 }

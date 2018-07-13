@@ -61,15 +61,14 @@ class VideoContentsVideoAdapter(val context : Context) : RecyclerView.Adapter<Vi
         return items.size
     }
 
+    inner class VideoContentsVideoViewHolder(val view : View):RecyclerView.ViewHolder(view){
+
+    }
     fun clear(){
         this.items.clear()
     }
 
-    fun addAll(contents: java.util.ArrayList<Content>) {
-        this.items.addAll(contents)
-    }
-
-    inner class VideoContentsVideoViewHolder(val view : View):RecyclerView.ViewHolder(view){
-
+    fun addAll(content: java.util.ArrayList<Content>) {
+        this.items.addAll(content)
     }
 }

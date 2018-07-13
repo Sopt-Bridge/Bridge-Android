@@ -12,7 +12,6 @@ import com.cow.bridge.network.ApplicationController
 import com.cow.bridge.network.Network
 import com.cow.bridge.network.ServerInterface
 import kotlinx.android.synthetic.main.fragment_video_contents_comment.view.*
-import kotlinx.android.synthetic.main.fragment_video_contents_video.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,7 +19,6 @@ import retrofit2.Response
 class VideoContentsCommentFragment() :Fragment() {
     private var pageName: String? = null
     var api : ServerInterface? = null
-    var videoContentsCommentAdapter : VideoContentsCommentAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,15 +33,12 @@ class VideoContentsCommentFragment() :Fragment() {
 
         with(convertView){
             val videoContentsCommentAdapter : VideoContentsCommentAdapter = VideoContentsCommentAdapter(context)
-            val llm : LinearLayoutManager = LinearLayoutManager(context)
-            llm.orientation = LinearLayoutManager.VERTICAL
-
+            val llm : LinearLayoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
             video_contents_comment_recycler.layoutManager = llm
             video_contents_comment_recycler.adapter = videoContentsCommentAdapter
 
-
-            var messagesCall = api?.recommandVideoContentsList(0, 0)
-            messagesCall?.enqueue(object : Callback<Network> {
+            var messagesCall = api?.getContentCommentList(13,0)
+            messagesCall?.enqueue(object : Callback<Network>{
                 override fun onFailure(call: Call<Network>?, t: Throwable?) {
 
                 }
@@ -52,16 +47,20 @@ class VideoContentsCommentFragment() :Fragment() {
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
                     if (network?.message.equals("ok")) {
-                        network.data?.get(0)?.contents_list?.let {
+                        network.data?.get(0)?.comments_list?.let {
                             if (it.size != 0) {
+                                videoContentsCommentAdapter.clear()
+                                videoContentsCommentAdapter.addAll(it)
+                                videoContentsCommentAdapter.notifyDataSetChanged()
 
                             }
                         }
                     }
                 }
-            })
-        }
+
+        })
+
+    }
         return convertView
     }
-
 }

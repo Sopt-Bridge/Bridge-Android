@@ -1,6 +1,5 @@
 package com.cow.bridge.contents.activity
 
-import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
@@ -279,9 +278,6 @@ class ImageContentsActivity : AppCompatActivity() {
 
         getContentsCommentList()
     }
-
-//    var sp : SharedPreferences = (_context as Activity).getSharedPreferences("bridge", MODE_PRIVATE)
-//    var myUserIdx = sp.getInt("userIdx", 0)
 
 
     public fun getContentsCommentList(){
