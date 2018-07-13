@@ -82,6 +82,7 @@ class ImageContentsActivity : AppCompatActivity() {
         var intent = Intent(this.intent)
         var imageContents = intent.getSerializableExtra("imageContents") as? Content
 
+
         text1.text = imageContents?.imgCnt.toString()
         text4.text = imageContents?.contentsInfo
         text6.text = imageContents?.contentsLike.toString()
@@ -108,14 +109,16 @@ class ImageContentsActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<Network>?, response: Response<Network>?) {
                     var network = response!!.body()
                     if(network?.message.equals("ok")) {
-                        if(likeFlag==1){
-                            likeFlag =0
+                        if(imageContents?.likeFlag==1){
                             text5.setBackgroundResource(R.drawable.good_normal_btn)
-                            text6.text = imageContents?.contentsLike!!.minus(1).toString()
-                        } else if(likeFlag==0){
-                            likeFlag =1
+                            imageContents!!.contentsLike--
+                            imageContents?.likeFlag =0
+                            text6.text = Integer.toString(imageContents.contentsLike)
+                        } else {
                             text5.setBackgroundResource(R.drawable.good_active_icon)
-                            text6.text = imageContents?.contentsLike!!.plus(1).toString()
+                            imageContents!!.contentsLike++
+                            imageContents?.likeFlag =1
+                            text6.text = Integer.toString(imageContents.contentsLike)
 
                         }
                     }
@@ -172,7 +175,6 @@ class ImageContentsActivity : AppCompatActivity() {
                 })
             }
         }
-
 
         // FeedBack Dialog
         text3.setOnClickListener(object : View.OnClickListener{

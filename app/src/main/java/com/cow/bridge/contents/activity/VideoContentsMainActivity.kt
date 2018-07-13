@@ -156,7 +156,6 @@ class VideoContentsMainActivity :AppCompatActivity() {
                             video.contentsLike--
                             video.likeFlag = 0
                             txt_recommand?.text = Integer.toString(video.contentsLike)
-
                         } else {
                             btn_recommand?.setBackgroundResource(R.drawable.good_active_icon)
                             video.contentsLike++
